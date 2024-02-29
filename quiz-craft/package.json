@@ -1,5 +1,5 @@
 {
-  "name": "shadcn-test",
+  "name": "quiz-craft",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -21,6 +21,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-firebase-hooks": "^5.1.1",
+    "react-hook-form": "^7.50.1",
     "react-router-dom": "^6.22.1",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7"
