@@ -8,7 +8,7 @@ const NavBar = () => {
     <>
       <div className="flex justify-between items-center">
         <div className="flex justify-between items-center ">
-          <Link to="/" className="p-8">
+          <Link to="/" className="px-8">
             Quiz Craft
           </Link>
           <Button>
@@ -19,7 +19,7 @@ const NavBar = () => {
           <Input placeholder="Search quizzes" />
         </div>
         <ModeToggle />
-        <Link to="/login"  className="p-8">
+        <Link to="/login"  className="px-8">
           Login
         </Link>
       </div>
@@ -28,3 +28,4 @@ const NavBar = () => {
 }
 
 export default NavBar
+
