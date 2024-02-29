@@ -30,7 +30,7 @@ const NavBar = () => {
       title: 'Logged out successfully',
       description: 'You have been logged out.',
     });
-    
+
     navigate('/');
   };
 
@@ -55,14 +55,18 @@ const NavBar = () => {
           </>
         )}
 
-        <Button onClick={toggleLoginForm} className="px-8">
-          Login
-        </Button>
-        <Button asChild>
-          <Link to="/register" className="px-8">
-            Register
-          </Link>
-        </Button>
+        {!user && (
+          <>
+            <Button onClick={toggleLoginForm} className="px-8">
+              Login
+            </Button>
+            <Button asChild>
+              <Link to="/register" className="px-8">
+                Register
+              </Link>
+            </Button>
+          </>
+        )}
       </div>
       {showLogInForm && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
