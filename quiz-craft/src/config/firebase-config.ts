@@ -9,7 +9,7 @@ const firebaseConfig = {
   storageBucket: "quiz-craft-3a9a5.appspot.com",
   messagingSenderId: "1056639557310",
   appId: "1:1056639557310:web:c9d2482437afe8d55c88ef",
-  dataBaseURL: "https://quiz-craft-3a9a5-default-rtdb.europe-west1.firebasedatabase.app/"
+  databaseURL: "https://quiz-craft-3a9a5-default-rtdb.europe-west1.firebasedatabase.app/"
 };
 
 // const app = initializeApp(firebaseConfig);
