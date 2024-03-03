@@ -12,7 +12,7 @@ const NavBar = () => {
   const { user, userData, setContext } = useContext(AuthContext);
   const [showLogInForm, setShowLogInForm] = useState(false);
   const navigate = useNavigate();
-  const toast = useToast();
+  const { toast } = useToast();
 
   const toggleLoginForm = () => {
     setShowLogInForm((prev) => !prev);

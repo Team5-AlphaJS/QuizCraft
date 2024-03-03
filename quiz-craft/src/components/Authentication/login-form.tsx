@@ -31,7 +31,7 @@ const formSchema = z.object({
 export function LoginForm() {
   const { setContext } = useContext(AuthContext);
   const navigate = useNavigate();
-  const toast = useToast();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
