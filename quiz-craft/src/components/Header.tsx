@@ -71,7 +71,7 @@ const NavBar = () => {
       {showLogInForm && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="p-8 rounded-lg w-96 max-w-full flex flex-col items-center">
-            <LoginForm />
+            <LoginForm hideLoginForm={hideLoginForm}/>
             <Button onClick={hideLoginForm} className="mt-4">
               Back
             </Button>

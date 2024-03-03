@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
-  FormDescription,
+  // FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -28,7 +28,7 @@ const formSchema = z.object({
   }),
 });
 
-export function LoginForm() {
+export function LoginForm({ hideLoginForm }: { hideLoginForm: () => void }) {
   const { setContext } = useContext(AuthContext);
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -50,6 +50,7 @@ export function LoginForm() {
         description: 'You have successfully logged in.',
       });
       navigate('/');
+      hideLoginForm();
     } catch (error) {
       toast({
         title: 'Login Error',
