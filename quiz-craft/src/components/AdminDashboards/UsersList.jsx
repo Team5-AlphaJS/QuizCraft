@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import UserCard from "../UserCard/UserCard";
+import { Link } from "@nextui-org/react";
 
 const UsersList = () => {
     const [users, setUsers] = useState([]);
@@ -50,13 +51,15 @@ const UsersList = () => {
 
     return (
         <>
-            <div className="flex flex-row w-full">
+            <div className="flex flex-row w-full mb-2">
+                {/* maybe it should be onSubmit? so that the search button a purpose */}
                 <Input type="text" placeholder="search term" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-                <Button>Search</Button>
+                <Button className='ml-2'>Search</Button>
             </div>
             <div className="flex mt-0.5">
                 <ScrollArea className="list-of-users w-2/3 border-r-4 h-full">
                     <div className="p-4">
+                        {users.length > 0 && <p className="text-lg font-semibold">Total number of users: {users.length} </p>}
                         {users && users.map((user) => <UserCard key={user.uid} user={user} />)}
                     </div>
                 </ScrollArea>
@@ -87,10 +90,10 @@ const UsersList = () => {
                     <div className="sort-by pt-10">
                         <div className="flex flex-row justify-between">
                             <p className="text-l mb-1">Sort by</p>
-                            <a href="" onClick={(e) => {
+                            <Link href="" onClick={(e) => {
                                 e.preventDefault();
                                 setDesc(!desc);
-                            }}>{!desc ? "Desc" : "Asc"}</a>
+                            }}>{!desc ? "Desc" : "Asc"}</Link>
                         </div>
                         <RadioGroup defaultValue="username">
                             <div className="flex items-center space-x-2">

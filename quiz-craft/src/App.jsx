@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import LandingPage from '../pages/LandingPage';
+import LandingPage from './pages/LandingPage';
 import Register from './components/Authentication/Register';
 import { useState, useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';

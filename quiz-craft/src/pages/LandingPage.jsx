@@ -1,7 +1,7 @@
-import { Toaster } from '../src/components/ui/toaster';
-import CategoriesNav from '../src/components/CategoriesNav';
-import Footer from '../src/components/Footer';
-import Header from '../src/components/Header';
+import { Toaster } from '../components/ui/toaster';
+import CategoriesNav from '../components/CategoriesNav';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
 import { Checkbox } from '@nextui-org/react';
 import { Accordion, AccordionItem } from '@nextui-org/react';
 import { Loader2 } from 'lucide-react';

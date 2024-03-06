@@ -1,10 +1,15 @@
+import { Avatar } from "@nextui-org/react";
 import PropTypes from "prop-types";
 
 const UserCard = ({ user }) => {
     return (
         <div className="flex h-32 my-2">
             <div className="user-photo w-1/4 border-r-2">
-                <image className="ms-3" />
+                <Avatar
+                    name={user?.username.slice(0, 1)}
+                    src={user?.photo}
+                    className="cursor-pointer ms-14 mt-6 w-20 h-20 text-large"
+                />
             </div>
             <div className="user-info flex flex-col flex-start space-y-0 w-3/4 ">
                 <h3 className="ms-3 text-left text-2xl">{user.username}</h3>
