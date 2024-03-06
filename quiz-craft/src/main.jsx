@@ -4,12 +4,15 @@ import App from './App.jsx';
 import './index.css';
 import { ThemeProvider } from './components/theme-provider';
 import { NextUIProvider } from '@nextui-org/react';
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <NextUIProvider>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </NextUIProvider>
     </ThemeProvider>
   </React.StrictMode>

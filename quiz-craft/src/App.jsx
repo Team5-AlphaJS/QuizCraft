@@ -1,5 +1,4 @@
-import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import Register from './components/Authentication/Register';
 import { useState, useEffect } from 'react';
@@ -8,6 +7,10 @@ import { auth } from '/config/firebase-config';
 import { getUserData } from '/services/users.service';
 import { AuthContext } from '/context/AuthContext';
 import AdminDashboard from './pages/AdminDashboard.jsx';
+import Footer from './components/Footer/Footer';
+import Header from './components/Header/Header';
+import About from './components/About/About';
+import NotFound from './components/NotFound/NotFound';
 
 function App() {
   const [appState, setAppState] = useState({
@@ -49,13 +52,15 @@ function App() {
   return (
     <>
       <AuthContext.Provider value={{ ...appState, setContext: setAppState }}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/admin" element={<AdminDashboard />} />
-          </Routes>
-        </BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path='/about' element={<About />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+        <Footer />
       </AuthContext.Provider>
     </>
   );

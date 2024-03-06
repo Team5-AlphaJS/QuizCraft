@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import {
   Avatar,
   Chip,
@@ -21,14 +21,14 @@ import {
   DropdownMenu,
   DropdownItem,
 } from '@nextui-org/react';
-import { Input } from './ui/input';
-import { ModeToggle } from './mode-toggle';
-import { useToast } from './ui/use-toast';
+import { Input } from '../ui/input';
+import { ModeToggle } from '../mode-toggle';
+import { useToast } from '../ui/use-toast';
 import { useContext, useState } from 'react';
 import { AuthContext } from '/context/AuthContext';
 import { logoutUser } from '/services/auth.service';
 import { useDisclosure } from '@nextui-org/react';
-import { LoginForm } from './Authentication/LoginForm';
+import { LoginForm } from '../Authentication/LoginForm';
 import { Settings, User } from 'lucide-react';
 
 export default function Header() {
@@ -38,7 +38,8 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
-  const iconClasses = 'text-xl text-default-500 pointer-events-none flex-shrink-0';
+  const iconClasses =
+    'text-xl text-default-500 pointer-events-none flex-shrink-0';
 
   const menuItems = [
     'Profile',
@@ -74,12 +75,12 @@ export default function Header() {
           aria-label={isMenuOpen ? 'Open Menu' : 'Close Menu'}
         />
         <NavbarBrand>
-          <NextUILink to="/" className="px-8 cursor-pointer">
-            <b>Quiz Craft</b>
-          </NextUILink>
+          <Link to="/" className="px-8 cursor-pointer text-primary">
+            <b>QuizCraft</b>
+          </Link>
         </NavbarBrand>
 
-        <NavbarContent className="hidden sm:flex gap-4" justify="center">
+        <NavbarContent className="flex" justify="center">
           <NavbarItem>
             <NextUIButton color="success">Random free quiz</NextUIButton>
           </NavbarItem>
@@ -146,23 +147,21 @@ export default function Header() {
               </>
             )}
           </NavbarItem>
-          <NavbarItem className="ml-3">
+          <NavbarItem className="ml-10">
             <ModeToggle />
           </NavbarItem>
         </NavbarContent>
 
         <NavbarMenu>
+          {userData && userData.role === 'admin' && (
+            <NextUILink size="lg" className="font-medium">
+              <Link to="/admin">Admin Dashboard</Link>
+            </NextUILink>
+          )}
           {menuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <NextUILink
-                color={
-                  index === 2
-                    ? 'primary'
-                    : index === menuItems.length - 1
-                      ? 'danger'
-                      : 'foreground'
-                }
-                className="w-full"
+                color={index === menuItems.length - 1 ? 'danger' : 'foreground'}
                 href="#"
                 size="lg"
               >
@@ -170,9 +169,7 @@ export default function Header() {
               </NextUILink>
             </NavbarMenuItem>
           ))}
-          {userData && userData.role === "admin" && <NextUILink href="/admin">Admin Dashboard</NextUILink>}
         </NavbarMenu>
-
       </Navbar>
     </>
   );

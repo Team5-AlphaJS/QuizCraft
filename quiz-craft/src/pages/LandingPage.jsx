@@ -1,7 +1,5 @@
 import { Toaster } from '../components/ui/toaster';
 import CategoriesNav from '../components/CategoriesNav';
-import Footer from '../components/Footer';
-import Header from '../components/Header';
 import { Checkbox } from '@nextui-org/react';
 import { Accordion, AccordionItem } from '@nextui-org/react';
 import { Loader2 } from 'lucide-react';
@@ -12,13 +10,10 @@ import { Card, CardHeader, CardBody } from '@nextui-org/react';
 
 export default function LandingPage() {
   return (
-    <>
+    <div className='mt-2 mb-20 text-center'>
       <Toaster />
 
-      <div className="container mx-auto pb-8">
-        <Header />
-      </div>
-
+      <h1 className="text-4xl font-bold mb-2">Welcome to QuizCraft</h1>
       <CategoriesNav />
 
       <p className="mt-5">Quizzes</p>
@@ -64,8 +59,6 @@ export default function LandingPage() {
           />
         </CardBody>
       </Card>
-
-      <Footer />
-    </>
+    </div>
   );
 }

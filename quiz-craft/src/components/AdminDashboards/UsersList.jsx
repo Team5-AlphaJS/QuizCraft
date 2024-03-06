@@ -56,16 +56,16 @@ const UsersList = () => {
                 <Input type="text" placeholder="search term" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
                 <Button className='ml-2'>Search</Button>
             </div>
-            <div className="flex mt-0.5">
+            <div className="flex mt-0.5 mb-10">
                 <ScrollArea className="list-of-users w-2/3 border-r-4 h-full">
                     <div className="p-4">
-                        {users.length > 0 && <p className="text-lg font-semibold">Total number of users: {users.length} </p>}
+                        {users.length > 0 && <p className="text-lg font-semibold text-center">Total number of users: {users.length} </p>}
                         {users && users.map((user) => <UserCard key={user.uid} user={user} />)}
                     </div>
                 </ScrollArea>
 
                 <div className="search-options ml-3">
-                    <h3 className="-ms-12 mb-1">Search by</h3>
+                    <h3 className="mb-2">Search by</h3>
                     <div className="search-by">
                         <RadioGroup defaultValue="username">
                             <div className="flex items-center space-x-2" >
@@ -89,14 +89,14 @@ const UsersList = () => {
 
                     <div className="sort-by pt-10">
                         <div className="flex flex-row justify-between">
-                            <p className="text-l mb-1">Sort by</p>
+                            <p className="text-l">Sort by</p>
                             <Link href="" onClick={(e) => {
                                 e.preventDefault();
                                 setDesc(!desc);
                             }}>{!desc ? "Desc" : "Asc"}</Link>
                         </div>
                         <RadioGroup defaultValue="username">
-                            <div className="flex items-center space-x-2">
+                            <div className="flex items-center space-x-2 mt-2">
                                 <RadioGroupItem value="username" id="sort-username" onClick={() => setSortBy('username')} />
                                 <Label htmlFor="sort-username">Username</Label>
                             </div>
