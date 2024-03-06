@@ -11,6 +11,7 @@ import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
 import About from './components/About/About';
 import NotFound from './components/NotFound/NotFound';
+// import AuthGuard from 'hoc/AuthGuard';
 
 function App() {
   const [appState, setAppState] = useState({
@@ -45,9 +46,9 @@ function App() {
   //   }));
   // };
 
-  // const isAdmin = () => {
-  //   return appState.userData?.role === 'admin';
-  // }
+  const isAdmin = () => {
+    return appState.userData?.role === 'admin';
+  }
 
   return (
     <>
@@ -56,9 +57,9 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/admin" element={<AdminDashboard />} />
           <Route path='/about' element={<About />} />
           <Route path="*" element={<NotFound />} />
+          {isAdmin() && <Route path="/admin" element={<AdminDashboard />} />}
         </Routes>
         <Footer />
       </AuthContext.Provider>
