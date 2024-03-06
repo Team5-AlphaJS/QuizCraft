@@ -11,7 +11,8 @@ import { createUserHandle } from '/services/users.service';
 import { EyeSlashFilledIcon } from '../Icons/EyeSlashFilledIcon';
 import { EyeFilledIcon } from '../Icons/EyeSlashIcon';
 import { MailIcon } from '../Icons/MailIcon';
-import { User, Phone, UserSearchIcon} from 'lucide-react';
+import { User, Phone, UserSearchIcon } from 'lucide-react';
+import { Select, SelectItem } from '@nextui-org/react';
 
 export default function Register() {
   const { setContext } = useContext(AuthContext);
@@ -22,10 +23,16 @@ export default function Register() {
     formState: { errors },
   } = useForm();
   const { toast } = useToast();
-  const iconClasses = 'text-2xl text-default-400 pointer-events-none flex-shrink-0';
+  const iconClasses =
+    'text-2xl text-default-400 pointer-events-none flex-shrink-0';
   const [isVisible, setIsVisible] = useState(false);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
+
+  const roles = [
+    { label: 'Student', value: 'Student' },
+    { label: 'Educator', value: 'Educator' },
+  ];
 
   const onSubmit = async (data) => {
     try {
@@ -50,7 +57,7 @@ export default function Register() {
         username: data.username,
         email: data.email,
         phone: data.phone,
-        role: 'student',
+        role: data.role,
         createdOn: Date.now(),
         // optional fields
         // city: '',
@@ -81,9 +88,7 @@ export default function Register() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <NextUIInput
           autoFocus
-          endContent={
-            <User className={iconClasses} />
-          }
+          endContent={<User className={iconClasses} />}
           variant="underlined"
           type="text"
           placeholder="First Name"
@@ -108,9 +113,7 @@ export default function Register() {
         )}
 
         <NextUIInput
-          endContent={
-            <User className={iconClasses} />
-          }
+          endContent={<User className={iconClasses} />}
           variant="underlined"
           type="text"
           placeholder="Last Name"
@@ -135,9 +138,7 @@ export default function Register() {
         )}
 
         <NextUIInput
-          endContent={
-            <UserSearchIcon className={iconClasses} />
-          }
+          endContent={<UserSearchIcon className={iconClasses} />}
           variant="underlined"
           type="text"
           placeholder="Username"
@@ -161,10 +162,25 @@ export default function Register() {
           <p className="text-danger-500">{errors.username.message}</p>
         )}
 
+        <Select
+          label="Select an role"
+          variant="underlined"
+          {...register('role', {
+            required: 'Role is required',
+          })}
+        >
+          {roles.map((role) => (
+            <SelectItem key={role.value} value={role.value}>
+              {role.label}
+            </SelectItem>
+          ))}
+        </Select>
+        {errors.role && (
+          <p className="text-danger-500">{errors.role.message}</p>
+        )}
+
         <NextUIInput
-          endContent={
-            <Phone className={iconClasses} />
-          }
+          endContent={<Phone className={iconClasses} />}
           variant="underlined"
           type="phone"
           placeholder="Phone"
@@ -189,9 +205,7 @@ export default function Register() {
         )}
 
         <NextUIInput
-          endContent={
-            <MailIcon className={iconClasses} />
-          }
+          endContent={<MailIcon className={iconClasses} />}
           variant="underlined"
           type="email"
           placeholder="Email"
