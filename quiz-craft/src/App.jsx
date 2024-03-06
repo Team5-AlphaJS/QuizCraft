@@ -7,6 +7,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '/config/firebase-config';
 import { getUserData } from '/services/users.service';
 import { AuthContext } from '/context/AuthContext';
+import AdminDashboard from './pages/AdminDashboard.jsx';
 
 function App() {
   const [appState, setAppState] = useState({
@@ -52,6 +53,7 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/admin" element={<AdminDashboard />} />
           </Routes>
         </BrowserRouter>
       </AuthContext.Provider>

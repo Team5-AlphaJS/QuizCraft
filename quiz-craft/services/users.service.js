@@ -7,7 +7,7 @@ export const getUserByUsername = (username) => {
 
 export const createUserHandle = (userData) => {
   return set(ref(db, `users/${userData.username}`), {
-      ...userData,
+    ...userData,
   });
 }
 
@@ -17,8 +17,12 @@ export const getUserData = (uid) => {
 
 export const handleToggleRole = async (userId, newRole) => {
   try {
-      await update(ref(db, `users/${userId}`), { role: newRole });
+    await update(ref(db, `users/${userId}`), { role: newRole });
   } catch (error) {
-      console.error('Error updating user role:', error);
+    console.error('Error updating user role:', error);
   }
 };
+
+export const getAllUsers = async () => {
+  return get(query(ref(db, 'users')));
+}

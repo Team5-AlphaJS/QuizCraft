@@ -159,8 +159,8 @@ export default function Header() {
                   index === 2
                     ? 'primary'
                     : index === menuItems.length - 1
-                    ? 'danger'
-                    : 'foreground'
+                      ? 'danger'
+                      : 'foreground'
                 }
                 className="w-full"
                 href="#"
@@ -170,8 +170,9 @@ export default function Header() {
               </NextUILink>
             </NavbarMenuItem>
           ))}
+          {userData && userData.role === "admin" && <NextUILink href="/admin">Admin Dashboard</NextUILink>}
         </NavbarMenu>
-        
+
       </Navbar>
     </>
   );
