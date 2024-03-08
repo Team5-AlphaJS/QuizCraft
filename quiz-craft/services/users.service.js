@@ -15,6 +15,10 @@ export const getUserData = (uid) => {
   return get(query(ref(db, 'users'), orderByChild('uid'), equalTo(uid)));
 };
 
+export const editUser = (data) => {
+  return update(ref(db, `users/${data.username}`), data);
+}
+
 export const handleToggleRole = async (userId, newRole) => {
   try {
     await update(ref(db, `users/${userId}`), { role: newRole });

@@ -164,7 +164,7 @@ export default function Register() {
           )}
 
           <Select
-            label="Select an role"
+            label="Select a role"
             variant="underlined"
             {...register('role', {
               required: 'Role is required',

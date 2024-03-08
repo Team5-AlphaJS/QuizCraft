@@ -106,6 +106,7 @@ export default function Header() {
                     <DropdownMenu>
                       <DropdownItem
                         startContent={<User className={iconClasses} />}
+                        onClick={() => navigate(`/user/${user?.uid}`)}
                       >
                         User Profile
                       </DropdownItem>

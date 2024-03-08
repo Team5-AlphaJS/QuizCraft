@@ -150,7 +150,10 @@ export function LoginForm({ isOpen, onOpenChange, onClose }) {
                   <p>
                     No account?{'  '}
                     <NextUILink
-                      onClick={() => navigate('/register')}
+                      onClick={() => {
+                        navigate('/register');
+                        onClose();
+                      }}
                       color="primary"
                       size="sm"
                       className={'cursor-pointer'}

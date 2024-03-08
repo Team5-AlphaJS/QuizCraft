@@ -1,12 +1,12 @@
 import { Toaster } from '../components/ui/toaster';
 import CategoriesNav from '../components/CategoriesNav';
-import { Checkbox } from '@nextui-org/react';
-import { Accordion, AccordionItem } from '@nextui-org/react';
-import { Loader2 } from 'lucide-react';
-import { CircularProgress } from '@nextui-org/react';
-import { Radio, RadioGroup } from '@nextui-org/react';
-import { Image } from '@nextui-org/react';
-import { Card, CardHeader, CardBody } from '@nextui-org/react';
+// import { Checkbox } from '@nextui-org/react';
+// import { Accordion, AccordionItem } from '@nextui-org/react';
+// import { Loader2 } from 'lucide-react';
+// import { CircularProgress } from '@nextui-org/react';
+// import { Radio, RadioGroup } from '@nextui-org/react';
+// import { Image } from '@nextui-org/react';
+// import { Card, CardHeader, CardBody } from '@nextui-org/react';
 
 export default function LandingPage() {
   return (
@@ -18,7 +18,7 @@ export default function LandingPage() {
 
       <p className="mt-5">Quizzes</p>
 
-      <Checkbox className="my-2" size="lg">
+      {/* <Checkbox className="my-2" size="lg">
         Check this
       </Checkbox>
 
@@ -58,7 +58,7 @@ export default function LandingPage() {
             width={270}
           />
         </CardBody>
-      </Card>
+      </Card> */}
     </div>
   );
 }

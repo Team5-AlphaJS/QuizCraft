@@ -11,7 +11,8 @@ import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
 import About from './components/About/About';
 import NotFound from './components/NotFound/NotFound';
-// import AuthGuard from 'hoc/AuthGuard';
+import AuthGuard from '/hoc/AuthGuard';
+import UserProfile from './components/UserProfile/UserProfile';
 
 function App() {
   const [appState, setAppState] = useState({
@@ -39,12 +40,12 @@ function App() {
     });
   }, [user]);
 
-  // const updateUserData = (newUserData) => {
-  //   setAppState((prevState) => ({
-  //     ...prevState,
-  //     userData: newUserData,
-  //   }));
-  // };
+  const updateUserData = (newUserData) => {
+    setAppState((prevState) => ({
+      ...prevState,
+      userData: newUserData,
+    }));
+  };
 
   const isAdmin = () => {
     return appState.userData?.role === 'admin';
@@ -58,6 +59,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/register" element={<Register />} />
           <Route path='/about' element={<About />} />
+          <Route path='/user/:id' element={<AuthGuard><UserProfile currentUser={appState.userData} updateUserData={updateUserData}/></AuthGuard>} />
           <Route path="*" element={<NotFound />} />
           {isAdmin() && <Route path="/admin" element={<AdminDashboard />} />}
         </Routes>
