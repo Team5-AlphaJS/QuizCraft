@@ -13,7 +13,7 @@ export default function LandingPage() {
     <div className='mt-2 mb-20 text-center'>
       <Toaster />
 
-      <h1 className="text-4xl font-bold mb-2">Welcome to QuizCraft</h1>
+      <h1 className="text-4xl font-bold mb-2">Welcome to Quizzify</h1>
       <CategoriesNav />
 
       <p className="mt-5">Quizzes</p>

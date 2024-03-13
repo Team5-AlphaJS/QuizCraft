@@ -76,13 +76,13 @@ export default function Header() {
         />
         <NavbarBrand>
           <Link to="/" className="px-8 cursor-pointer text-primary">
-            <b>QuizCraft</b>
+            <b>Quizzify</b>
           </Link>
         </NavbarBrand>
 
         <NavbarContent className="flex" justify="center">
           <NavbarItem>
-            <NextUIButton color="success">Random free quiz</NextUIButton>
+            <NextUIButton color="primary">Random free quiz</NextUIButton>
           </NavbarItem>
           <NavbarItem>
             <Input placeholder="Search quizzes" />
@@ -119,7 +119,7 @@ export default function Header() {
                   </Dropdown>
                   <Chip size="sm">{userData?.role}</Chip>
                 </div>
-                <NextUIButton onClick={logout} color="success">
+                <NextUIButton onClick={logout} color="primary">
                   Logout
                 </NextUIButton>
               </div>

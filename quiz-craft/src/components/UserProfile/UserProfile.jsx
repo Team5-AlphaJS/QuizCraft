@@ -6,7 +6,7 @@ import { uploadAvatar } from '/services/images.service';
 import PropTypes from 'prop-types';
 import { editUser } from '/services/users.service';
 import { useToast } from '../ui/use-toast';
-import { User, Mail, Phone, UserSearch, Image } from 'lucide-react';
+import { User, Mail, Phone, UserSearch, Image, Trash } from 'lucide-react';
 import { Toaster } from '../ui/toaster';
 // import { deleteAvatar } from '/services/images.service';
 
@@ -74,18 +74,26 @@ export default function UserProfile({ currentUser, updateUserData }) {
   };
 
   return (
-    <div className="flex justify-center mt-36">
+    <>
       <Toaster />
-
-      <div>
+      {userData?.username.endsWith('s') ? (
+        <h1 className="text-center text-3xl mt-36 mb-10 font-bold">
+          {userData?.username}&apos; profile
+        </h1>
+      ) : (
+        <h1 className="text-center text-3xl mt-36 mb-10 font-bold">
+          {userData?.username}&apos;s profile
+        </h1>
+      )}
+      <div className="flex justify-center items-center">
         <Avatar
-          size="lg"
+          className="w-20 h-20 mr-7 text-large"
           name={userData?.username.slice(0, 1)}
           src={userData?.photo}
         />
 
         {currentUser?.uid === userData?.uid && (
-          <div>
+          <div className="pr-7">
             <input
               type="file"
               onChange={(e) => {
@@ -102,38 +110,45 @@ export default function UserProfile({ currentUser, updateUserData }) {
                 Upload Avatar
               </Button>
             )}
-            {userData?.photo && (
-              <Button color='danger' variant="ghost" onClick={handleAvatarRemove}>
+            {userData?.photo && avatarUpload === null && (
+              <Button
+                color="danger"
+                variant="ghost"
+                onClick={handleAvatarRemove}
+                endContent={<Trash />}
+              >
                 Remove Avatar
               </Button>
             )}
           </div>
         )}
 
-        <div className="flex items-center mt-4">
-          <UserSearch />
-          <p className="ml-2">{userData?.username}</p>
-          <Chip className="ml-2">{userData?.role}</Chip>
-        </div>
+        <div className="border-l-3 pl-7">
+          <div className="flex items-center border-b-3 pb-2">
+            <UserSearch />
+            <p className="ml-2">{userData?.username}</p>
+            <Chip className="ml-2">{userData?.role}</Chip>
+          </div>
 
-        <div className="flex items-center">
-          <Mail />
-          <p className="ml-2">{userData?.email}</p>
-        </div>
+          <div className="flex items-center border-b-3 py-2">
+            <Mail />
+            <p className="ml-2">{userData?.email}</p>
+          </div>
 
-        <div className="flex items-center">
-          <User />
-          <p className="ml-2">
-            {userData?.firstName} {userData?.lastName}
-          </p>
-        </div>
+          <div className="flex items-center border-b-3 py-2">
+            <User />
+            <p className="ml-2">
+              {userData?.firstName} {userData?.lastName}
+            </p>
+          </div>
 
-        <div className="flex items-center">
-          <Phone />
-          <p className="ml-2">{userData?.phone}</p>
+          <div className="flex items-center pt-2">
+            <Phone />
+            <p className="ml-2">{userData?.phone}</p>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
