@@ -13,6 +13,8 @@ import About from './components/About/About';
 import NotFound from './components/NotFound/NotFound';
 import AuthGuard from '/hoc/AuthGuard';
 import UserProfile from './components/UserProfile/UserProfile';
+import EducatorDashboard from './pages/EducatorDashboard.jsx';
+import StudentDashboard from './components/StudentDashboard/StudentDashboard.jsx';
 
 function App() {
   const [appState, setAppState] = useState({
@@ -62,6 +64,8 @@ function App() {
           <Route path='/user/:id' element={<AuthGuard><UserProfile currentUser={appState.userData} updateUserData={updateUserData}/></AuthGuard>} />
           <Route path="*" element={<NotFound />} />
           {isAdmin() && <Route path="/admin" element={<AdminDashboard />} />}
+          <Route path='/educator-dashboard' element={<EducatorDashboard />} />
+          <Route path='/student-dashboard' element={<StudentDashboard />} />
         </Routes>
         <Footer />
       </AuthContext.Provider>

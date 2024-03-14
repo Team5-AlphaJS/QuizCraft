@@ -30,3 +30,4 @@ export const handleToggleRole = async (userId, newRole) => {
 export const getAllUsers = async () => {
   return get(query(ref(db, 'users')));
 }
+  
