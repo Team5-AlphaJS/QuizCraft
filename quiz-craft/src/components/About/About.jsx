@@ -11,7 +11,6 @@ export default function About() {
         including React, Firebase, and Tailwind CSS. It is designed to be
         user-friendly and accessible to all users.
       </p>
-      <p className="text-lg">Have fun! 😊</p>
     </div>
   );
 }

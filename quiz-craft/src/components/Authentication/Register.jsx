@@ -73,7 +73,7 @@ export default function Register() {
         description: 'You have successfully registered.',
       });
 
-      navigate('/');
+      navigate('/home');
     } catch (error) {
       toast({
         title: 'Registration Error',

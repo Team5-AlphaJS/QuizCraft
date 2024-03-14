@@ -47,7 +47,7 @@ export function LoginForm({ isOpen, onOpenChange, onClose }) {
         title: 'Log In Successful',
         description: 'You have successfully logged in.',
       });
-      navigate('/');
+      navigate('/home');
       onClose();
     } catch (error) {
       toast({
