@@ -73,12 +73,21 @@ export default function Header() {
     >
       <NavbarMenuToggle aria-label={isMenuOpen ? 'Open Menu' : 'Close Menu'} />
       <NavbarBrand>
-        <Link
-          to="/"
+        {user === null ? (
+          <Link
+            to="/"
+            className="px-2 cursor-pointer text-primary text-xl font-semibold"
+          >
+            Quizzify
+          </Link>
+        ) : (
+          <Link
+          to="/home"
           className="px-2 cursor-pointer text-primary text-xl font-semibold"
         >
           Quizzify
         </Link>
+        )}
       </NavbarBrand>
 
       {/* <NavbarContent className="flex" justify="center">
