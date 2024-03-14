@@ -1,22 +1,23 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { useToast } from './ui/use-toast';
-import { Input } from './ui/input';
-import { Button } from './ui/button';
-import { Select, SelectItem } from '@nextui-org/react';
+import { useForm, useFieldArray } from 'react-hook-form';
 import { createQuiz } from '/services/quiz.service';
+import { useToast } from './ui/use-toast';
+import { Button } from './ui/button';
+import { Input } from './ui/input';
+import { Select, SelectItem } from '@nextui-org/react';
 
 const CreateQuizForm = () => {
-  const navigate = useNavigate();
   const { toast } = useToast();
-  const { register, handleSubmit } = useForm();
-  const [questions, setQuestions] = useState([{ question: '', answers: ['', '', '', ''] }]);
+  const { register, handleSubmit, control } = useForm({
+    defaultValues: {
+      title: '',
+      questions: [{ question: '', answers: ['', '', '', ''], correctAnswer: 0 }],
+    },
+  });
+  const { fields, append, remove } = useFieldArray({ control, name: 'questions' });
 
   const onSubmit = async (data) => {
     try {
-      await createQuiz(data)
-
+      await createQuiz(data);
       toast({
         title: 'Quiz Created',
         description: 'Your quiz has been created successfully.',
@@ -27,73 +28,50 @@ const CreateQuizForm = () => {
         description: 'Failed to create quiz. Please try again later.',
       });
     }
-
-
-  };
-
-  const onSubmitQuestion = async (quizId, data) => {
-    try {
-      await createQuizQuestion(quizId, data);
-      toast({
-        title: 'Question Added',
-        description: 'Your question was added successfully.',
-      });
-    } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Failed to create question. Please try again later'
-      })
-
-    }
-  }
-  const handleAddQuestion = () => {
-    setQuestions([...questions, { question: '', answers: ['', '', '', ''] }]);
-  };
-
-  const handleQuestionChange = (index, value) => {
-    const newQuestions = [...questions];
-    newQuestions[index].question = value;
-    setQuestions(newQuestions);
-  };
-
-  const handleAnswerChange = (questionIndex, answerIndex, value) => {
-    const newQuestions = [...questions];
-    newQuestions[questionIndex].answers[answerIndex] = value;
-    setQuestions(newQuestions);
   };
 
   return (
-    <div>
-      <h1>Create Quiz</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Input {...register('title')} placeholder="Title" />
-        <Input {...register('category')} placeholder="Category" />
-        <Select label="Type" {...register('type')}>
-          <SelectItem value="open">Open</SelectItem>
-          <SelectItem value="invitational">Invitational</SelectItem>
-        </Select>
-        <Button type="submit">Create Quiz</Button>
-      {questions.map((question, index) => (
-          <div key={index}>
-            <Input
-              placeholder={`Question ${index + 1}`}
-              value={question.question}
-              onChange={(e) => handleQuestionChange(index, e.target.value)}
-            />
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <label>
+        Title:
+        <Input {...register('title', { required: true })} />
+      </label>
+      <br />
+      {fields.map((question, index) => (
+        <div key={question.id}>
+          <label>
+            Question {index + 1}:
+            <Input {...register(`questions.${index}.question`, { required: true })} />
+          </label>
+          <br />
+          <label>
+            Answers:
             {question.answers.map((answer, answerIndex) => (
-              <Input
-                key={answerIndex}
-                placeholder={`Answer ${answerIndex + 1}`}
-                value={answer}
-                onChange={(e) => handleAnswerChange(index, answerIndex, e.target.value)}
-              />
+              <Input key={answer.id} {...register(`questions.${index}.answers.${answerIndex}`, { required: true })} />
             ))}
-          </div>
-        ))}
-        <Button type="button" onClick={handleAddQuestion}>Add Question</Button>
-        </form>        
-    </div>
+          </label>
+          <br />
+          <label>
+            Correct Answer:
+            <Select {...register(`questions.${index}.correctAnswer`)}>
+              {[0, 1, 2, 3].map((option) => (
+                <SelectItem key={option} value={option}>
+                  {option + 1}
+                </SelectItem>
+              ))}
+            </Select>
+          </label>
+          <Button type="button" onClick={() => remove(index)}>Remove Question</Button>
+          <br />
+        </div>
+      ))}
+      <Button type="button" onClick={() => append({ question: '', answers: ['', '', '', ''], correctAnswer: 0 })}>
+        Add Question
+      </Button>
+      <br />
+      <Button type="submit">Create Quiz</Button>
+    </form>
   );
-}
+};
 
 export default CreateQuizForm;
