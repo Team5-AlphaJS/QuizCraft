@@ -96,7 +96,7 @@ const CreateQuizForm = () => {
           Add Question
         </Button>
         <br />
-        <div className="flex justify-center pt-10">
+        <div className="flex justify-center pt-10 pb-20">
           <Button type="submit">Create Quiz</Button>
         </div>
       </form>
