@@ -67,7 +67,7 @@ function App() {
           <Route path='/educator-dashboard' element={<EducatorDashboard />} />
           <Route path='/student-dashboard' element={<StudentDashboard />} />
         </Routes>
-        <Footer />
+        {/* {<Footer />} */}
       </AuthContext.Provider>
     </>
   );

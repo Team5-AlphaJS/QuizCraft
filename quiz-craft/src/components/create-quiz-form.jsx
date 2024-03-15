@@ -1,16 +1,21 @@
+import { useState } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { createQuiz } from '/services/quiz.service';
 import { useToast } from './ui/use-toast';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Select, SelectItem } from '@nextui-org/react';
+import { v4 as uuidv4 } from 'uuid';
 
 const CreateQuizForm = () => {
   const { toast } = useToast();
   const { register, handleSubmit, control } = useForm({
     defaultValues: {
       title: '',
-      questions: [{ question: '', answers: ['', '', '', ''], correctAnswer: 0 }],
+      category: '',
+      type: 'open',
+      timer: 0,
+      questions: [{ id: uuidv4(), question: '', answers: ['', '', '', ''], correctAnswer: 0, points: 1 }],
     },
   });
   const { fields, append, remove } = useFieldArray({ control, name: 'questions' });
@@ -31,46 +36,71 @@ const CreateQuizForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label>
-        Title:
-        <Input {...register('title', { required: true })} />
-      </label>
-      <br />
-      {fields.map((question, index) => (
-        <div key={question.id}>
-          <label>
-            Question {index + 1}:
-            <Input {...register(`questions.${index}.question`, { required: true })} />
-          </label>
-          <br />
-          <label>
-            Answers:
-            {question.answers.map((answer, answerIndex) => (
-              <Input key={answer.id} {...register(`questions.${index}.answers.${answerIndex}`, { required: true })} />
-            ))}
-          </label>
-          <br />
-          <label>
-            Correct Answer:
-            <Select {...register(`questions.${index}.correctAnswer`)}>
-              {[0, 1, 2, 3].map((option) => (
-                <SelectItem key={option} value={option}>
-                  {option + 1}
-                </SelectItem>
+    <div className="flex-auto mx-20 px-10">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <label>
+          Title:
+          <Input {...register('title')} />
+        </label>
+        <br />
+        <label>
+          Category:
+          <Input {...register('category')} />
+        </label>
+        <br />
+        <label>
+          Type of Quiz:
+          <Select {...register('type')} defaultValue="open">
+            <SelectItem value="open">Open</SelectItem>
+            <SelectItem value="invitational">Invitational</SelectItem>
+          </Select>
+        </label>
+        <br />
+        <label>
+          Timer (in minutes):
+          <Input type="number" {...register('timer')} />
+        </label>
+        <br />
+        {fields.map((question, index) => (
+          <div key={question.id}>
+            <label>
+              Question {index + 1}:
+              <Input {...register(`questions.${index}.question`)} />
+            </label>
+            <br />
+            <label>
+              Points:
+              <Input type="number" {...register(`questions.${index}.points`)} />
+            </label>
+            <br />
+            <label>
+              Answers:
+              {question.answers.map((_, answerIndex) => (
+                <Input key={answerIndex} {...register(`questions.${index}.answers.${answerIndex}`)} />
               ))}
-            </Select>
-          </label>
-          <Button type="button" onClick={() => remove(index)}>Remove Question</Button>
-          <br />
+            </label>
+            <br />
+            <label>
+              Correct Answer:
+              <Select {...register(`questions.${index}.correctAnswer`)}>
+                {[0, 1, 2, 3].map((option) => (
+                  <SelectItem key={option} value={option}>{option + 1}</SelectItem>
+                ))}
+              </Select>
+            </label>
+            <Button type="button" onClick={() => remove(index)}>Remove Question</Button>
+            <br />
+          </div>
+        ))}
+        <Button type="button" onClick={() => append({ question: '', answers: ['', '', '', ''], correctAnswer: 0, points: 1 })}>
+          Add Question
+        </Button>
+        <br />
+        <div className="flex justify-center pt-10">
+          <Button type="submit">Create Quiz</Button>
         </div>
-      ))}
-      <Button type="button" onClick={() => append({ question: '', answers: ['', '', '', ''], correctAnswer: 0 })}>
-        Add Question
-      </Button>
-      <br />
-      <Button type="submit">Create Quiz</Button>
-    </form>
+      </form>
+    </div>
   );
 };
 
