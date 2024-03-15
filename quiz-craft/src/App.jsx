@@ -14,6 +14,7 @@ import NotFound from './components/NotFound/NotFound';
 import AuthGuard from '/hoc/AuthGuard';
 import UserProfile from './components/UserProfile/UserProfile';
 import LandingPage from './pages/LandingPage';
+import EducatorDashboard from './pages/EducatorDashboard';
 
 function App() {
   const [appState, setAppState] = useState({
@@ -85,6 +86,7 @@ function App() {
                   </AuthGuard>
                 }
               />
+              <Route path="/educator-dashboard" element={<EducatorDashboard />} />
               <Route path="*" element={<NotFound />} />
               {isAdmin() && (
                 <Route path="/admin" element={<AdminDashboard />} />
