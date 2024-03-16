@@ -122,13 +122,6 @@ export default function Header() {
                 </DropdownItem>
                 <DropdownItem
                   startContent={<X className={iconClasses} />}
-                  onClick={() => navigate('/educator-dashboard')}
-                >
-                  {/* {temporary item} */}
-                  Educator Dashboard
-                </DropdownItem>
-                <DropdownItem
-                  startContent={<X className={iconClasses} />}
                   onClick={logout}
                   color="danger"
                 >
@@ -169,6 +162,11 @@ export default function Header() {
         {userData && userData.role === 'admin' && (
           <NextUILink size="lg" className="font-medium">
             <Link to="/admin">Admin Dashboard</Link>
+          </NextUILink>
+        )}
+        {userData && userData.role === 'Educator' && (
+          <NextUILink size="lg" className="font-medium">
+            <Link to="/educator-dashboard">Educator Dashboard</Link>
           </NextUILink>
         )}
         {menuItems.map((item, index) => (
