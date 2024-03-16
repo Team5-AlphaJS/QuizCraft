@@ -1,4 +1,4 @@
-import { set, ref } from 'firebase/database';
+import { set, ref, get, query,orderByChild, equalTo } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
 export const createQuiz = (quizData) => {
@@ -6,3 +6,14 @@ export const createQuiz = (quizData) => {
     ...quizData
   });
 };
+
+// Function to retrieve quizzes by owner's ID
+export const getQuizzesByOwner = async (ownerId) => {
+  return get(query(ref(db, 'quizzes'), orderByChild('ownerId'), equalTo(ownerId)));
+};
+
+// Function to get all quizzes from Firebase Realtime Database
+export const getAllQuizzes = async () => {
+  return get(query(ref(db, 'quizzes')));
+};
+

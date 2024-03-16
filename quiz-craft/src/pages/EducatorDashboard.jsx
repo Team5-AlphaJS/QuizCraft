@@ -1,18 +1,26 @@
 import { useState } from 'react';
 import { Accordion, AccordionItem, Button } from '@nextui-org/react';
 import CreateQuizForm from '@/components/create-quiz-form';
+import QuizManagement from '@/components/EducatorDashboard/QuizManagement';
 
 const EducatorDashboard = () => {
   const [selectedMenu, setSelectedMenu] = useState('quizzes'); // Default to 'quizzes'
   const [showCreateQuizForm, setShowCreateQuizForm] = useState(false);
-  
+  const [showQuizManagement, setShowQuizManagement] = useState(false);
+
   const handleMenuClick = (menu) => {
     setSelectedMenu(menu);
   };
 
   const handleCreateQuizClick = () => {
+    setShowQuizManagement(false);
     setShowCreateQuizForm(true);
   };
+
+  const handleQuizManagementClick = () => {
+    setShowCreateQuizForm(false);
+    setShowQuizManagement(true);
+  }
   return (
     <div className="flex h-screen">
       {/* Left menu */}
@@ -24,6 +32,9 @@ const EducatorDashboard = () => {
             </Button>
             <Button ghost onClick={handleCreateQuizClick} block>
               Create New Quiz
+            </Button>
+            <Button ghost onClick={handleQuizManagementClick} block>
+              Quiz Management
             </Button>
             {/* Add more buttons or content related to quizzes */}
           </AccordionItem>
@@ -76,6 +87,7 @@ const EducatorDashboard = () => {
           </div>
         )}
         {selectedMenu === 'quizzes' && showCreateQuizForm && <CreateQuizForm />}
+        {selectedMenu === 'quizzes' && showQuizManagement && <QuizManagement />}
         {/* Default content */}
         {/* Render default content */}
       </div>

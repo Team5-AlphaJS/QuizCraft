@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { createQuiz } from '/services/quiz.service';
 import { useToast } from './ui/use-toast';
@@ -6,12 +5,17 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Select, SelectItem } from '@nextui-org/react';
 import { v4 as uuidv4 } from 'uuid';
+import { useContext } from 'react';
+import { AuthContext } from '/context/AuthContext';
 
 const CreateQuizForm = () => {
+  const { userData } = useContext(AuthContext);
   const { toast } = useToast();
   const { register, handleSubmit, control } = useForm({
     defaultValues: {
+      owner: userData.uid,
       title: '',
+      id: uuidv4(),
       category: '',
       type: 'open',
       timer: 0,
