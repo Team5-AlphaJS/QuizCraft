@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useToast } from '../ui/use-toast';
 import { Input as NextUIInput } from '@nextui-org/react';
 import { Button } from '../ui/button';
+import { Button as NextUIButton } from '@nextui-org/react';
 import { useContext, useState } from 'react';
 import { AuthContext } from '/context/AuthContext';
 import { getUserByUsername } from '/services/users.service';
@@ -19,6 +20,7 @@ export default function Register() {
   const navigate = useNavigate();
   const {
     register,
+    watch,
     handleSubmit,
     formState: { errors },
   } = useForm();
@@ -26,6 +28,7 @@ export default function Register() {
   const iconClasses =
     'text-2xl text-default-400 pointer-events-none flex-shrink-0';
   const [isVisible, setIsVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
@@ -36,6 +39,7 @@ export default function Register() {
 
   const onSubmit = async (data) => {
     try {
+      setIsLoading(true);
       const existingUsernameSnapshot = await getUserByUsername(data.username);
 
       if (existingUsernameSnapshot.exists()) {
@@ -73,17 +77,19 @@ export default function Register() {
         description: 'You have successfully registered.',
       });
 
-      navigate('/');
+      navigate('/home');
     } catch (error) {
       toast({
         title: 'Registration Error',
         description: error.message,
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className='mb-20 flex items-center justify-center'>
+    <div className="mb-20 flex items-center justify-center">
       <div className="w-1/4 p-5 mt-10 border-2 border-primary">
         <h1 className={'text-xl font-semibold text-center'}>Register</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -164,7 +170,7 @@ export default function Register() {
           )}
 
           <Select
-            label="Select an role"
+            label="Select a role"
             variant="underlined"
             {...register('role', {
               required: 'Role is required',
@@ -209,12 +215,20 @@ export default function Register() {
             endContent={<MailIcon className={iconClasses} />}
             variant="underlined"
             type="email"
-            placeholder="Email"
+            placeholder={
+              watch('role') === 'Educator' ? 'Educator Email' : 'Email'
+            }
             {...register('email', {
               required: 'Email address is required',
               pattern: {
-                value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9]+\.[A-Za-z]+$/,
-                message: 'Email address is not valid',
+                value:
+                  watch('role') === 'Educator'
+                    ? /^[a-zA-Z0-9_.+-]+@edu.mon.bg$/
+                    : /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9]+\.[A-Za-z]+$/,
+                message:
+                  watch('role') === 'Educator'
+                    ? 'Invalid educator email format (must end with @edu.mon.bg)'
+                    : 'Email address is not valid',
               },
             })}
           />
@@ -247,7 +261,9 @@ export default function Register() {
           <Button className="mt-4 mr-2" onClick={() => navigate('/')}>
             Back
           </Button>
-          <Button type="submit">Register</Button>
+          <NextUIButton className="font-semibold" color="primary" type="submit" isLoading={isLoading}>
+            Register
+          </NextUIButton>
         </form>
       </div>
     </div>

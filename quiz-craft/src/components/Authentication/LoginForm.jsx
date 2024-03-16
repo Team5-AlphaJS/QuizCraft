@@ -47,7 +47,7 @@ export function LoginForm({ isOpen, onOpenChange, onClose }) {
         title: 'Log In Successful',
         description: 'You have successfully logged in.',
       });
-      navigate('/');
+      navigate('/home');
       onClose();
     } catch (error) {
       toast({
@@ -150,7 +150,10 @@ export function LoginForm({ isOpen, onOpenChange, onClose }) {
                   <p>
                     No account?{'  '}
                     <NextUILink
-                      onClick={() => navigate('/register')}
+                      onClick={() => {
+                        navigate('/register');
+                        onClose();
+                      }}
                       color="primary"
                       size="sm"
                       className={'cursor-pointer'}

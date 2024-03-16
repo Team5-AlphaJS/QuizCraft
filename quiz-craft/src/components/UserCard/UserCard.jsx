@@ -1,14 +1,18 @@
 import { Avatar } from "@nextui-org/react";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 const UserCard = ({ user }) => {
+    const navigate = useNavigate();
+
     return (
         <div className="flex h-32 my-2">
             <div className="user-photo w-1/4 border-r-2">
                 <Avatar
                     name={user?.username.slice(0, 1)}
                     src={user?.photo}
-                    className="cursor-pointer w-36 h-full text-large rounded"
+                    className="cursor-pointer ms-14 mt-6 w-20 h-20 text-large"
+                    onClick={() => navigate(`/user/${user?.uid}`)}
                 />
             </div>
             <div className="user-info flex flex-col flex-start space-y-0 w-3/4 ">

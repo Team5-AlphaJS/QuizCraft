@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.max-w-\[1024px\] {
+  max-width: 1024vmax;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

@@ -7,7 +7,7 @@ const AdminDashboard = () => {
 
     return (
         <div className="flex flex-col w-full max-w-l items-center space-x-2">
-            <h1 className="mb-2 font-semibold">Welcome to the Admin Dashboard!</h1>
+            <h1 className="mb-2 font-semibold text-xl">Welcome to the Admin Dashboard!</h1>
             <div className="flex w-full max-w-sm items-center space-x-2 justify-center mb-2">
                 <Button onClick={() => setBoardOf('users')}>Users</Button>
                 <Button onClick={() => setBoardOf('quizzes')}>Quizzes</Button>

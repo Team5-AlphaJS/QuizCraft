@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import LandingPage from './pages/LandingPage';
+import Home from './pages/Home';
 import Register from './components/Authentication/Register';
 import { useState, useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -12,6 +12,10 @@ import Header from './components/Header/Header';
 import About from './components/About/About';
 import NotFound from './components/NotFound/NotFound';
 import Quizzes from './pages/Quizzes';
+import AuthGuard from '/hoc/AuthGuard';
+import UserProfile from './components/UserProfile/UserProfile';
+import LandingPage from './pages/LandingPage';
+import EducatorDashboard from './pages/EducatorDashboard';
 
 function App() {
   const [appState, setAppState] = useState({
@@ -39,31 +43,61 @@ function App() {
     });
   }, [user]);
 
-  // const updateUserData = (newUserData) => {
-  //   setAppState((prevState) => ({
-  //     ...prevState,
-  //     userData: newUserData,
-  //   }));
-  // };
+  const updateUserData = (newUserData) => {
+    setAppState((prevState) => ({
+      ...prevState,
+      userData: newUserData,
+    }));
+  };
 
-  // const isAdmin = () => {
-  //   return appState.userData?.role === 'admin';
-  // }
+  const isAdmin = () => {
+    return appState.userData?.role === 'admin';
+  };
 
   return (
     <>
-      <AuthContext.Provider value={{ ...appState, setContext: setAppState }}>
-        <Header />
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/quizzes" element={<Quizzes />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path='/about' element={<About />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        <Footer />
-      </AuthContext.Provider>
+      {appState.user === null ? (
+        <>
+          <Header />
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/about" element={<About />} />
+          </Routes>
+          <Footer />
+        </>
+      ) : (
+        <>
+          <AuthContext.Provider
+            value={{ ...appState, setContext: setAppState }}
+          >
+            <Header />
+            <Routes>
+              <Route path="/home" element={<Home />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/quizzes" element={<Quizzes />} />
+              <Route
+                path="/user/:id"
+                element={
+                  <AuthGuard>
+                    <UserProfile
+                      currentUser={appState.userData}
+                      updateUserData={updateUserData}
+                    />
+                  </AuthGuard>
+                }
+              />
+              <Route path="/educator-dashboard" element={<EducatorDashboard />} />
+              <Route path="*" element={<NotFound />} />
+              {isAdmin() && (
+                <Route path="/admin" element={<AdminDashboard />} />
+              )}
+            </Routes>
+            <Footer />
+          </AuthContext.Provider>
+        </>
+      )}
     </>
   );
 }
