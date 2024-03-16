@@ -82,11 +82,11 @@ export default function Header() {
           </Link>
         ) : (
           <Link
-          to="/home"
-          className="px-2 cursor-pointer text-primary text-xl font-semibold"
-        >
-          Quizzify
-        </Link>
+            to="/home"
+            className="px-2 cursor-pointer text-primary text-xl font-semibold"
+          >
+            Quizzify
+          </Link>
         )}
       </NavbarBrand>
 
@@ -117,6 +117,13 @@ export default function Header() {
                   onClick={() => navigate(`/user/${user?.uid}`)}
                 >
                   User Profile
+                </DropdownItem>
+                <DropdownItem
+                  startContent={<X className={iconClasses} />}
+                  onClick={() => navigate('/educator-dashboard')}
+                >
+                  {/* {temporary item} */}
+                  Educator Dashboard
                 </DropdownItem>
                 <DropdownItem
                   startContent={<X className={iconClasses} />}
