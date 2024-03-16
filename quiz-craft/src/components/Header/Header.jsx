@@ -68,9 +68,9 @@ export default function Header() {
 
   return (
     <motion.nav
-    initial={{ opacity: 0, y: -50 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6 }}
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
     >
       <Navbar
         className={'bg-slate-900'}
@@ -145,14 +145,16 @@ export default function Header() {
           </div>
         ) : (
           <>
-            <NextUIButton
-              onPress={onOpen}
-              color="primary"
-              className="px-8 mr-2"
-            >
-              {' '}
-              Log In
-            </NextUIButton>
+            <motion.button whileHover={{ scale: 1.1 }}>
+              <NextUIButton
+                onPress={onOpen}
+                color="primary"
+                className="px-8 mr-2"
+              >
+                {' '}
+                Log In
+              </NextUIButton>
+            </motion.button>
 
             <LoginForm
               isOpen={isOpen}
@@ -160,15 +162,18 @@ export default function Header() {
               onClose={onClose}
             />
 
-            <NextUIButton
-              color="primary"
-              className="px-8 mr-2"
-              onClick={() => navigate('/register')}
-            >
-              Register
-            </NextUIButton>
+            <motion.button whileHover={{ scale: 1.1 }}>
+              <NextUIButton
+                color="primary"
+                className="px-8 mr-2"
+                onClick={() => navigate('/register')}
+              >
+                Register
+              </NextUIButton>
+            </motion.button>
           </>
         )}
+        
         <ModeToggle />
 
         <NavbarMenu>
