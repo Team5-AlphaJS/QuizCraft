@@ -7,6 +7,7 @@ const QuizManagement = () => {
     <div>
       <h2>Quiz Management</h2>
       <QuizList />
+
     </div>
   );
 };

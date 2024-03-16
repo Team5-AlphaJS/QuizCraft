@@ -1,4 +1,4 @@
-import { set, ref, get, query,orderByChild, equalTo } from 'firebase/database';
+import { set, ref, get, query,orderByChild, equalTo, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
 export const createQuiz = (quizData) => {
@@ -17,3 +17,10 @@ export const getAllQuizzes = async () => {
   return get(query(ref(db, 'quizzes')));
 };
 
+export const getQuizData = (id) => {
+  return get(query(ref(db, 'quizzes'), orderByChild('id'), equalTo(id)));
+};
+
+export const editQuiz = (data) => {
+  return update(ref(db, `quizzes/${data.title}`), data);
+}
