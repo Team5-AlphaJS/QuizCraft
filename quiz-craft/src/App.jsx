@@ -11,6 +11,7 @@ import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
 import About from './components/About/About';
 import NotFound from './components/NotFound/NotFound';
+import Quizzes from './pages/Quizzes';
 
 function App() {
   const [appState, setAppState] = useState({
@@ -56,6 +57,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/quizzes" element={<Quizzes />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path='/about' element={<About />} />
           <Route path="*" element={<NotFound />} />

@@ -8,7 +8,7 @@ const UserCard = ({ user }) => {
                 <Avatar
                     name={user?.username.slice(0, 1)}
                     src={user?.photo}
-                    className="cursor-pointer ms-14 mt-6 w-20 h-20 text-large"
+                    className="cursor-pointer w-36 h-full text-large rounded"
                 />
             </div>
             <div className="user-info flex flex-col flex-start space-y-0 w-3/4 ">
