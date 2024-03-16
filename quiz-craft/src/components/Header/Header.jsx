@@ -30,6 +30,7 @@ import { logoutUser } from '/services/auth.service';
 import { useDisclosure } from '@nextui-org/react';
 import { LoginForm } from '../Authentication/LoginForm';
 import { User, X } from 'lucide-react';
+import { motion } from 'framer-motion';
 import logo from '../../assets/logo.svg';
 
 export default function Header() {
@@ -66,33 +67,41 @@ export default function Header() {
   };
 
   return (
-    <Navbar
-      className={'bg-slate-900'}
-      shouldHideOnScroll
-      isBordered
-      onMenuOpenChange={setIsMenuOpen}
+    <motion.nav
+    initial={{ opacity: 0, y: -50 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6 }}
     >
-      <NavbarMenuToggle aria-label={isMenuOpen ? 'Open Menu' : 'Close Menu'} />
-      <NavbarBrand>
-        <img width={'55px'} src={logo} />
-        {user === null ? (
-          <Link
-            to="/"
-            className="ml-[-3px] cursor-pointer text-primary text-xl font-semibold"
-          >
-            Quizzify
-          </Link>
-        ) : (
-          <Link
-            to="/home"
-            className="ml-[-3px] cursor-pointer text-primary text-xl font-semibold"
-          >
-            Quizzify
-          </Link>
-        )}
-      </NavbarBrand>
+      <Navbar
+        className={'bg-slate-900'}
+        shouldHideOnScroll
+        isBordered
+        isMenuOpen={isMenuOpen}
+        onMenuOpenChange={setIsMenuOpen}
+      >
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? 'Open Menu' : 'Close Menu'}
+        />
+        <NavbarBrand>
+          <img width={'55px'} src={logo} />
+          {user === null ? (
+            <Link
+              to="/"
+              className="ml-[-3px] cursor-pointer text-primary text-xl font-semibold"
+            >
+              Quizzify
+            </Link>
+          ) : (
+            <Link
+              to="/home"
+              className="ml-[-3px] cursor-pointer text-primary text-xl font-semibold"
+            >
+              Quizzify
+            </Link>
+          )}
+        </NavbarBrand>
 
-      {/* <NavbarContent className="flex" justify="center">
+        {/* <NavbarContent className="flex" justify="center">
         <NavbarItem>
           <NextUIButton color="primary">Random free quiz</NextUIButton>
         </NavbarItem>
@@ -101,86 +110,98 @@ export default function Header() {
         </NavbarItem>
       </NavbarContent> */}
 
-      {user ? (
-        <div className="flex gap-4 items-center">
-          {userData && `Welcome, ${userData.username}`}
-          <div className="flex gap-1 items-center">
-            <Dropdown>
-              <DropdownTrigger>
-                <Avatar
-                  name={userData?.username.slice(0, 1)}
-                  src={userData?.photo}
-                  className="cursor-pointer"
-                />
-              </DropdownTrigger>
-              <DropdownMenu>
-                <DropdownItem
-                  startContent={<User className={iconClasses} />}
-                  onClick={() => navigate(`/user/${user?.uid}`)}
-                >
-                  User Profile
-                </DropdownItem>
-                <DropdownItem
-                  startContent={<X className={iconClasses} />}
-                  onClick={logout}
-                  color="danger"
-                >
-                  Log Out
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-            <Chip size="sm" className="ml-1">
-              {userData?.role}
-            </Chip>
+        {user ? (
+          <div className="flex gap-4 items-center">
+            {userData && `Welcome, ${userData.username}`}
+            <div className="flex gap-1 items-center">
+              <Dropdown>
+                <DropdownTrigger>
+                  <Avatar
+                    name={userData?.username.slice(0, 1)}
+                    src={userData?.photo}
+                    className="cursor-pointer"
+                  />
+                </DropdownTrigger>
+                <DropdownMenu>
+                  <DropdownItem
+                    startContent={<User className={iconClasses} />}
+                    onClick={() => navigate(`/user/${user?.uid}`)}
+                  >
+                    User Profile
+                  </DropdownItem>
+                  <DropdownItem
+                    startContent={<X className={iconClasses} />}
+                    onClick={logout}
+                    color="danger"
+                  >
+                    Log Out
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+              <Chip size="sm" className="ml-1">
+                {userData?.role}
+              </Chip>
+            </div>
           </div>
-        </div>
-      ) : (
-        <>
-          <NextUIButton onPress={onOpen} color="primary" className="px-8 mr-2">
-            {' '}
-            Log In
-          </NextUIButton>
-
-          <LoginForm
-            isOpen={isOpen}
-            onOpenChange={onOpenChange}
-            onClose={onClose}
-          />
-
-          <NextUIButton
-            color="primary"
-            className="px-8 mr-2"
-            onClick={() => navigate('/register')}
-          >
-            Register
-          </NextUIButton>
-        </>
-      )}
-      <ModeToggle />
-
-      <NavbarMenu>
-        {userData && userData.role === 'admin' && (
-          <NextUILink size="lg" className="font-medium">
-            <Link to="/admin">Admin Dashboard</Link>
-          </NextUILink>
-        )}
-        {userData && userData.role === 'Educator' && (
-          <NextUILink size="lg" className="font-medium">
-            <Link to="/educator-dashboard">Educator Dashboard</Link>
-          </NextUILink>
-        )}
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
-            <NextUILink
-              color={index === menuItems.length - 1 ? 'danger' : 'foreground'}
-              href="#"
-              size="lg"
+        ) : (
+          <>
+            <NextUIButton
+              onPress={onOpen}
+              color="primary"
+              className="px-8 mr-2"
             >
-              {item}
+              {' '}
+              Log In
+            </NextUIButton>
+
+            <LoginForm
+              isOpen={isOpen}
+              onOpenChange={onOpenChange}
+              onClose={onClose}
+            />
+
+            <NextUIButton
+              color="primary"
+              className="px-8 mr-2"
+              onClick={() => navigate('/register')}
+            >
+              Register
+            </NextUIButton>
+          </>
+        )}
+        <ModeToggle />
+
+        <NavbarMenu>
+          {userData && userData.role === 'admin' && (
+            <NextUILink size="lg" className="font-medium">
+              <Link to="/admin" onClick={() => setIsMenuOpen(false)}>
+                Admin Dashboard
+              </Link>
             </NextUILink>
-          </NavbarMenuItem>
-        ))}
-      </NavbarMenu>
-    </Navbar>
+          )}
+          {userData && userData.role === 'Educator' && (
+            <NextUILink size="lg" className="font-medium">
+              <Link
+                to="/educator-dashboard"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Educator Dashboard
+              </Link>
+            </NextUILink>
+          )}
+          {menuItems.map((item, index) => (
+            <NavbarMenuItem key={`${item}-${index}`}>
+              <NextUILink
+                color={index === menuItems.length - 1 ? 'danger' : 'foreground'}
+                href="#"
+                size="lg"
+              >
+                {item}
+              </NextUILink>
+            </NavbarMenuItem>
+          ))}
+        </NavbarMenu>
+      </Navbar>
+    </motion.nav>
   );
 }

@@ -1,6 +1,13 @@
+import { motion } from "framer-motion";
+
 export default function LandingPage() {
   return (
-    <div className="mt-5 flex flex-col items-center space-y-4">
+    <motion.div 
+      className="mt-5 flex flex-col items-center space-y-4"
+      initial={{ opacity: 0, y: -50, scale: 0.5 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.5, type: 'just' }}
+    >
       <h1 className="text-4xl font-semibold">Welcome to Quizzify</h1>
       <p className="text-lg">
         Quizzify is a web application that allows users to create, share, and
@@ -12,6 +19,6 @@ export default function LandingPage() {
         user-friendly and accessible to all users.
       </p>
       <p className="text-lg">Have fun! 😊</p>
-    </div>
+    </motion.div>
   );
 }
