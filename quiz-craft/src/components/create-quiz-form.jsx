@@ -51,8 +51,8 @@ const CreateQuizForm = () => {
         <label>
           Type of Quiz:
           <Select {...register('type')} defaultValue="open">
-            <SelectItem value="open">Open</SelectItem>
-            <SelectItem value="invitational">Invitational</SelectItem>
+            <SelectItem textValue="open">Open</SelectItem>
+            <SelectItem textValue="invitational">Invitational</SelectItem>
           </Select>
         </label>
         <br />
