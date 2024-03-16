@@ -34,7 +34,7 @@ export default function Register() {
 
   const roles = [
     { label: 'Student', value: 'Student' },
-    { label: 'Educator', value: 'Educator' },
+    { label: 'Educator', value: 'Educator' }
   ];
 
   const onSubmit = async (data) => {
