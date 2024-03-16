@@ -1,7 +1,10 @@
+import logo from '../../assets/logo.svg';
+
 export default function About() {
   return (
     <div className="mt-5 flex flex-col items-center space-y-4">
-      <h1 className="text-4xl font-semibold">About Quizzify</h1>
+      <h1 className="text-4xl font-semibold">About the app</h1>
+      <h1 className="text-4xl font-semibold"><img className='inline' width={'50px'} src={logo} />Quizzify</h1>
       <p className="text-lg">
         Quizzify is a web application that allows users to create, share, and
         take quizzes. It was created by Team 4.

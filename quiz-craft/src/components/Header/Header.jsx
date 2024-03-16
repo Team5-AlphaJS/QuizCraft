@@ -30,6 +30,7 @@ import { logoutUser } from '/services/auth.service';
 import { useDisclosure } from '@nextui-org/react';
 import { LoginForm } from '../Authentication/LoginForm';
 import { User, X } from 'lucide-react';
+import logo from '../../assets/logo.svg';
 
 export default function Header() {
   const { user, userData, setContext } = useContext(AuthContext);
@@ -73,17 +74,18 @@ export default function Header() {
     >
       <NavbarMenuToggle aria-label={isMenuOpen ? 'Open Menu' : 'Close Menu'} />
       <NavbarBrand>
+        <img width={'55px'} src={logo} />
         {user === null ? (
           <Link
             to="/"
-            className="px-2 cursor-pointer text-primary text-xl font-semibold"
+            className="ml-[-3px] cursor-pointer text-primary text-xl font-semibold"
           >
             Quizzify
           </Link>
         ) : (
           <Link
             to="/home"
-            className="px-2 cursor-pointer text-primary text-xl font-semibold"
+            className="ml-[-3px] cursor-pointer text-primary text-xl font-semibold"
           >
             Quizzify
           </Link>
