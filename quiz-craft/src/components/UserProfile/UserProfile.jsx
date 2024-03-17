@@ -104,7 +104,7 @@ export default function UserProfile({ currentUser, updateUserData }) {
               <Button
                 isLoading={isUploading}
                 variant="ghost"
-                endContent={<Image />}
+                startContent={<Image />}
                 onClick={handleAvatarUpload}
               >
                 Upload Avatar
@@ -115,7 +115,7 @@ export default function UserProfile({ currentUser, updateUserData }) {
                 color="danger"
                 variant="ghost"
                 onClick={handleAvatarRemove}
-                endContent={<Trash />}
+                startContent={<Trash />}
               >
                 Remove Avatar
               </Button>
