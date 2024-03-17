@@ -89,6 +89,6 @@ const CategorySelect = ({ quiz, setQuiz }) => {
 CategorySelect.propTypes = {
     quiz: PropTypes.object.isRequired,
     setQuiz: PropTypes.func.isRequired
-}
+};
 
 export default CategorySelect;

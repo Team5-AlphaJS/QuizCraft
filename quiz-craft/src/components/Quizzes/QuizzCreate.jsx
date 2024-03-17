@@ -16,6 +16,7 @@ import { Toaster } from "../ui/toaster";
 import { useToast } from "../ui/use-toast";
 import { AuthContext } from "../../../context/AuthContext";
 import { createQuiz, inviteStudent } from "../../../services/quiz.service";
+import OrderQuestions from "../OrderQuestions/OrderQuestions";
 
 
 
@@ -29,6 +30,8 @@ const QuizCreate = ({ quizzes, setQuizzes }) => {
         timer: 0,
         dueDate: '',
         author: userData.username,
+        orderQuestions: 'ordered',
+        orderAnswears: 'ordered'
     });
 
     const { toast } = useToast();
@@ -96,15 +99,17 @@ const QuizCreate = ({ quizzes, setQuizzes }) => {
                 title: `Quiz created successfuly`,
             });
             // setQuizzes([...quizzes, quiz]);
-            // setQuiz({
-            //     title: '',
-            //     category: '',
-            //     openOrInvite: '',
-            //     questions: {},
-            //     timer: 0,
-            //     dueDate: '',
-            //     author: userData.username,
-            // });
+            setQuiz({
+                title: '',
+                category: '',
+                openOrInvite: '',
+                questions: {},
+                timer: 0,
+                dueDate: '',
+                author: userData.username,
+                orderQuestions: 'ordered',
+                orderAnswears: 'ordered'
+            });
         }
     };
 
@@ -125,6 +130,7 @@ const QuizCreate = ({ quizzes, setQuizzes }) => {
                 <OpenInvite quiz={quiz} setQuiz={setQuiz} />{" "}
                 <SetTimer quiz={quiz} setQuiz={setQuiz} /> {" "}
                 <SetDate quiz={quiz} setQuiz={setQuiz} />
+                <OrderQuestions quiz={quiz} setQuiz={setQuiz} />
             </div>
             <div className="flex">
                 <div className="w-full mr-2">
