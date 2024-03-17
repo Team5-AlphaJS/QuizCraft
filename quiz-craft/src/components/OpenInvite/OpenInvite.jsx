@@ -48,7 +48,7 @@ const OpenInvite = ({ quiz, setQuiz }) => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="outline" className="pt-1 ml-1">Availability</Button>
+                <Button variant="link" className="pt-1 ml-1">Availability</Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>

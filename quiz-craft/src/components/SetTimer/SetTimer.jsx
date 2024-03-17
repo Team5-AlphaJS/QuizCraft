@@ -16,7 +16,7 @@ const SetTimer = ({ quiz, setQuiz }) => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="outline" className="pt-1 ml-1">Timer</Button>
+                <Button variant="link" className="pt-1 ml-1">Timer</Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>

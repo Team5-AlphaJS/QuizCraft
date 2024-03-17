@@ -16,7 +16,7 @@ const Quizzes = () => {
     return (
         <div>
             <p>Quizzes page</p>
-            {userData && userData.role === 'educator'
+            {userData && userData.role === 'ducator'
                 ? (
                     <div className="flex ml-5">
                         <div className="operations flex flex-col mr-2 mt-3">

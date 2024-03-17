@@ -44,13 +44,17 @@ const SimpleAnswear = ({ answearId, question, setQuestion }) => {
     }
 
     return (
-        <div className="answer flex mt-2 border-b-2 mt-3">
-            <p className="w-2/3 pl-1 pb-1">{question.answears[answearId]}</p>
-            {question.type === 'single' && Object.keys(question.correct).length === 0 && <Button className="h-6 mr-1" onClick={onMarkCorrect}>Mark as correct</Button>}
-            {question.type === 'multi' && !Object.keys(question.correct).includes(answearId) && <Button className="h-6 mr-1" onClick={onMarkCorrect}>Mark as correct</Button>}
-            {question.correct && Object.keys(question.correct).includes(answearId) && <Button className="h-6 mr-1" onClick={onMarkIncorrect}>Mark as incorrect</Button>}
-            <Button className="h-6 bg-sky-500 mr-1" onClick={editAnswer}>Edit</Button>
-            <Button className="h-6 bg-red-500" onClick={deleteAnswear}>Delete</Button>
+        <div className="answer flex mt-2 border-b-2 mt-3 ml-1 mr-1 justify-between">
+            <div className="flex w-full">
+                <p className="w-2/3 grow pl-1 pb-1">{question.answears[answearId]}</p>
+                {question.type === 'single' && Object.keys(question.correct).length === 0 && <Button variant="link" className="h-6 mr-1 place-self-end" onClick={onMarkCorrect}>Mark as correct</Button>}
+                {question.type === 'multi' && !Object.keys(question.correct).includes(answearId) && <Button variant="link" className="h-6 mr-1 place-self-end" onClick={onMarkCorrect}>Mark as correct</Button>}
+                {question.correct && Object.keys(question.correct).includes(answearId) && <Button variant="link" className="h-6 mr-1 place-self-end" onClick={onMarkIncorrect}>Mark as incorrect</Button>}
+            </div>
+            <div className="flex place-self-end">
+                <Button className="h-6 mr-1" variant="ghost" onClick={editAnswer}>Edit</Button>
+                <Button className="h-6" variant="ghost" onClick={deleteAnswear}>Delete</Button>
+            </div>
         </div>
     );
 };

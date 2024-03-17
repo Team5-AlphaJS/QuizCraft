@@ -7,10 +7,12 @@ import AnswearCreateEdit from "../AnswerCreateEdit/AnswearCreateEdit";
 import SimpleAnswear from "../SimpleAnswer/SimpleAsnwear";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-
+import { ScrollArea } from "../ui/scroll-area";
+import { Toaster } from "../ui/toaster";
+import { useToast } from "../ui/use-toast";
 
 const QuestionCreateEdit = ({ quiz, setQuiz, onEdit, setOnEdit, questionId }) => {
-
+    const { toast } = useToast();
     const [question, setQuestion] = useState({
         question: '',
         type: 'single',
@@ -26,21 +28,32 @@ const QuestionCreateEdit = ({ quiz, setQuiz, onEdit, setOnEdit, questionId }) =>
     }, []);
 
     const onAddQuestion = () => {
-        if (question.question.length < 12) {
-            console.log('Question must be at least 12 characters long!');
+        if (!question.question.length) {
+            toast({
+                title: "Invalid question",
+                description: 'Question cannot be emty!'
+            });
             return;
         }
         if (!Object.keys(question.answears).length || Object.keys(question.answears).length < 2) {
-            console.log('Question must have at least two answers!');
+            toast({
+                title: "Invalid amount of naswers",
+                description: 'Question must have at least two answers!'
+            });
             return;
         }
         if (question.type === 'single' && Object.keys(question.correct).length === 0) {
-            console.log('You must select one correct answer!');
+            toast({
+                title: "No correct answers selected!",
+                description: 'You must select one correct answer!'
+            });
             return;
         }
         if (question.type === 'multi' && Object.keys(question.correct).length === 0) {
-            console.log('You must select at least one correct answer!');
-            return;
+            toast({
+                title: "No correct answers selected!",
+                description: 'You must select at least one correct answer!'
+            });
         }
 
         if (!onEdit) {
@@ -61,7 +74,7 @@ const QuestionCreateEdit = ({ quiz, setQuiz, onEdit, setOnEdit, questionId }) =>
     };
 
     return (
-        <div className="create-question mt-3 ml-1 flex flex-col border-b-3">
+        <div className="create-question mt-3 ml-1 flex flex-col border-2 rounded-md">
             <Input placeholder="Enter question here" value={question.question} onChange={(e) => setQuestion({ ...question, question: e.target.value })} /><br />
             <RadioGroup defaultValue={question.type} className="flex justify-start ">
                 <p className="pl-3 mt-2 mb-2">Choose type of question</p>
@@ -81,16 +94,19 @@ const QuestionCreateEdit = ({ quiz, setQuiz, onEdit, setOnEdit, questionId }) =>
             </RadioGroup>
             <AnswearCreateEdit question={question} setQuestion={setQuestion} />
             {Object.keys(question.answears).length > 0
-                && Object.keys(question.answears)
-                    .map(answearId =>
-                        <SimpleAnswear
-                            key={answearId}
-                            answearId={answearId}
-                            question={question}
-                            setQuestion={setQuestion} />
-                    )
+                && <ScrollArea className="h-24">
+                    {Object.keys(question.answears)
+                        .map(answearId =>
+                            <SimpleAnswear
+                                key={answearId}
+                                answearId={answearId}
+                                question={question}
+                                setQuestion={setQuestion} />
+                        )}
+                </ScrollArea>
             }
-            <Button className=" mt-2 mb-2 w-1/6 place-self-end" onClick={onAddQuestion}>{onEdit ? "Save" : "Add"} question</Button>
+            <Button className="mt-2 place-self-end border-2 self-end" variant="ghost" onClick={onAddQuestion}>{onEdit ? "Save" : "Add"} question</Button>
+            <Toaster />
         </div>
     );
 };

@@ -55,7 +55,7 @@ const CategorySelect = ({ quiz, setQuiz }) => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="outline" className="pt-1 ml-1">Category</Button>
+                <Button variant="link" className="pt-1 ml-1">Category</Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>

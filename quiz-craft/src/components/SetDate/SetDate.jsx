@@ -12,7 +12,7 @@ import { Calendar } from "../ui/calendar"
 import { useState } from "react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { useToast } from "../ui/use-toast"
+import { useToast } from "../ui/use-toast";
 import { Toaster } from "../ui/toaster";
 
 
@@ -20,7 +20,14 @@ const SetDate = ({ quiz, setQuiz }) => {
     const [date, setDate] = useState(new Date());
     const { toast } = useToast();
     const [hour, setHour] = useState('');
-
+    const options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
+    };
     const setNewHour = () => {
 
         const [currHour, minutes] = hour.split(':').map(Number);
@@ -42,7 +49,8 @@ const SetDate = ({ quiz, setQuiz }) => {
     };
 
     const onSetEndDate = () => {
-        setQuiz({ ...quiz, dueDate: date });
+        const toSeconds = new Date(date).getTime();
+        setQuiz({ ...quiz, dueDate: toSeconds });
         toast({
             title: "End date is set.",
             description: `Date set to ${date}`
@@ -52,7 +60,7 @@ const SetDate = ({ quiz, setQuiz }) => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="outline" className="pt-1 ml-1">End Date</Button>
+                <Button variant="link" className="pt-1 ml-1">End Date</Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
@@ -85,7 +93,7 @@ const SetDate = ({ quiz, setQuiz }) => {
                     </div>
                 </div>
             </DialogContent>
-            <Toaster/>
+            <Toaster />
         </Dialog>
     );
 };

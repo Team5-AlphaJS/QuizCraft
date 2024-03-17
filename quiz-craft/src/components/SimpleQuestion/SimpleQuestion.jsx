@@ -25,8 +25,8 @@ const SimpleQuestion = ({ questionId, quiz, setQuiz }) => {
                 </div>
             </div>
             <div className="flex justify-end w-2/3">
-                <Button className="h-6 bg-sky-500 mr-1" onClick={() => setOnEdit(true)}>Edit</Button>
-                <Button className="h-6 bg-red-500" onClick={onDeleteQuestion}>Delete</Button>
+                <Button className="h-6 mr-1" variant="ghost" onClick={() => setOnEdit(true)}>Edit</Button>
+                <Button className="h-6" variant="ghost" onClick={onDeleteQuestion}>Delete</Button>
             </div>
             <hr />
         </div>

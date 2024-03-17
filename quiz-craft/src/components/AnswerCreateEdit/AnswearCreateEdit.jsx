@@ -3,14 +3,21 @@ import { v4 as uuidv4 } from "uuid";
 import PropTypes from "prop-types";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { useToast } from "../ui/use-toast";
+import { Toaster } from "../ui/toaster";
+
 
 
 const AnswearCreateEdit = ({ question, setQuestion }) => {
     const [answear, setAnswear] = useState('');
+    const { toast } = useToast();
 
     const onAddAnswear = () => {
         if (!answear) {
-            console.log('Answer must be at least 2 characters long!');
+            toast({
+                title: "Invalid answear",
+                description: 'Answears cannot be empty!'
+            });
             return;
         }
         const answearId = uuidv4();
@@ -22,10 +29,11 @@ const AnswearCreateEdit = ({ question, setQuestion }) => {
     return (
         <div className="add-naswer flex">
             <Input className="w-2/3 mr-2" placeholder="Enter answear" value={answear} onChange={(e) => setAnswear(e.target.value)} />
-            <Button href="" onClick={(e) => {
+            <Button variant="ghost" onClick={(e) => {
                 e.preventDefault();
                 onAddAnswear();
-            }}>add</Button>
+            }}>Add</Button>
+            <Toaster />
         </div>
     );
 };
