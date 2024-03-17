@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import UserCard from '../UserCard/UserCard';
 import { Link } from '@nextui-org/react';
 import { Search } from 'lucide-react';
-import { Button } from '@nextui-org/react';
+import { Button, Accordion, AccordionItem } from '@nextui-org/react';
 
 const UsersList = () => {
   const [users, setUsers] = useState([]);
@@ -68,7 +68,12 @@ const UsersList = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <Button color="primary" variant='ghost' className="ml-2" startContent={<Search />}>
+        <Button
+          color="primary"
+          variant="ghost"
+          className="ml-2"
+          startContent={<Search />}
+        >
           Search
         </Button>
       </div>
@@ -84,105 +89,112 @@ const UsersList = () => {
                 No users found.
               </p>
             )}
-            {users && users.map((user) => <UserCard key={user.uid} user={user} />)}
+            {users &&
+              users.map((user) => <UserCard key={user.uid} user={user} />)}
           </div>
         </ScrollArea>
 
         <div className="search-options ml-3">
-          <h3 className="mb-2">Search by</h3>
-          <div className="search-by">
-            <RadioGroup defaultValue="username">
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem
-                  value="username"
-                  id="search-username"
-                  onClick={() => setSearchBy('username')}
-                />
-                <Label htmlFor="search-username">Username</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem
-                  value="first-name"
-                  id="search-firstname"
-                  onClick={() => setSearchBy('firstName')}
-                />
-                <Label htmlFor="search-firstname">First name</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem
-                  value="last-name"
-                  id="search-lastname"
-                  onClick={() => setSearchBy('lastName')}
-                />
-                <Label htmlFor="search-lastname">Last name</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem
-                  value="email"
-                  id="search-email"
-                  onClick={() => setSearchBy('email')}
-                />
-                <Label htmlFor="search-email">Email</Label>
-              </div>
-            </RadioGroup>
-          </div>
+          <Accordion
+            variant="bordered"
+            className="w-[415px]"
+            selectionMode="multiple"
+          >
+            <AccordionItem title="Search by">
+              <RadioGroup defaultValue="username" className="mb-3">
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem
+                    value="username"
+                    id="search-username"
+                    onClick={() => setSearchBy('username')}
+                  />
+                  <Label htmlFor="search-username">Username</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem
+                    value="first-name"
+                    id="search-firstname"
+                    onClick={() => setSearchBy('firstName')}
+                  />
+                  <Label htmlFor="search-firstname">First name</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem
+                    value="last-name"
+                    id="search-lastname"
+                    onClick={() => setSearchBy('lastName')}
+                  />
+                  <Label htmlFor="search-lastname">Last name</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem
+                    value="email"
+                    id="search-email"
+                    onClick={() => setSearchBy('email')}
+                  />
+                  <Label htmlFor="search-email">Email</Label>
+                </div>
+              </RadioGroup>
+            </AccordionItem>
 
-          <div className="sort-by pt-10">
-            <div className="flex flex-row justify-between">
-              <p className="text-l">Sort by</p>
-              <Link
-                href=""
-                onClick={(e) => {
-                  e.preventDefault();
-                  setDesc(!desc);
-                }}
-              >
-                {!desc ? 'Desc' : 'Asc'}
-              </Link>
-            </div>
-            <RadioGroup defaultValue="username">
-              <div className="flex items-center space-x-2 mt-2">
-                <RadioGroupItem
-                  value="username"
-                  id="sort-username"
-                  onClick={() => setSortBy('username')}
-                />
-                <Label htmlFor="sort-username">Username</Label>
+            <AccordionItem title="Sort by">
+              <div className="flex flex-row">
+                <p className="text-l">Sort order:</p>
+                <Link
+                  href=""
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setDesc(!desc);
+                  }}
+                  className="ml-2"
+                >
+                  {!desc ? 'Desc' : 'Asc'}
+                </Link>
               </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem
-                  value="first-name"
-                  id="sort-firstname"
-                  onClick={() => setSortBy('firstName')}
-                />
-                <Label htmlFor="sort-firstname">First name</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem
-                  value="last-name"
-                  id="sort-lastname"
-                  onClick={() => setSortBy('lastName')}
-                />
-                <Label htmlFor="sort-lastname">Last name</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem
-                  value="email"
-                  id="sort-email"
-                  onClick={() => setSortBy('email')}
-                />
-                <Label htmlFor="sort-email">Email</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem
-                  value="member-since"
-                  id="sort-member-since"
-                  onClick={() => setSortBy('createdOn')}
-                />
-                <Label htmlFor="sort-member-since">Member since</Label>
-              </div>
-            </RadioGroup>
-          </div>
+              <RadioGroup defaultValue="username">
+                <div className="flex items-center space-x-2 mt-2">
+                  <RadioGroupItem
+                    value="username"
+                    id="sort-username"
+                    onClick={() => setSortBy('username')}
+                  />
+                  <Label htmlFor="sort-username">Username</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem
+                    value="first-name"
+                    id="sort-firstname"
+                    onClick={() => setSortBy('firstName')}
+                  />
+                  <Label htmlFor="sort-firstname">First name</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem
+                    value="last-name"
+                    id="sort-lastname"
+                    onClick={() => setSortBy('lastName')}
+                  />
+                  <Label htmlFor="sort-lastname">Last name</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem
+                    value="email"
+                    id="sort-email"
+                    onClick={() => setSortBy('email')}
+                  />
+                  <Label htmlFor="sort-email">Email</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem
+                    value="member-since"
+                    id="sort-member-since"
+                    onClick={() => setSortBy('createdOn')}
+                  />
+                  <Label htmlFor="sort-member-since">Member since</Label>
+                </div>
+              </RadioGroup>
+            </AccordionItem>
+          </Accordion>
         </div>
       </div>
     </>
