@@ -15,7 +15,7 @@ import { ScrollArea } from "../ui/scroll-area";
 import { Toaster } from "../ui/toaster";
 import { useToast } from "../ui/use-toast";
 import { AuthContext } from "../../../context/AuthContext";
-import { createQuiz } from "../../../services/quiz.service";
+import { createQuiz, inviteStudent } from "../../../services/quiz.service";
 
 
 
@@ -74,8 +74,18 @@ const QuizCreate = ({ quizzes, setQuizzes }) => {
             return;
         }
 
+        // createQuiz(quiz).then(snap => console.log(snap._path.pieces_[1]));
+
         try {
-            await createQuiz(quiz);
+            const response = await createQuiz(quiz);
+            if (quiz.openOrInvite === "invitational") {
+                const quizId = response._path.pieces_[1];
+                const invitation = {
+                    status: "pending"
+                };
+
+                Object.keys(quiz.participants).map(async participant => await inviteStudent(participant, invitation, quizId));
+            }
         } catch (e) {
             toast({
                 title: "Something went wrong",
@@ -85,16 +95,16 @@ const QuizCreate = ({ quizzes, setQuizzes }) => {
             toast({
                 title: `Quiz created successfuly`,
             });
-            setQuizzes([...quizzes, quiz]);
-            setQuiz({
-                title: '',
-                category: '',
-                openOrInvite: '',
-                questions: {},
-                timer: 0,
-                dueDate: '',
-                author: userData.username,
-            });
+            // setQuizzes([...quizzes, quiz]);
+            // setQuiz({
+            //     title: '',
+            //     category: '',
+            //     openOrInvite: '',
+            //     questions: {},
+            //     timer: 0,
+            //     dueDate: '',
+            //     author: userData.username,
+            // });
         }
     };
 

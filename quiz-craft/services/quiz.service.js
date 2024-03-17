@@ -1,4 +1,4 @@
-import { set, push, ref, get, query,orderByChild, equalTo, update } from 'firebase/database';
+import { set, push, ref, get, query, orderByChild, equalTo, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
 export const createQuiz = (quizData) => {
@@ -7,9 +7,9 @@ export const createQuiz = (quizData) => {
   });
 };
 
-export const inviteStudents = async () => {
-  return 
-}
+export const inviteStudent = (username, invitation, quizId) => {
+  return update(ref(db, `users/${username}/ongoing/${quizId}`), invitation);
+};
 
 // Function to retrieve quizzes by owner's ID
 export const getQuizzesByOwner = async (ownerId) => {
