@@ -17,6 +17,7 @@ import { useToast } from "../ui/use-toast";
 import { AuthContext } from "../../../context/AuthContext";
 import { createQuiz, inviteStudent } from "../../../services/quiz.service";
 import OrderQuestions from "../OrderQuestions/OrderQuestions";
+import Scoring from "../Scoring/Scoring";
 
 
 
@@ -31,7 +32,8 @@ const QuizCreate = ({ quizzes, setQuizzes }) => {
         dueDate: '',
         author: userData.username,
         orderQuestions: 'ordered',
-        orderAnswears: 'ordered'
+        orderAnswears: 'ordered',
+        score: 100
     });
 
     const { toast } = useToast();
@@ -131,6 +133,7 @@ const QuizCreate = ({ quizzes, setQuizzes }) => {
                 <SetTimer quiz={quiz} setQuiz={setQuiz} /> {" "}
                 <SetDate quiz={quiz} setQuiz={setQuiz} />
                 <OrderQuestions quiz={quiz} setQuiz={setQuiz} />
+                <Scoring quiz={quiz} setQuiz={setQuiz} />
             </div>
             <div className="flex">
                 <div className="w-full mr-2">
