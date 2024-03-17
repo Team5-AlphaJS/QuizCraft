@@ -1,5 +1,6 @@
 import { Toaster } from '../components/ui/toaster';
 import CategoriesNav from '../components/CategoriesNav';
+import { motion } from 'framer-motion';
 // import { Checkbox } from '@nextui-org/react';
 // import { Accordion, AccordionItem } from '@nextui-org/react';
 // import { Loader2 } from 'lucide-react';
@@ -10,7 +11,12 @@ import CategoriesNav from '../components/CategoriesNav';
 
 export default function Home() {
   return (
-    <div className='mt-2 mb-20 text-center'>
+    <motion.div
+      className="mt-2 mb-20 text-center"
+      initial={{ opacity: 0, y: -50, scale: 0.5 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.5, type: 'just' }}
+    >
       <Toaster />
 
       <h1 className="text-4xl font-bold mb-2">Quizzify</h1>
@@ -59,6 +65,6 @@ export default function Home() {
           />
         </CardBody>
       </Card> */}
-    </div>
+    </motion.div>
   );
 }

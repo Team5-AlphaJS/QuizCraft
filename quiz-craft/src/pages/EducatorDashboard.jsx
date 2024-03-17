@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Accordion, AccordionItem, Button } from '@nextui-org/react';
-import CreateQuizForm from '@/components/create-quiz-form';
+// import CreateQuizForm from '@/components/create-quiz-form';
 import QuizManagement from '@/components/EducatorDashboard/QuizManagement';
 import QuizCreate from '@/components/Quizzes/QuizzCreate';
 

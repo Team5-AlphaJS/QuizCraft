@@ -56,7 +56,7 @@ const UsersList = () => {
                 <Input type="text" placeholder="search term" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
                 <Button className='ml-2'>Search</Button>
             </div>
-            <div className="flex mt-0.5 mb-10 h-96">
+            <div className="flex mt-0.5 mb-10 h-[440px]">
                 <ScrollArea className="list-of-users w-2/3 border-r-4 h-full">
                     <div className="p-4">
                         {users.length > 0 && <p className="text-lg font-semibold text-center">Total number of users: {users.length} </p>}
