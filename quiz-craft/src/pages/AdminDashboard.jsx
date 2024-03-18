@@ -1,4 +1,5 @@
 import UsersList from "@/components/AdminDashboards/UsersList";
+import QuizList from "@/components/EducatorDashboard/QuizList";
 import { Button } from "@nextui-org/react";
 import { useState } from "react";
 
@@ -15,7 +16,7 @@ const AdminDashboard = () => {
             </div>
             <div className="w-5/6">
                 {boardOf === 'users' && <UsersList />}
-                {boardOf === 'quizzes' && <h1>Quizzes</h1>}
+                {boardOf === 'quizzes' && <QuizList />}
                 {boardOf === 'groups' && <h1>Groups Management</h1>}
                 {/* {boardOf === 'scores' && <h1>Scores</h1>} */}
             </div>

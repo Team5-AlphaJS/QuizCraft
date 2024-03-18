@@ -1,4 +1,4 @@
-import { set, push, ref, get, query, orderByChild, equalTo, update } from 'firebase/database';
+import { push, ref, get, query, orderByChild, equalTo, update, remove } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
 export const createQuiz = (quizData) => {
@@ -36,4 +36,8 @@ export const getQuizData = async (id) => {
 
 export const editQuiz = (data) => {
   return update(ref(db, `quizzes/${data.title}`), data);
+}
+
+export const removeQuiz = (quizId) => {
+  return remove(ref(db, `quizzes/${quizId}`));
 }
