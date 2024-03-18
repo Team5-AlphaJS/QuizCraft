@@ -261,7 +261,6 @@ const QuizList = () => {
                   />
                   <Label htmlFor="search-category">Category</Label>
                 </div>
-                {/* Add more search options here */}
               </RadioGroup>
             </AccordionItem>
 

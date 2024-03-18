@@ -81,6 +81,7 @@ export default function Header() {
       >
         <NavbarMenuToggle
           aria-label={isMenuOpen ? 'Open Menu' : 'Close Menu'}
+          className='text-white'
         />
         <NavbarBrand>
           <img width={'55px'} src={logo} />
@@ -145,7 +146,7 @@ export default function Header() {
           </div>
         ) : (
           <>
-            <motion.button whileHover={{ scale: 1.1 }}>
+            <motion.div whileHover={{ scale: 1.1 }}>
               <NextUIButton
                 onPress={onOpen}
                 color="primary"
@@ -154,7 +155,7 @@ export default function Header() {
                 {' '}
                 Log In
               </NextUIButton>
-            </motion.button>
+            </motion.div>
 
             <LoginForm
               isOpen={isOpen}
@@ -162,7 +163,7 @@ export default function Header() {
               onClose={onClose}
             />
 
-            <motion.button whileHover={{ scale: 1.1 }}>
+            <motion.div whileHover={{ scale: 1.1 }}>
               <NextUIButton
                 color="primary"
                 className="px-8 mr-2"
@@ -170,7 +171,7 @@ export default function Header() {
               >
                 Register
               </NextUIButton>
-            </motion.button>
+            </motion.div>
           </>
         )}
 

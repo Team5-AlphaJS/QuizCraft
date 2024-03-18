@@ -151,7 +151,7 @@ const UsersList = () => {
                   {!desc ? 'Desc' : 'Asc'}
                 </Link>
               </div>
-              <RadioGroup defaultValue="username">
+              <RadioGroup defaultValue="username" className="mb-3">
                 <div className="flex items-center space-x-2 mt-2">
                   <RadioGroupItem
                     value="username"
