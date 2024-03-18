@@ -23,7 +23,6 @@ const Quizzes = () => {
 
     return (
         <div className="h-screen">
-            <p>Quizzes page</p>
             {userData && userData.role === 'Educator'
                 && (
                     <div className="flex ml-5">
@@ -45,7 +44,7 @@ const Quizzes = () => {
                     </div>
                 )}
             {userData && userData.role === "Student" && (
-                <div className="flex ml-5">
+                <div className="flex ml-5 h-4/5">
                     <div className="operations flex flex-col mr-2 mt-3">
                         <Button className="mt-1" onClick={() => {
                             setStudentState('active');
@@ -54,7 +53,7 @@ const Quizzes = () => {
                             setStudentState('ongoing');
                         }}>Ongoing</Button>
                     </div>
-                    <div className="dashboard flex justify-start w-full mt-3">
+                    <div className="dashboard flex justify-start w-full  mt-3">
                         {studentState === "active" && <QuizAll quizzes={quizzes} setQuizzes={setQuizzes} />}
                         {studentState === "ongoing" && <OngoingQuizzes />}
                     </div>
