@@ -36,11 +36,11 @@ const OpenInvite = ({ quiz, setQuiz }) => {
 
 
     const onInvite = (student) => {
-        if (student in quiz.participants) {
-            delete quiz.participants[student];
+        if (student in quiz.invited) {
+            delete quiz.invited[student];
             setQuiz({ ...quiz });
         } else {
-            quiz.participants[student] = true;
+            quiz.invited[student] = true;
             setQuiz({ ...quiz });
         }
     };
@@ -60,7 +60,7 @@ const OpenInvite = ({ quiz, setQuiz }) => {
                     <div className="flex items-center space-x-2">
                         <RadioGroupItem value="open" id="open" onClick={() => {
                             if ('participants' in quiz) {
-                                delete quiz.participants;
+                                delete quiz.invited;
                             }
                             quiz.openOrInvite = 'open'
                             setQuiz({ ...quiz, openOrInvite: 'open' });
@@ -69,7 +69,7 @@ const OpenInvite = ({ quiz, setQuiz }) => {
                     </div>
                     <div className="flex items-center space-x-2">
                         <RadioGroupItem value="invitational" id="invitational" onClick={() => {
-                            quiz['participants'] = {};
+                            quiz['invited'] = {};
                             setQuiz({ ...quiz, openOrInvite: 'invitational' });
                         }} />
                         <Label htmlFor="invitational">Invitational</Label>
@@ -86,7 +86,7 @@ const OpenInvite = ({ quiz, setQuiz }) => {
                                         <a href="" onClick={(e) => {
                                             e.preventDefault();
                                             onInvite(e.target.parentNode.id);
-                                        }}>{student[0] in quiz.participants ? 'Uninvite' : 'Invite'}</a>
+                                        }}>{student[0] in quiz.invited ? 'Uninvite' : 'Invite'}</a>
                                     </div>
                                 ))}
                             </div>

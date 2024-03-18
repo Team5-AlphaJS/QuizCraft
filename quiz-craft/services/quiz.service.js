@@ -8,7 +8,15 @@ export const createQuiz = (quizData) => {
 };
 
 export const inviteStudent = (username, invitation, quizId) => {
-  return update(ref(db, `users/${username}/ongoing/${quizId}`), invitation);
+  return update(ref(db, `users/${username}/invitations/${quizId}`), invitation);
+};
+
+export const inviteAcceptedQuiz = (username, quizId) => {
+  return update(ref(db, `quizzes/${quizId}/participants/`), {[username]: true});
+};
+
+export const removeFromInvated = (username, quizId) => {
+  return update(ref(db, `quizzes/${quizId}/invited/`), {[username]: null});
 };
 
 // Function to retrieve quizzes by owner's ID
@@ -21,8 +29,9 @@ export const getAllQuizzes = async () => {
   return get(query(ref(db, 'quizzes')));
 };
 
-export const getQuizData = (id) => {
-  return get(query(ref(db, 'quizzes'), orderByChild('id'), equalTo(id)));
+export const getQuizData = async (id) => {
+  // return get(query(ref(db, 'quizzes'), orderByChild('id'), equalTo(id)));
+  return get(ref(db, `quizzes/${id}`));
 };
 
 export const editQuiz = (data) => {

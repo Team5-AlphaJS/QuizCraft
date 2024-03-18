@@ -11,6 +11,15 @@ export const createUserHandle = (userData) => {
   });
 }
 
+export const acceptInvitation = (quizId, userName) => {
+  return update(ref(db, `users/${userName}/ongoing/`), {[quizId]: true});
+};
+
+export const removeInvitation = (quizId, userName) => {
+  return update(ref(db, `users/${userName}/invitations/`), {[quizId]: null});
+  // return update(ref(db, `users/${userName}/invitations/`), {[quizId]: null});
+};
+
 export const getUserData = (uid) => {
   return get(query(ref(db, 'users'), orderByChild('uid'), equalTo(uid)));
 };

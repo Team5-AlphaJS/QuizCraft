@@ -39,6 +39,7 @@ const QuizCreate = ({ quizzes, setQuizzes }) => {
     const { toast } = useToast();
 
     const onCreate = async () => {
+        console.log(quiz);
         if (quiz.title.length < 3 || quiz.title.length > 30) {
             toast({
                 title: "Invalid title",
@@ -63,7 +64,7 @@ const QuizCreate = ({ quizzes, setQuizzes }) => {
             return;
         }
 
-        if (quiz.openOrInvite === 'invitational' && (!('participants' in quiz) || Object.keys(quiz.participants) === 0)) {
+        if (quiz.openOrInvite === 'invitational' && (!('invited' in quiz) || Object.keys(quiz.invited) === 0)) {
             toast({
                 title: "No participants/studnets",
                 description: "You must invite at least one studnet"
@@ -79,7 +80,6 @@ const QuizCreate = ({ quizzes, setQuizzes }) => {
             return;
         }
 
-        // createQuiz(quiz).then(snap => console.log(snap._path.pieces_[1]));
 
         try {
             const response = await createQuiz(quiz);
@@ -89,7 +89,7 @@ const QuizCreate = ({ quizzes, setQuizzes }) => {
                     status: "pending"
                 };
 
-                Object.keys(quiz.participants).map(async participant => await inviteStudent(participant, invitation, quizId));
+                Object.keys(quiz.invited).map(async participant => await inviteStudent(participant, invitation, quizId));
             }
         } catch (e) {
             toast({
@@ -141,7 +141,7 @@ const QuizCreate = ({ quizzes, setQuizzes }) => {
                     <div className="added-questions mt-4">
                         <p className="text-xl ml-1">Questions:</p>
                         {Object.keys(quiz.questions).length > 0 ? (
-                            <ScrollArea className="h-[350px]">
+                            <ScrollArea className="">
                                 <div className="p-4">
                                     {quiz.questions && Object.keys(quiz.questions).map(questionId => (
                                         <SimpleQuestion key={questionId} questionId={questionId} quiz={quiz} setQuiz={setQuiz} />

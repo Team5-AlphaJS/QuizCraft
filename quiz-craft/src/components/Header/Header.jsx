@@ -173,7 +173,7 @@ export default function Header() {
             </motion.button>
           </>
         )}
-        
+
         <ModeToggle />
 
         <NavbarMenu>
@@ -191,6 +191,16 @@ export default function Header() {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Educator Dashboard
+              </Link>
+            </NextUILink>
+          )}
+          {userData && userData.role === "Student" && (
+            <NextUILink size="lg" className="font-medium">
+              <Link
+                to="/quizzes"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Quizzes
               </Link>
             </NextUILink>
           )}
