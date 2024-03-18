@@ -8,6 +8,7 @@ import { editUser } from '/services/users.service';
 import { useToast } from '../ui/use-toast';
 import { User, Mail, Phone, UserSearch, Image, Trash } from 'lucide-react';
 import { Toaster } from '../ui/toaster';
+import { motion } from 'framer-motion';
 // import { deleteAvatar } from '/services/images.service';
 
 export default function UserProfile({ currentUser, updateUserData }) {
@@ -16,6 +17,7 @@ export default function UserProfile({ currentUser, updateUserData }) {
   const [avatarUpload, setAvatarUpload] = useState(null);
   const { toast } = useToast();
   const [isUploading, setIsUploading] = useState(false);
+  const [showEditAvatar, setShowEditAvatar] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -70,6 +72,8 @@ export default function UserProfile({ currentUser, updateUserData }) {
       });
     } catch (error) {
       console.error('Error removing avatar:', error);
+    } finally {
+      setShowEditAvatar(false);
     }
   };
 
@@ -86,13 +90,24 @@ export default function UserProfile({ currentUser, updateUserData }) {
         </h1>
       )}
       <div className="flex justify-center items-center">
-        <Avatar
-          className="w-20 h-20 mr-7 text-large"
-          name={userData?.username.slice(0, 1)}
-          src={userData?.photo}
-        />
+        <motion.div whileHover={currentUser?.uid === userData?.uid ? { opacity: 0.7 } : {}}>
+          <Avatar
+            className={
+              currentUser?.uid === userData?.uid
+                ? 'cursor-pointer w-20 h-20 mr-7 text-large'
+                : 'w-20 h-20 mr-7 text-large'
+            }
+            name={userData?.username.slice(0, 1)}
+            src={userData?.photo}
+            onClick={() => {
+              if (currentUser?.uid === userData?.uid) {
+                setShowEditAvatar(!showEditAvatar);
+              }
+            }}
+          />
+        </motion.div>
 
-        {currentUser?.uid === userData?.uid && (
+        {currentUser?.uid === userData?.uid && showEditAvatar === true && (
           <div className="pr-7">
             <input
               type="file"

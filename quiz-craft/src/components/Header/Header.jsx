@@ -81,7 +81,7 @@ export default function Header() {
       >
         <NavbarMenuToggle
           aria-label={isMenuOpen ? 'Open Menu' : 'Close Menu'}
-          className='text-white'
+          className="text-white"
         />
         <NavbarBrand>
           <img width={'55px'} src={logo} />
@@ -113,11 +113,15 @@ export default function Header() {
 
         {user ? (
           <div className="flex gap-4 items-center">
-            {userData && `Welcome, ${userData.username}`}
+            {userData && (
+              <span className="text-white">Welcome, {userData.username}</span>
+            )}
             <div className="flex gap-1 items-center">
               <Dropdown>
                 <DropdownTrigger>
                   <Avatar
+                    isBordered
+                    color="primary"
                     name={userData?.username.slice(0, 1)}
                     src={userData?.photo}
                     className="cursor-pointer"
@@ -179,11 +183,26 @@ export default function Header() {
 
         <NavbarMenu>
           {userData && userData.role === 'admin' && (
-            <NextUILink size="lg" className="font-medium">
-              <Link to="/admin" onClick={() => setIsMenuOpen(false)}>
-                Admin Dashboard
-              </Link>
-            </NextUILink>
+            <>
+              <NextUILink size="lg" className="font-medium">
+                <Link to="/admin" onClick={() => setIsMenuOpen(false)}>
+                  Admin Dashboard
+                </Link>
+              </NextUILink>
+              {/* <NextUILink size="lg" className="font-medium">
+                <Link
+                  to="/educator-dashboard"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Educator Dashboard
+                </Link>
+              </NextUILink> */}
+              {/* <NextUILink size="lg" className="font-medium">
+                <Link to="/quizzes" onClick={() => setIsMenuOpen(false)}>
+                  Quizzes
+                </Link>
+              </NextUILink> */}
+            </>
           )}
           {userData && userData.role === 'Educator' && (
             <NextUILink size="lg" className="font-medium">
@@ -195,12 +214,9 @@ export default function Header() {
               </Link>
             </NextUILink>
           )}
-          {userData && userData.role === "Student" && (
+          {userData && userData.role === 'Student' && (
             <NextUILink size="lg" className="font-medium">
-              <Link
-                to="/quizzes"
-                onClick={() => setIsMenuOpen(false)}
-              >
+              <Link to="/quizzes" onClick={() => setIsMenuOpen(false)}>
                 Quizzes
               </Link>
             </NextUILink>
