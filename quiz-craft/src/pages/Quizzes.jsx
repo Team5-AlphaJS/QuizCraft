@@ -55,12 +55,7 @@ const Quizzes = () => {
                     </div>
                     <div className="dashboard w-full mt-3">
                         {studentState === "active" && <QuizAll quizzes={quizzes} setQuizzes={setQuizzes} />}
-                        {studentState === "ongoing" && (
-                            <>
-                                <p className="text-center text-white p-2 mb-5 text-2xl font-semibold bg-gradient-to-l from-slate-600 to-slate-800 w-[98%]">Ongoing Quizzes</p>
-                                <OngoingQuizzes />
-                            </>
-                        )}
+                        {studentState === "ongoing" && <OngoingQuizzes />}
                     </div>
                 </div>
             )}
