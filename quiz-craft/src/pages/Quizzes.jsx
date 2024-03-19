@@ -1,7 +1,7 @@
 import { AuthContext } from "../../context/AuthContext";
 import { useContext, useEffect, useState } from "react";
 import QuizCreate from "@/components/Quizzes/QuizzCreate";
-import { Button } from "../components/ui/button";
+import { Button } from "@nextui-org/react";
 import { getAllQuizzes } from "../../services/quiz.service";
 import QuizAll from "@/components/Quizzes/QuizzAll";
 import OngoingQuizzes from "@/components/Quizzes/OngoingQuizzes";
@@ -44,18 +44,23 @@ const Quizzes = () => {
                     </div>
                 )}
             {userData && userData.role === "Student" && (
-                <div className="flex ml-5 h-4/5">
-                    <div className="operations flex flex-col mr-2 mt-3">
-                        <Button className="mt-1" onClick={() => {
+                <div className="flex h-4/5">
+                    <div className="operations p-2 flex flex-col mr-5 mt-3 bg-gradient-to-t from-slate-600 to-slate-800 h-screen">
+                        <Button className="mt-1 font-semibold" color="primary" onClick={() => {
                             setStudentState('active');
                         }}>Active</Button>
-                        <Button className="mt-1" onClick={() => {
+                        <Button className="mt-2 font-semibold" color="primary" onClick={() => {
                             setStudentState('ongoing');
                         }}>Ongoing</Button>
                     </div>
-                    <div className="dashboard flex justify-start w-full  mt-3">
+                    <div className="dashboard w-full mt-3">
                         {studentState === "active" && <QuizAll quizzes={quizzes} setQuizzes={setQuizzes} />}
-                        {studentState === "ongoing" && <OngoingQuizzes />}
+                        {studentState === "ongoing" && (
+                            <>
+                                <p className="text-center text-white p-2 mb-5 text-2xl font-semibold bg-gradient-to-l from-slate-600 to-slate-800 w-[98%]">Ongoing Quizzes</p>
+                                <OngoingQuizzes />
+                            </>
+                        )}
                     </div>
                 </div>
             )}

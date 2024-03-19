@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import { Button } from "../ui/button";
+import { Button } from "@nextui-org/react";
 import { Checkbox } from "../ui/checkbox";
 import { Label } from "../ui/label";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
@@ -61,24 +61,24 @@ const EnrollQuiz = ({ quiz, setEnroll }) => {
     return (
         <>
             {!quizStart &&
-                <div className="flex flex-col w-11/12 justify-around">
-                    <di className="flex flex-col pl-8 pt-8 h-2/4">
+                <div className="w-[98%]">
+                    <div className="">
                         <h1>{quiz.title}</h1>
                         <p>Of category: {quiz.category}</p>
                         <p>Time left to complete: {quiz.dueDate - Date.now()}</p>
-                        <p>You will have to answear {Object.keys(quiz.questions).length} questions in {quiz.timer} time to complete.</p>
-                    </di>
-                    <div className="flex justify-between">
-                        <Button className="ml-2" onClick={() => setEnroll('')}>Back</Button>
-                        <Button className="mr-4" onClick={() => setQuizStart(true)}>Start</Button>
+                        <p>You will have to answer {Object.keys(quiz.questions).length} questions in {quiz.timer} minutes to complete it.</p>
+                    </div>
+                    <div className="flex justify-between mt-4">
+                        <Button variant="faded" onClick={() => setEnroll('')}>Back</Button>
+                        <Button variant="ghost" color="primary" onClick={() => setQuizStart(true)}>Start</Button>
                     </div>
                 </div>
             }
-            {quizStart && <div className="quiz`">
+            {quizStart && <div className="quiz">
                 <div className="question">
                     <p>{currentQuestion.question}</p>
                     {quiz.questions[questionIds[questionIndex]].type === "single" &&
-                        <RadioGroup>
+                        <RadioGroup className='my-2'>
                             {Object.keys(quiz.questions[questionIds[questionIndex]].answears).map(answearId =>
                                 <div key={answearId} className="flex items-center space-x-2">
                                     <RadioGroupItem
@@ -116,7 +116,7 @@ const EnrollQuiz = ({ quiz, setEnroll }) => {
                 </div>
                 <div className="navigate">
                     {questionIndex !== 0 && <Button onClick={() => setQuestionIndex(questionIndex - 1)}>Previous</Button>}
-                    {questionIndex < questionIds.length - 1 && <Button onClick={() => setQuestionIndex(questionIndex + 1)}>Next</Button>}
+                    {questionIndex < questionIds.length - 1 && <Button variant="ghost" color="primary" onClick={() => setQuestionIndex(questionIndex + 1)}>Next</Button>}
                     {questionIndex === questionIds.length - 1 && <Button onClick={finish}>Finish</Button>}
                 </div>
             </div>
