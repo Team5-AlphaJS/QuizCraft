@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getUserData } from '/services/users.service';
-import { Avatar, Button, Chip } from '@nextui-org/react';
+import {
+  Avatar,
+  Button,
+  Card,
+  Chip,
+} from '@nextui-org/react';
 import { uploadAvatar } from '/services/images.service';
 import PropTypes from 'prop-types';
 import { editUser } from '/services/users.service';
@@ -80,89 +85,97 @@ export default function UserProfile({ currentUser, updateUserData }) {
   return (
     <>
       <Toaster />
-      {userData?.username.endsWith('s') ? (
-        <h1 className="text-center text-3xl mt-36 mb-10 font-bold">
-          {userData?.username}&apos; profile
-        </h1>
-      ) : (
-        <h1 className="text-center text-3xl mt-36 mb-10 font-bold">
-          {userData?.username}&apos;s profile
-        </h1>
-      )}
-      <div className="flex justify-center items-center">
-        <motion.div whileHover={currentUser?.uid === userData?.uid ? { opacity: 0.7 } : {}}>
-          <Avatar
-            className={
-              currentUser?.uid === userData?.uid
-                ? 'cursor-pointer w-20 h-20 mr-7 text-large'
-                : 'w-20 h-20 mr-7 text-large'
+      <Card radius='none' className="mt-36 p-3 bg-gradient-to-t from-slate-600 to-slate-900 text-white">
+        {userData?.username.endsWith('s') ? (
+          <h1 className="text-center text-3xl mb-10 font-bold">
+            {userData?.username}&apos; profile
+          </h1>
+        ) : (
+          <h1 className="text-center text-3xl mb-10 font-bold">
+            {userData?.username}&apos;s profile
+          </h1>
+        )}
+        <div className="flex justify-center items-center">
+          <motion.div
+            whileHover={
+              currentUser?.uid === userData?.uid ? { opacity: 0.6 } : {}
             }
-            name={userData?.username.slice(0, 1)}
-            src={userData?.photo}
-            onClick={() => {
-              if (currentUser?.uid === userData?.uid) {
-                setShowEditAvatar(!showEditAvatar);
+          >
+            <Avatar
+              className={
+                currentUser?.uid === userData?.uid
+                  ? 'cursor-pointer w-20 h-20 mr-7 text-large'
+                  : 'w-20 h-20 mr-7 text-large'
               }
-            }}
-          />
-        </motion.div>
-
-        {currentUser?.uid === userData?.uid && showEditAvatar === true && (
-          <div className="pr-7">
-            <input
-              type="file"
-              onChange={(e) => {
-                setAvatarUpload(e.target.files[0]);
+              name={userData?.username.slice(0, 1)}
+              src={userData?.photo}
+              onClick={() => {
+                if (currentUser?.uid === userData?.uid) {
+                  setShowEditAvatar(!showEditAvatar);
+                  setAvatarUpload(null);
+                }
               }}
             />
-            {avatarUpload !== null && (
-              <Button
-                isLoading={isUploading}
-                variant="ghost"
-                startContent={<Image />}
-                onClick={handleAvatarUpload}
-              >
-                Upload Avatar
-              </Button>
-            )}
-            {userData?.photo && avatarUpload === null && (
-              <Button
-                color="danger"
-                variant="ghost"
-                onClick={handleAvatarRemove}
-                startContent={<Trash />}
-              >
-                Remove Avatar
-              </Button>
-            )}
-          </div>
-        )}
+          </motion.div>
 
-        <div className="border-l-3 pl-7">
-          <div className="flex items-center border-b-3 pb-2">
-            <UserSearch />
-            <p className="ml-2">{userData?.username}</p>
-            <Chip className="ml-2">{userData?.role}</Chip>
-          </div>
+          {currentUser?.uid === userData?.uid && showEditAvatar === true && (
+            <Card className="p-4 mr-7 bg-slate-900 flex flex-row items-center text-white">
+              <input
+                type="file"
+                onChange={(e) => {
+                  setAvatarUpload(e.target.files[0]);
+                }}
+                className='w-60'
+              />
+              {avatarUpload !== null && (
+                <Button
+                  isLoading={isUploading}
+                  variant="ghost"
+                  startContent={<Image />}
+                  onClick={handleAvatarUpload}
+                >
+                  Upload Avatar
+                </Button>
+              )}
+              {userData?.photo && avatarUpload === null && (
+                <Button
+                  color="danger"
+                  variant="ghost"
+                  onClick={handleAvatarRemove}
+                  startContent={<Trash />}
+                >
+                  Remove Avatar
+                </Button>
+              )}
+            </Card>
+          )}
 
-          <div className="flex items-center border-b-3 py-2">
-            <Mail />
-            <p className="ml-2">{userData?.email}</p>
-          </div>
+          <div className="border-l-3 pl-7">
+            <div className="flex items-center border-b-3 pb-2">
+              <UserSearch />
+              <p className="ml-2">{userData?.username}</p>
+              <Chip className="ml-2">{userData?.role}</Chip>
+            </div>
 
-          <div className="flex items-center border-b-3 py-2">
-            <User />
-            <p className="ml-2">
-              {userData?.firstName} {userData?.lastName}
-            </p>
-          </div>
+            <div className="flex items-center border-b-3 py-2">
+              <Mail />
+              <p className="ml-2">{userData?.email}</p>
+            </div>
 
-          <div className="flex items-center pt-2">
-            <Phone />
-            <p className="ml-2">{userData?.phone}</p>
+            <div className="flex items-center border-b-3 py-2">
+              <User />
+              <p className="ml-2">
+                {userData?.firstName} {userData?.lastName}
+              </p>
+            </div>
+
+            <div className="flex items-center pt-2">
+              <Phone />
+              <p className="ml-2">{userData?.phone}</p>
+            </div>
           </div>
         </div>
-      </div>
+      </Card>
     </>
   );
 }
