@@ -2,7 +2,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { useState, useEffect, useContext } from "react";
 import { getAllQuizzes } from "../../services/quiz.service";
 import SimpleQuiz from "@/components/SimpleQuiz/SimpleQuiz";
-import { ScrollArea } from "@/components/ui/scroll-area";
+// import { ScrollArea } from "@/components/ui/scroll-area";
 
 const ActiveQuizzes = () => {
     const { userData } = useContext(AuthContext);
@@ -33,12 +33,14 @@ const ActiveQuizzes = () => {
 
 
     return (
-        <div className="flex flex-col  h-[600px]">
-            <h1 className="text-2xl mb-3 place-self-center">Active Quizzes</h1>
-            <ScrollArea className="h-4/5 ml-4 mr-4">
-                {Object.keys(quizzes).length !== 0 && (
+        <div className="flex flex-col">
+            <p className="text-center text-white p-2 mb-5 mt-5 text-3xl font-semibold bg-gradient-to-r from-slate-900 to-slate-700 w-full">
+                Active Quizzes
+            </p>
+            <div className="mb-[60px]">
+                {Object.keys(quizzes).length !== 0 ? (
                     <>
-                        <p className="ml-5 text-lg">You are invited to participate in</p>
+                        <p className="text-white text-center py-1 mb-2 text-xl bg-gradient-to-r from-slate-800 to-slate-600 w-full">You are invited to participate in</p>
                         {Object.keys(quizzes).map(quizId =>
                             quizzes[quizId].openOrInvite === "invitational" &&
                             <SimpleQuiz
@@ -47,11 +49,13 @@ const ActiveQuizzes = () => {
                                 quizzes={quizzes}
                                 setQuizzes={setQuizzes} />)}
                     </>
+                ) : (
+                    <p className="text-center text-white mb-5 mt-5 font-semibold bg-gradient-to-r from-pink-900 to-red-900 w-full">You are not invited to any quizzes.</p>
                 )}
 
-                {Object.keys(quizzes).length !== 0 && (
+                {Object.keys(quizzes).length !== 0 ? (
                     <>
-                        <p className="ml-5 text-lg">Open quizzes for everyone</p>
+                        <p className="text-white text-center py-1 text-xl bg-gradient-to-r from-slate-800 to-slate-600 w-full">Open quizzes for everyone</p>
                         {Object.keys(quizzes).map(quizId =>
                             quizzes[quizId].openOrInvite === "open" &&
                             <SimpleQuiz
@@ -60,8 +64,10 @@ const ActiveQuizzes = () => {
                                 quizzes={quizzes}
                                 setQuizzes={setQuizzes} />)}
                     </>
+                ) : (
+                    <p className="text-center text-white mb-5 mt-5 font-semibold bg-gradient-to-r from-pink-900 to-red-900 w-full">There are no open quizzes at the moment.</p>
                 )}
-            </ScrollArea>
+            </div>
         </div>
 
     );

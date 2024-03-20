@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getQuizData, participated, removeFromParticipatns } from "../../services/quiz.service";
 import { Button } from "../components/ui/button";
 import { studentParticipated, studentEnrolled } from "../../services/users.service";
+import {Card, CardHeader, CardBody, CardFooter } from "@nextui-org/react";
 
 const Enroll = () => {
     const id = useParams().id;
@@ -118,34 +119,48 @@ const Enroll = () => {
     return (
         <>
             {!onStart ? (
-                <div className="flex flex-col items-center justify-center space-y-12 h-[700px]">
+                <div className="flex flex-col items-center justify-center space-y-12 h-[600px]">
+                <Card className="border border-slate-900" shadow="lg">
+                    <CardHeader className="flex justify-center">
+                        <p className="text-3xl font-semibold">{quiz.title}</p>
+                    </CardHeader>
+                    <CardBody>
                     {!showScore &&
                         <div>
-                            <p>Once you click on Start you`ll have {quiz.timer} minutes to complete {Object.keys(questions).length} questions <br />
-                                to solve. Are you ready ?
+                            <p className="text-center text-lg">
+                                Once you click on Start you`ll have {quiz.timer} minutes to answer {Object.keys(questions).length} questions
+                                to solve the quiz.
                             </p>
+                            <p className="text-center text-primary text-lg">Good Luck!</p>
                         </div>
                     }
                     {showScore &&
                         <div>
-                            <p className="text-2xl">Great Job</p>
-                            <p>Your score is {score.score}</p>
+                            <p className="text-2xl text-center">Well done!</p>
+                            <p className="text-center">Your score is {score.score}</p>
                         </div>}
-                    <div className="flex justify-between w-3/5">
+                    </CardBody>
+                    <CardFooter>
+                    <div className="flex justify-between w-full">
                         <Button onClick={() => navigate(-1)}>Back</Button>
                         {!showScore && <Button onClick={onStartQuiz}>Start</Button>}
-
                     </div>
+                    </CardFooter>
+                </Card>
                 </div>
             ) : (
                 <>
-
-                    <div className="flex flex-col items-center justify-center space-y-12  h-[700px]">
-                        <Timer setOnStart={setOnStart} expiryTimestamp={startTime} onFinish={onFinish} />
-                        <div className="flex flex-col w-1/2">
-                            <div className="flex justify-between">
+                    <div className="flex flex-col items-center justify-center h-[600px]">
+                    <Card>
+                        <CardHeader className="flex flex-col border-b-2">
+                            <p className="text-3xl font-semibold">{quiz.title}</p>
+                            <Timer setOnStart={setOnStart} expiryTimestamp={startTime} onFinish={onFinish} />
+                        </CardHeader>
+                        <CardBody>
+                        <div className="flex flex-col">
+                            <div className="flex flex-col">
+                                {questions[currentIndex].type === 'multi' && <p className="text-primary">*More than one answer possible.</p>}
                                 <p className="text-2xl mb-4">{questions[currentIndex].question}</p>
-                                {questions[currentIndex].type === 'multi' && <p>More than one answer possible.</p>}
                             </div>
                             {questions[currentIndex].type === 'single' &&
                                 <RadioGroup className="">
@@ -179,11 +194,15 @@ const Enroll = () => {
 
 
                         </div>
-                        <div className="flex justify-between w-3/5">
+                        </CardBody>
+                        <CardFooter>
+                        <div className=" place-items-end space-x-3">
                             {currentIndex !== 0 && <Button onClick={() => setCurrentIndex(currentIndex - 1)}>Previous</Button>}
                             {currentIndex < questionsIds.length - 1 && <Button onClick={() => setCurrentIndex(currentIndex + 1)}>Next</Button>}
                             {currentIndex === questionsIds.length - 1 && <Button onClick={onFinish}>Finish</Button>}
                         </div>
+                        </CardFooter>
+                        </Card>
                     </div>
                 </>)}
         </>

@@ -1,7 +1,7 @@
 import { AuthContext } from '../../../context/AuthContext';
 import { useContext, useEffect, useState } from 'react';
 import { getQuizData } from '../../../services/quiz.service';
-import { Card, CardHeader, CardBody, CardFooter, Button } from '@nextui-org/react';
+import { Card, CardHeader, CardBody, Button } from '@nextui-org/react';
 import { motion } from 'framer-motion';
 import EnrollQuiz from './EnrollQuiz';
 
@@ -41,7 +41,7 @@ const OngoingQuizzes = () => {
               <CardBody
                 className={
                   ongoing[quizId].category === 'math'
-                    ? 'bg-blue-900 border-y-2 border-white text-white'
+                    ? 'bg-gradient-to-br from-blue-700 to-slate-800 border-t-2 border-white text-white'
                     : ongoing[quizId].category === 'biology'
                     ? 'bg-red-800 border-y-2 border-white text-white'
                     : ongoing[quizId].category === 'history'
@@ -59,15 +59,13 @@ const OngoingQuizzes = () => {
                   Due Date:{' '}
                   {new Date(ongoing[quizId].dueDate).toLocaleDateString()}
                 </p>
-              </CardBody>
-              <CardFooter>
                 <motion.div
                   whileHover={{ scale: 1.1 }}
                   id={quizId}
                   className="w-full pt-2 px-2"
                 >
                   <Button
-                    variant="ghost"
+                    variant='ghost'
                     className={
                       ongoing[quizId].category === 'math'
                         ? 'w-full border-2 border-blue-900'
@@ -86,7 +84,9 @@ const OngoingQuizzes = () => {
                     Enroll
                   </Button>
                 </motion.div>
-              </CardFooter>
+              </CardBody>
+              {/* <CardFooter> */}
+              {/* </CardFooter> */}
             </Card>
           </div>
         ))}
