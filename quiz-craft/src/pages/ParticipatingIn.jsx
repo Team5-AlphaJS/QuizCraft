@@ -26,9 +26,12 @@ const ParticipatingIn = () => {
     }, [userData]);
 
     return (
-        <div className="flex flex-col  h-[600px]">
+        <div className="flex flex-col mb-[60px]">
+            <p className="text-center text-white p-2 mb-5 mt-5 text-3xl font-semibold bg-gradient-to-r from-slate-900 to-slate-700 w-full">
+                Quizzes you are participating in
+            </p>
             {Object.keys(quizzes).length !== 0 && Object.keys(quizzes).map(quizId => <SimpleQuiz key={quizId} quiz={quizzes[quizId]} quizzes={quizzes} setQuizzes={setQuizzes} onOngoing={true} />)}
-            {Object.keys(quizzes).length === 0 && <p>You are not praticipating in any quizes. You can find<Button className="pl-1 pr-0 " onClick={() => navigate('/active')} variant="link"> some </Button> here</p>}
+            {Object.keys(quizzes).length === 0 && <p className="text-center text-white mb-5 mt-2 font-semibold bg-gradient-to-r from-pink-900 to-red-900 w-full">😔 You are not participating in any quizzes. You can find <Button className="p-0" onClick={() => navigate('/active')} variant="link"> some</Button> here 😊</p>}
         </div>
     );
 };

@@ -4,7 +4,7 @@ import {
   Avatar,
   Chip,
   NavbarMenu,
-  NavbarMenuItem,
+  // NavbarMenuItem,
   NavbarMenuToggle,
   Button as NextUIButton,
 } from '@nextui-org/react';
@@ -43,16 +43,16 @@ export default function Header() {
   const iconClasses =
     'text-xl text-default-500 pointer-events-none flex-shrink-0';
 
-  const menuItems = [
-    'Profile',
-    'Dashboard',
-    'Activity',
-    'System',
-    'My Settings',
-    'Team Settings',
-    'Help & Feedback',
-    'Log Out',
-  ];
+  // const menuItems = [
+  //   'Profile',
+  //   'Dashboard',
+  //   'Activity',
+  //   'System',
+  //   'My Settings',
+  //   'Team Settings',
+  //   'Help & Feedback',
+  //   'Log Out',
+  // ];
 
   const logout = async () => {
     await logoutUser();
@@ -184,7 +184,7 @@ export default function Header() {
         <NavbarMenu>
           {userData && userData.role === 'admin' && (
             <>
-              <NextUILink size="lg" className="font-medium">
+              <NextUILink className="font-medium text-2xl">
                 <Link to="/admin" onClick={() => setIsMenuOpen(false)}>
                   Admin Dashboard
                 </Link>
@@ -215,38 +215,34 @@ export default function Header() {
             </NextUILink>
           )} */}
           {userData && userData.role === 'Educator' && (
-            <NextUILink size="lg" className="font-medium">
-              <Link
-                to="/create-quiz"
-                onClick={() => setIsMenuOpen(false)}
-              >
+            <NextUILink className="font-medium text-2xl">
+              <Link to="/create-quiz" onClick={() => setIsMenuOpen(false)}>
                 Create quiz
               </Link>
             </NextUILink>
           )}
           {userData && userData.role === 'Student' && (
-            <NextUILink size="lg" className="font-medium">
+            <NextUILink className="font-medium text-2xl">
               <Link to="/quizzes" onClick={() => setIsMenuOpen(false)}>
                 Quizzes
               </Link>
             </NextUILink>
           )}
-          <NextUILink size="lg" className="font-medium">
-            <Link
-              to="/active"
-              onClick={() => setIsMenuOpen(false)}
-            >
+          <NextUILink className="font-medium text-2xl">
+            <Link to="/active" onClick={() => setIsMenuOpen(false)}>
               Active Quizzes
             </Link>
           </NextUILink>
-          <NextUILink size="lg" className="font-medium">
-              <Link
-                to="/participatingIn"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Participating In
-              </Link>
-            </NextUILink>
+          <NextUILink className="font-medium text-2xl">
+            <Link to="/participatingIn" onClick={() => setIsMenuOpen(false)}>
+              Participating In
+            </Link>
+          </NextUILink>
+          <NextUILink className="font-medium text-2xl">
+            <Link to="/about" onClick={() => setIsMenuOpen(false)}>
+              About the app
+            </Link>
+          </NextUILink>
           {/* {menuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <NextUILink

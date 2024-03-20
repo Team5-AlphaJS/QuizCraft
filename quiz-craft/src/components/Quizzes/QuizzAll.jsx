@@ -68,7 +68,7 @@ const QuizAll = ({ quizzes, setQuizzes }) => {
       {userData.role === 'Student' && (
         <div className="quizzes-list grid grid-cols-2">
           <div className="invitational">
-            <p className="text-center text-white p-2 mb-5 text-2xl font-semibold bg-gradient-to-l from-slate-600 to-slate-800 w-[95%]">
+            <p className="text-center text-white p-2 mb-5 text-2xl font-semibold bg-gradient-to-r from-slate-900 to-slate-800 w-[95%]">
               Invitation Quizzes
             </p>
             <div className="grid grid-cols-2 gap-7 w-[95%]">
