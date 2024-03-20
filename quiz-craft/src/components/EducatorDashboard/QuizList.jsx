@@ -30,6 +30,7 @@ import {
   Button,
 } from '@nextui-org/react';
 import { Edit, Trash, Search } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const QuizList = () => {
   //   const navigate = useNavigate();
@@ -54,6 +55,8 @@ const QuizList = () => {
   };
 
   const { toast } = useToast();
+
+  const navigate = useNavigate();
 
   const sortQuizzes = (quizzesGiven) => {
     return desc
@@ -108,17 +111,6 @@ const QuizList = () => {
 
     setQuizzes([...filteredQuizzes]);
   }, [searchTerm, searchBy]);
-
-  const handleEditQuizClick = (quiz) => {
-    // TODO: navigate to the quiz edit page
-    // or open a modal/dialog to edit the quiz
-
-    // in the QuizCreate component, we can use the quiz object to set the state
-    // with the quiz's data and then the user can edit it 
-
-    // quiz is the whole quiz object with the id and all the data
-    console.log(quiz);
-  };
 
   const handleRemoveQuizClick = async (quizId) => {
     try {
@@ -190,7 +182,7 @@ const QuizList = () => {
                   <Divider />
                   <CardFooter>
                     <Button
-                      onClick={() => handleEditQuizClick({...quiz})}
+                      onClick={() => navigate(`/edit-quiz/${quiz.id}`)}
                       className="mr-2"
                       color="primary"
                       startContent={<Edit />}

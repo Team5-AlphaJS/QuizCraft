@@ -20,6 +20,7 @@ import ActiveQuizzes from './pages/ActiveQuizzes';
 import ParticipatingIn from './pages/ParticipatingIn';
 import Enroll from './pages/Enroll';
 import CreateEditQuiz from './pages/CreateEditQuiz';
+import { Toaster } from './components/ui/toaster';
 
 function App() {
   const [appState, setAppState] = useState({
@@ -67,6 +68,8 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/register" element={<Register />} />
             <Route path="/about" element={<About />} />
+            <Route path="/enroll/:id" element={<Enroll />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />
         </>
@@ -75,6 +78,7 @@ function App() {
           <AuthContext.Provider
             value={{ ...appState, setContext: setAppState }}
           >
+            <Toaster />
             <Header />
             <Routes>
               <Route path="/" element={<ActiveQuizzes />} />

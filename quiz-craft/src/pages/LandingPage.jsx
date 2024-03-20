@@ -1,7 +1,11 @@
 import { motion } from 'framer-motion';
 import { Card, CardHeader, CardBody, Button } from '@nextui-org/react';
+import { useNavigate } from 'react-router-dom';
 
 export default function LandingPage() {
+  const navigate = useNavigate();
+  const demoQuizId = '-NtSHrlTAY-KUP_rAmq-'
+
   return (
     <motion.div
       className="flex flex-col items-center justify-center"
@@ -93,8 +97,11 @@ export default function LandingPage() {
           Interested? Try our demo quiz! 👉
         </h1>
         <motion.div whileHover={{ scale: 1.1 }}>
-          {/* Quiz card to render on click with the option to enroll and play the demo quiz */}
-          <Button color="primary" variant="ghost">
+          <Button 
+            color="primary" 
+            variant="ghost" 
+            onClick={() => navigate(`/enroll/${demoQuizId}`)}
+          >
             Demo Quiz
           </Button>
         </motion.div>
