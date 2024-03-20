@@ -21,6 +21,8 @@ import ParticipatingIn from './pages/ParticipatingIn';
 import Enroll from './pages/Enroll';
 import CreateEditQuiz from './pages/CreateEditQuiz';
 import { Toaster } from './components/ui/toaster';
+import Finished from './pages/Finished';
+import Scoreboard from './pages/Scoreboard';
 
 function App() {
   const [appState, setAppState] = useState({
@@ -88,6 +90,7 @@ function App() {
               <Route path="/quizzes" element={<Quizzes />} />
               <Route path="/active" element={<ActiveQuizzes />} />
               <Route path="/participatingIn" element={<ParticipatingIn />} />
+              <Route path="/scoreboard" element={<Scoreboard />} />
               <Route path="/enroll/:id" element={<Enroll />} />
               <Route
                 path="/user/:id"
@@ -103,7 +106,7 @@ function App() {
               {/* <Route path="/educator-dashboard" element={<EducatorDashboard />} /> */}
               <Route path="/create-quiz" element={<CreateEditQuiz />} />
               <Route path="/edit-quiz/:id" element={<CreateEditQuiz />} />
-              <Route path="/finished" element={<></>} />
+              <Route path="/finished" element={<Finished />} />
               <Route path="*" element={<NotFound />} />
               {isAdmin() && (
                 <Route path="/admin" element={<AdminDashboard />} />
