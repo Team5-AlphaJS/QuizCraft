@@ -8,10 +8,11 @@ import {
 import {
   inviteAcceptedQuiz,
   removeFromInvated,
+  removeQuiz,
 } from '../../../services/quiz.service';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardHeader, CardBody, Button, Divider } from '@nextui-org/react';
-import { Check, X, BookCheck, BookOpenCheck } from 'lucide-react';
+import { Check, X, BookCheck, BookOpenCheck, Pencil } from 'lucide-react';
 
 const SimpleQuiz = ({ quiz, quizzes, setQuizzes, onOngoing }) => {
   const { userData, setContext } = useContext(AuthContext);
@@ -80,6 +81,12 @@ const SimpleQuiz = ({ quiz, quizzes, setQuizzes, onOngoing }) => {
     }
   };
 
+  const onDelete = async () => {
+    await removeQuiz(quiz.id);
+    delete quizzes[quiz.id];
+    setQuizzes({ ...quizzes });
+  }
+
   return (
     <Card
       className="flex flex-col mx-20 my-8 border border-slate-900"
@@ -98,14 +105,14 @@ const SimpleQuiz = ({ quiz, quizzes, setQuizzes, onOngoing }) => {
           quiz.category === 'math'
             ? 'bg-gradient-to-br from-blue-700 to-slate-800  text-white'
             : quiz.category === 'biology'
-            ? 'bg-gradient-to-br from-red-700 to-slate-800 text-white'
-            : quiz.category === 'history'
-            ? 'bg-gradient-to-br from-yellow-800 to-slate-800 text-white'
-            : quiz.category === 'science'
-            ? 'bg-gradient-to-br from-green-800 to-slate-800 text-white'
-            : quiz.category === 'chemistry'
-            ? 'bg-gradient-to-br from-purple-800 to-slate-800 text-white'
-            : 'bg-gradient-to-br from-slate-600 to-slate-800 text-white'
+              ? 'bg-gradient-to-br from-red-700 to-slate-800 text-white'
+              : quiz.category === 'history'
+                ? 'bg-gradient-to-br from-yellow-800 to-slate-800 text-white'
+                : quiz.category === 'science'
+                  ? 'bg-gradient-to-br from-green-800 to-slate-800 text-white'
+                  : quiz.category === 'chemistry'
+                    ? 'bg-gradient-to-br from-purple-800 to-slate-800 text-white'
+                    : 'bg-gradient-to-br from-slate-600 to-slate-800 text-white'
         }
       >
         <p>Subject: {quiz.category}</p>
@@ -175,10 +182,24 @@ const SimpleQuiz = ({ quiz, quizzes, setQuizzes, onOngoing }) => {
             )}
           </>
         )}
-        {userData.userName === quiz.author && (
-          <div>
-            <div>Edit</div>
-            <div>Delete</div>
+        {userData.username === quiz.author && (
+          <div className="place-self-end">
+            <Button
+              className="m-1 border-1 border-slate-600 hover:text-green-400 hover:border-1 hover:border-green-400 text-white"
+              variant="ghost"
+              startContent={<Pencil />}
+              onClick={() => navigate(`/edit-quiz/${quiz.id}`)}
+            >
+              Edit
+            </Button>
+            <Button
+              className="m-1 border-1 border-slate-600 hover:text-red-300 hover:border-1 hover:border-red-400 text-white"
+              variant="ghost"
+              startContent={<X />}
+              onClick={onDelete}
+            >
+              Delete
+            </Button>
           </div>
         )}
       </CardBody>

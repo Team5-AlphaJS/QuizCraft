@@ -2,8 +2,6 @@ import { AuthContext } from "../../context/AuthContext";
 import { useState, useEffect, useContext } from "react";
 import { getAllQuizzes } from "../../services/quiz.service";
 import SimpleQuiz from "@/components/SimpleQuiz/SimpleQuiz";
-// import { ScrollArea } from "@/components/ui/scroll-area";
-
 
 const ActiveQuizzes = () => {
     const { userData } = useContext(AuthContext);
@@ -12,7 +10,7 @@ const ActiveQuizzes = () => {
 
 
     useEffect(() => {
-        if (userData) {
+        if (userData && userData.role === "Student") {
             getAllQuizzes()
                 .then(snap => snap.val())
                 .then(data => {
@@ -23,10 +21,23 @@ const ActiveQuizzes = () => {
                                 data[quizId].id = quizId;
                                 quizzes[quizId] = data[quizId];
                                 setQuizzes({ ...quizzes });
-
                             }
                         }
                     });
+                });
+        } else if (userData && userData.role === 'Educator') {
+            getAllQuizzes()
+                .then(snap => snap.val())
+                .then(data => {
+                    Object.keys(data).map(quizId => {
+                        if (data[quizId].dueDate > new Date().getTime()) {
+                            if (data[quizId].author === userData.username) {
+                                data[quizId].id = quizId;
+                                quizzes[quizId] = data[quizId];
+                                setQuizzes({ ...quizzes });
+                            }
+                        }
+                    })
                 });
         }
 
