@@ -93,7 +93,7 @@ export default function LandingPage() {
           Interested? Try our demo quiz! 👉
         </h1>
         <motion.div whileHover={{ scale: 1.1 }}>
-          {/* route to a demo quiz to be added here */}
+          {/* Quiz card to render on click with the option to enroll and play the demo quiz */}
           <Button color="primary" variant="ghost">
             Demo Quiz
           </Button>

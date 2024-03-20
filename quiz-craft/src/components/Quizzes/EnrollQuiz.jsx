@@ -1,12 +1,10 @@
 import PropTypes from "prop-types";
-import { useContext, useEffect, useState } from "react";
-import { Button } from "../ui/button";
+import { useEffect, useState } from "react";
+import { Button } from "@nextui-org/react";
 import { Checkbox } from "../ui/checkbox";
 import { Label } from "../ui/label";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import Timer from "../Timer/Timer";
-import { AuthContext } from "../../../context/AuthContext";
-import { studentEnrolled, studentParticipated } from "../../../services/users.service";
+import {Card, CardHeader, CardBody, CardFooter, Divider} from "@nextui-org/react";
 
 const EnrollQuiz = ({ quiz, ongoing, setOngoing, setEnroll }) => {
     const { userData, setContext } = useContext(AuthContext);
@@ -86,33 +84,30 @@ const EnrollQuiz = ({ quiz, ongoing, setOngoing, setEnroll }) => {
     return (
         <>
             {!quizStart &&
-                <div className="flex flex-col w-11/12 justify-around">
-                    <di className="flex flex-col pl-8 pt-8 h-2/4">
-                        <h1>{quiz.title}</h1>
-                        <p>Of category: {quiz.category}</p>
-                        <p>Time left to complete: {quiz.dueDate - Date.now()}</p>
-                        <p>You will have to answear {Object.keys(quiz.questions).length} questions in {quiz.timer} time to complete.</p>
-                    </di>
-                    <div className="flex justify-between">
-                        <Button className="ml-2" onClick={() => setEnroll('')}>Back</Button>
-                        {(!("participated" in quiz) || !(userData.username in quiz.participated)) &&
-                            <Button className="mr-4" onClick={() => {
-                                setQuizStart(true);
-                                const newTime = new Date();
-                                const seconds = quiz.timer * 60;
-                                newTime.setSeconds(newTime.getSeconds() + seconds);
-                                setTime(newTime);
-                            }}>Start</Button>}
-
-                    </div>
+                <div className="w-[98%]">
+                    <Card shadow="lg" className="border border-slate-900">
+                        <CardHeader className="flex items-center justify-center text-3xl">
+                            <p>{quiz.title}</p>
+                        </CardHeader>
+                        <Divider />
+                        <CardBody className="text-xl">
+                            <p>Of category: {quiz.category}</p>
+                            <p>Time left to complete: {quiz.dueDate - Date.now()}</p>
+                            <p>You will have to answer {Object.keys(quiz.questions).length} questions in {quiz.timer} minutes to complete it.</p>
+                        </CardBody>
+                        <Divider />
+                        <CardFooter className="flex justify-between">
+                            <Button size="lg" variant="faded" onClick={() => setEnroll('')}>Back</Button>
+                            <Button size="lg" variant="ghost" color="primary" onClick={() => setQuizStart(true)}>Start</Button>
+                        </CardFooter>
+                    </Card>
                 </div>
             }
             {quizStart && <div className="quiz">
-                <Timer setQuizStart={setQuizStart} expiryTimestamp={time} />
                 <div className="question">
                     <p>{currentQuestion.question}</p>
                     {quiz.questions[questionIds[questionIndex]].type === "single" &&
-                        <RadioGroup>
+                        <RadioGroup className='my-2'>
                             {Object.keys(quiz.questions[questionIds[questionIndex]].answears).map(answearId =>
                                 <div key={answearId} className="flex items-center space-x-2">
                                     <RadioGroupItem
@@ -148,10 +143,10 @@ const EnrollQuiz = ({ quiz, ongoing, setOngoing, setEnroll }) => {
                         </div>
                     }
                 </div>
-                <div className="navigate">
-                    {questionIndex !== 0 && <Button onClick={() => setQuestionIndex(questionIndex - 1)}>Previous</Button>}
-                    {questionIndex < questionIds.length - 1 && <Button onClick={() => setQuestionIndex(questionIndex + 1)}>Next</Button>}
-                    {questionIndex === questionIds.length - 1 && <Button onClick={finish}>Finish</Button>}
+                <div className="navigate space-x-2">
+                    {questionIndex !== 0 && <Button variant="ghost" color="primary" onClick={() => setQuestionIndex(questionIndex - 1)}>Previous</Button>}
+                    {questionIndex < questionIds.length - 1 && <Button variant="ghost" color="primary" onClick={() => setQuestionIndex(questionIndex + 1)}>Next</Button>}
+                    {questionIndex === questionIds.length - 1 && <Button variant="ghost" color="primary" onClick={finish}>Finish</Button>}
                 </div>
             </div>
             }

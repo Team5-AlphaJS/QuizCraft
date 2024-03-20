@@ -109,9 +109,15 @@ const QuizList = () => {
     setQuizzes([...filteredQuizzes]);
   }, [searchTerm, searchBy]);
 
-  const handleEditQuizClick = (quizId) => {
-    // TODO: navigate to the quiz edit page or open a modal to edit the quiz
-    console.log('Edit quiz:', quizId);
+  const handleEditQuizClick = (quiz) => {
+    // TODO: navigate to the quiz edit page
+    // or open a modal/dialog to edit the quiz
+
+    // in the QuizCreate component, we can use the quiz object to set the state
+    // with the quiz's data and then the user can edit it 
+
+    // quiz is the whole quiz object with the id and all the data
+    console.log(quiz);
   };
 
   const handleRemoveQuizClick = async (quizId) => {
@@ -184,7 +190,7 @@ const QuizList = () => {
                   <Divider />
                   <CardFooter>
                     <Button
-                      onClick={() => handleEditQuizClick(quiz.id)}
+                      onClick={() => handleEditQuizClick({...quiz})}
                       className="mr-2"
                       color="primary"
                       startContent={<Edit />}
