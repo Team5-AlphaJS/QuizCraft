@@ -233,9 +233,16 @@ export default function Header() {
               Active Quizzes
             </Link>
           </NextUILink>
+          {userData && userData.role === "Student" && (
+            <NextUILink className="font-medium text-2xl">
+              <Link to="/participatingIn" onClick={() => setIsMenuOpen(false)}>
+                Participating In
+              </Link>
+            </NextUILink>
+          )}
           <NextUILink className="font-medium text-2xl">
-            <Link to="/participatingIn" onClick={() => setIsMenuOpen(false)}>
-              Participating In
+            <Link to="/finished" onClick={() => setIsMenuOpen(false)}>
+              Finished
             </Link>
           </NextUILink>
           <NextUILink className="font-medium text-2xl">
