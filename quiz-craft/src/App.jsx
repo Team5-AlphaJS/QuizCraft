@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
+// import Home from './pages/Home';
 import Register from './components/Authentication/Register';
 import { useState, useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -82,13 +82,13 @@ function App() {
             <Toaster />
             <Header />
             <Routes>
-            <Route path="/" element={<ActiveQuizzes />} />
-              <Route path="/home" element={<Home />} />
+              <Route path="/" element={<ActiveQuizzes />} />
+              <Route path="/home" element={<ActiveQuizzes />} />
               {/* <Route path="/register" element={<Register />} /> */}
               <Route path="/about" element={<About />} />
               <Route path="/quizzes" element={<Quizzes />} />
               <Route path="/active" element={<ActiveQuizzes />} />
-              <Route path="participatingIn" element={<ParticipatingIn />} />
+              <Route path="/participatingIn" element={<ParticipatingIn />} />
               <Route path="/enroll/:id" element={<Enroll />} />
               <Route
                 path="/user/:id"
@@ -104,6 +104,7 @@ function App() {
               {/* <Route path="/educator-dashboard" element={<EducatorDashboard />} /> */}
               <Route path="/create-quiz" element={<CreateEditQuiz />} />
               <Route path="/edit-quiz/:id" element={<CreateEditQuiz />} />
+              <Route path="/finished" element={<></>} />
               <Route path="*" element={<NotFound />} />
               {isAdmin() && (
                 <Route path="/admin" element={<AdminDashboard />} />

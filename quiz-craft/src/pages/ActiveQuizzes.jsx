@@ -52,7 +52,8 @@ const ActiveQuizzes = () => {
             <div className="mb-[60px]">
                 {Object.keys(quizzes).length !== 0 ? (
                     <>
-                        <p className="text-white text-center py-1 mb-2 text-xl bg-gradient-to-r from-slate-800 to-slate-600 w-full">You are invited to participate in</p>
+                        {userData && userData.role === "Educator" && <p className="text-white text-center py-1 mb-2 text-xl bg-gradient-to-r from-slate-800 to-slate-600 w-full">Your invitational quizzes.</p>}
+                        {userData && userData.role === "Student" && <p className="text-white text-center py-1 mb-2 text-xl bg-gradient-to-r from-slate-800 to-slate-600 w-full">You are invited to participate in</p>}
                         {Object.keys(quizzes).map(quizId =>
                             quizzes[quizId].openOrInvite === "invitational" &&
                             <SimpleQuiz
@@ -62,12 +63,17 @@ const ActiveQuizzes = () => {
                                 setQuizzes={setQuizzes} />)}
                     </>
                 ) : (
-                    <p className="text-center text-white mb-5 mt-5 font-semibold bg-gradient-to-r from-pink-900 to-red-900 w-full">You are not invited to any quizzes.</p>
+                    <>
+                        {userData && userData.role === "Educator" && <p className="text-center text-white mb-5 mt-5 font-semibold bg-gradient-to-r from-pink-900 to-red-900 w-full">You have not created any invitational quizzes.</p>}
+                        {userData && userData.role === "Student" && <p className="text-center text-white mb-5 mt-5 font-semibold bg-gradient-to-r from-pink-900 to-red-900 w-full">You are not invited to any quizzes.</p>}
+                    </>
+
                 )}
 
                 {Object.keys(quizzes).length !== 0 ? (
                     <>
-                        <p className="text-white text-center py-1 text-xl bg-gradient-to-r from-slate-800 to-slate-600 w-full">Open quizzes for everyone</p>
+                        {userData && userData.role === "Educator" && <p className="text-white text-center py-1 mb-2 text-xl bg-gradient-to-r from-slate-800 to-slate-600 w-full">Your open quizzes.</p>}
+                        {userData && userData.role === "Student" && <p className="text-white text-center py-1 mb-2 text-xl bg-gradient-to-r from-slate-800 to-slate-600 w-full">Open quizzes for everyone.</p>}
                         {Object.keys(quizzes).map(quizId =>
                             quizzes[quizId].openOrInvite === "open" &&
                             <SimpleQuiz
@@ -77,7 +83,10 @@ const ActiveQuizzes = () => {
                                 setQuizzes={setQuizzes} />)}
                     </>
                 ) : (
-                    <p className="text-center text-white mb-5 mt-5 font-semibold bg-gradient-to-r from-pink-900 to-red-900 w-full">There are no open quizzes at the moment.</p>
+                    <>
+                        {userData && userData.role === "Educator" && <p className="text-center text-white mb-5 mt-5 font-semibold bg-gradient-to-r from-pink-900 to-red-900 w-full">You have not created any open quizzes.</p>}
+                        {userData && userData.role === "Student" && <p className="text-center text-white mb-5 mt-5 font-semibold bg-gradient-to-r from-pink-900 to-red-900 w-full">There are no open quizzes at the moment.</p>}
+                    </>
                 )}
             </div>
         </div>

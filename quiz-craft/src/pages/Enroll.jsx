@@ -85,18 +85,21 @@ const Enroll = () => {
         setShowScore(true);
 
         const ponitsPerAns = Math.ceil(quiz.score / Object.keys(quiz.questions).length);
+
         Object.keys(quiz.questions).map(questionId => {
             if (quiz.questions[questionId].type === 'single') {
-                if (participantAnswers[questionId].includes(Object.keys(quiz.questions[questionId].answears)[0])) {
+                if (participantAnswers[questionId].includes(Object.keys(quiz.questions[questionId].correct)[0])) {
+                    console.log('correct')
                     score.score += ponitsPerAns;
-                    setScore(score);
+                    setScore({...score});
                 }
             } else {
                 const pointsPerAnsPiece = Math.ceil(ponitsPerAns / Object.keys(quiz.questions[questionId].correct).length);
+
                 Object.keys(quiz.questions[questionId].answears).map(answear => {
                     if (participantAnswers[questionId].includes(answear)) {
                         score.score += pointsPerAnsPiece;
-                        setScore(score);
+                        setScore({ ...score });
                     }
                 })
             }
@@ -108,9 +111,9 @@ const Enroll = () => {
             // mahni ot usera ongoing
             await studentEnrolled(userData.username, id);
             userData.enrolled = { [id]: score };
-    
+
             console.log(userData);
-    
+
             // zapishi v bazata na usera enrolled scora
             await studentParticipated(userData.username, id, score);
             // mahni ot quiza participants
@@ -122,87 +125,87 @@ const Enroll = () => {
         <>
             {!onStart ? (
                 <div className="flex flex-col items-center justify-center space-y-12 h-[600px]">
-                <Card className="border border-slate-900" shadow="lg">
-                    <CardHeader className="flex justify-center">
-                        <p className="text-3xl font-semibold">{quiz.title}</p>
-                    </CardHeader>
-                    <CardBody>
-                    {!showScore &&
-                        <div>
-                            <p className="text-center text-lg">
-                                Once you click on Start you`ll have {quiz.timer} minutes to complete the quiz.
-                            </p>
-                            <p className="text-center text-primary text-lg">Good Luck!</p>
-                        </div>
-                    }
-                    {showScore &&
-                        <div>
-                            <p className="text-2xl text-center">Well done!</p>
-                            <p className="text-center">Your score is {score.score}</p>
-                        </div>}
-                    </CardBody>
-                    <CardFooter>
-                    <div className="flex justify-between w-full">
-                        <Button onClick={() => navigate(-1)}>Back</Button>
-                        {!showScore && <Button onClick={onStartQuiz}>Start</Button>}
-                    </div>
-                    </CardFooter>
-                </Card>
+                    <Card className="border border-slate-900" shadow="lg">
+                        <CardHeader className="flex justify-center">
+                            <p className="text-3xl font-semibold">{quiz.title}</p>
+                        </CardHeader>
+                        <CardBody>
+                            {!showScore &&
+                                <div>
+                                    <p className="text-center text-lg">
+                                        Once you click on Start you`ll have {quiz.timer} minutes to complete the quiz.
+                                    </p>
+                                    <p className="text-center text-primary text-lg">Good Luck!</p>
+                                </div>
+                            }
+                            {showScore &&
+                                <div>
+                                    <p className="text-2xl text-center">Well done!</p>
+                                    <p className="text-center">Your score is {score.score}</p>
+                                </div>}
+                        </CardBody>
+                        <CardFooter>
+                            <div className="flex justify-between w-full">
+                                <Button onClick={() => navigate(-1)}>Back</Button>
+                                {!showScore && <Button onClick={onStartQuiz}>Start</Button>}
+                            </div>
+                        </CardFooter>
+                    </Card>
                 </div>
             ) : (
                 <>
                     <div className="flex flex-col items-center justify-center h-[600px]">
-                    <Card>
-                        <CardHeader className="flex flex-col border-b-2">
-                            <p className="text-3xl font-semibold">{quiz.title}</p>
-                            <Timer setOnStart={setOnStart} expiryTimestamp={startTime} onFinish={onFinish} />
-                        </CardHeader>
-                        <CardBody>
-                        <div className="flex flex-col">
-                            <div className="flex flex-col">
-                                {questions[currentIndex].type === 'multi' && <p className="text-primary">*More than one answer possible.</p>}
-                                <p className="text-2xl mb-4">{questions[currentIndex].question}</p>
-                            </div>
-                            {questions[currentIndex].type === 'single' &&
-                                <RadioGroup className="">
-                                    {Object.keys(questions[currentIndex].answears).map(answearId =>
-                                        <div key={answearId} className="flex items-center space-x-2">
-                                            <RadioGroupItem
-                                                value={questions[currentIndex].answears[answearId]}
-                                                checked={participantAnswers[questions[currentIndex].id].includes(answearId)}
-                                                id={answearId}
-                                                onClick={() => setAnswear(answearId)}
-                                            />
-                                            <Label htmlFor={answearId}>{questions[currentIndex].answears[answearId]}</Label>
-                                        </div>)
+                        <Card>
+                            <CardHeader className="flex flex-col border-b-2">
+                                <p className="text-3xl font-semibold">{quiz.title}</p>
+                                <Timer setOnStart={setOnStart} expiryTimestamp={startTime} onFinish={onFinish} />
+                            </CardHeader>
+                            <CardBody>
+                                <div className="flex flex-col">
+                                    <div className="flex flex-col">
+                                        {questions[currentIndex].type === 'multi' && <p className="text-primary">*More than one answer possible.</p>}
+                                        <p className="text-2xl mb-4">{questions[currentIndex].question}</p>
+                                    </div>
+                                    {questions[currentIndex].type === 'single' &&
+                                        <RadioGroup className="">
+                                            {Object.keys(questions[currentIndex].answears).map(answearId =>
+                                                <div key={answearId} className="flex items-center space-x-2">
+                                                    <RadioGroupItem
+                                                        value={questions[currentIndex].answears[answearId]}
+                                                        checked={participantAnswers[questions[currentIndex].id].includes(answearId)}
+                                                        id={answearId}
+                                                        onClick={() => setAnswear(answearId)}
+                                                    />
+                                                    <Label htmlFor={answearId}>{questions[currentIndex].answears[answearId]}</Label>
+                                                </div>)
+                                            }
+                                        </RadioGroup>
                                     }
-                                </RadioGroup>
-                            }
-                            {questions[currentIndex].type === 'multi' &&
-                                <div className="checkboxes space-y-2">
-                                    {Object.keys(questions[currentIndex].answears).map(answearId =>
-                                        <div key={answearId} className="flex items-center space-x-2">
-                                            <Checkbox
-                                                value={questions[currentIndex].answears[answearId]}
-                                                checked={participantAnswers[questions[currentIndex].id].includes(answearId)}
-                                                id={answearId}
-                                                onClick={() => setAnswear(answearId)}
-                                            />
-                                            <Label htmlFor={answearId}>{questions[currentIndex].answears[answearId]}</Label>
-                                        </div>)
-                                    }
-                                </div>}
+                                    {questions[currentIndex].type === 'multi' &&
+                                        <div className="checkboxes space-y-2">
+                                            {Object.keys(questions[currentIndex].answears).map(answearId =>
+                                                <div key={answearId} className="flex items-center space-x-2">
+                                                    <Checkbox
+                                                        value={questions[currentIndex].answears[answearId]}
+                                                        checked={participantAnswers[questions[currentIndex].id].includes(answearId)}
+                                                        id={answearId}
+                                                        onClick={() => setAnswear(answearId)}
+                                                    />
+                                                    <Label htmlFor={answearId}>{questions[currentIndex].answears[answearId]}</Label>
+                                                </div>)
+                                            }
+                                        </div>}
 
 
-                        </div>
-                        </CardBody>
-                        <CardFooter>
-                        <div className=" place-items-end space-x-3">
-                            {currentIndex !== 0 && <Button onClick={() => setCurrentIndex(currentIndex - 1)}>Previous</Button>}
-                            {currentIndex < questionsIds.length - 1 && <Button onClick={() => setCurrentIndex(currentIndex + 1)}>Next</Button>}
-                            {currentIndex === questionsIds.length - 1 && <Button onClick={onFinish}>Finish</Button>}
-                        </div>
-                        </CardFooter>
+                                </div>
+                            </CardBody>
+                            <CardFooter>
+                                <div className=" place-items-end space-x-3">
+                                    {currentIndex !== 0 && <Button onClick={() => setCurrentIndex(currentIndex - 1)}>Previous</Button>}
+                                    {currentIndex < questionsIds.length - 1 && <Button onClick={() => setCurrentIndex(currentIndex + 1)}>Next</Button>}
+                                    {currentIndex === questionsIds.length - 1 && <Button onClick={onFinish}>Finish</Button>}
+                                </div>
+                            </CardFooter>
                         </Card>
                     </div>
                 </>)}
