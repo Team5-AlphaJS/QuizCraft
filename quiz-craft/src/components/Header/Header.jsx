@@ -228,16 +228,20 @@ export default function Header() {
               </Link>
             </NextUILink>
           )}
-          <NextUILink className="font-medium text-2xl">
-            <Link to="/active" onClick={() => setIsMenuOpen(false)}>
-              Active Quizzes
-            </Link>
-          </NextUILink>
-          <NextUILink className="font-medium text-2xl">
-            <Link to="/participatingIn" onClick={() => setIsMenuOpen(false)}>
-              Participating In
-            </Link>
-          </NextUILink>
+          {userData && (
+            <NextUILink className="font-medium text-2xl">
+              <Link to="/active" onClick={() => setIsMenuOpen(false)}>
+                Active Quizzes
+              </Link>
+            </NextUILink>
+          )}
+          {userData && (
+            <NextUILink className="font-medium text-2xl">
+              <Link to="/participatingIn" onClick={() => setIsMenuOpen(false)}>
+                Participating In
+              </Link>
+            </NextUILink>
+          )}
           <NextUILink className="font-medium text-2xl">
             <Link to="/about" onClick={() => setIsMenuOpen(false)}>
               About the app

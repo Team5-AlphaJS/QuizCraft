@@ -9,12 +9,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getQuizData, participated, removeFromParticipatns } from "../../services/quiz.service";
 import { Button } from "../components/ui/button";
 import { studentParticipated, studentEnrolled } from "../../services/users.service";
-import {Card, CardHeader, CardBody, CardFooter } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/react";
 
 const Enroll = () => {
     const id = useParams().id;
     const navigate = useNavigate();
-    const { userData } = useContext(AuthContext)
+    const { userData } = useContext(AuthContext);
 
     const [quiz, setQuiz] = useState({
         title: '',
@@ -49,11 +49,11 @@ const Enroll = () => {
     useEffect(() => {
         setQuestionIds(Object.keys(quiz.questions));
         Object.keys(quiz.questions).map(questionId => {
-            participantAnswers[questionId] = []
+            participantAnswers[questionId] = [];
             setParticipantAswers({ ...participantAnswers })
             quiz.questions[questionId].id = questionId;
             questions.push(quiz.questions[questionId]);
-            setQuestions([...questions])
+            setQuestions([...questions]);
         });
     }, [quiz]);
 
@@ -102,18 +102,20 @@ const Enroll = () => {
             }
         });
 
-        // zapishi v bazata na quiaz participated scora
-        await participated(userData.username, id, score);
-        // mahni ot usera ongoing
-        await studentEnrolled(userData.username, id);
-        userData.enrolled = { [id]: score };
-
-        console.log(userData);
-
-        // zapishi v bazata na usera enrolled scora
-        await studentParticipated(userData.username, id, score);
-        // mahni ot quiza participants
-        await removeFromParticipatns(userData.username, id);
+        if (userData) {
+            // zapishi v bazata na quiaz participated scora
+            await participated(userData.username, id, score);
+            // mahni ot usera ongoing
+            await studentEnrolled(userData.username, id);
+            userData.enrolled = { [id]: score };
+    
+            console.log(userData);
+    
+            // zapishi v bazata na usera enrolled scora
+            await studentParticipated(userData.username, id, score);
+            // mahni ot quiza participants
+            await removeFromParticipatns(userData.username, id);
+        }
     };
 
     return (
@@ -128,8 +130,7 @@ const Enroll = () => {
                     {!showScore &&
                         <div>
                             <p className="text-center text-lg">
-                                Once you click on Start you`ll have {quiz.timer} minutes to answer {Object.keys(questions).length} questions
-                                to solve the quiz.
+                                Once you click on Start you`ll have {quiz.timer} minutes to complete the quiz.
                             </p>
                             <p className="text-center text-primary text-lg">Good Luck!</p>
                         </div>
