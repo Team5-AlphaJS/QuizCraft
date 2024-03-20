@@ -74,7 +74,7 @@ const QuestionCreateEdit = ({ quiz, setQuiz, onEdit, setOnEdit, questionId }) =>
     };
 
     return (
-        <div className="create-question mt-3 ml-1 flex flex-col border-2 rounded-md">
+        <div className="create-question mt-3 ml-1 flex flex-col rounded-md">
             <Input placeholder="Enter question here" value={question.question} onChange={(e) => setQuestion({ ...question, question: e.target.value })} /><br />
             <RadioGroup defaultValue={question.type} className="flex justify-start ">
                 <p className="pl-3 mt-2 mb-2">Choose type of question</p>
@@ -92,9 +92,12 @@ const QuestionCreateEdit = ({ quiz, setQuiz, onEdit, setOnEdit, questionId }) =>
                     <Label htmlFor="multi">Multi</Label>
                 </div>
             </RadioGroup>
-            <AnswearCreateEdit question={question} setQuestion={setQuestion} />
+            <div className="flex justify-between ">
+                <AnswearCreateEdit  question={question} setQuestion={setQuestion} />
+                <Button className="mb-1 self-end" variant="ghost" onClick={onAddQuestion}>{onEdit ? "Save" : "Add"} question</Button>
+            </div>
             {Object.keys(question.answears).length > 0
-                && <ScrollArea className="h-24">
+                && <ScrollArea className="h-40 p-2">
                     {Object.keys(question.answears)
                         .map(answearId =>
                             <SimpleAnswear
@@ -105,7 +108,6 @@ const QuestionCreateEdit = ({ quiz, setQuiz, onEdit, setOnEdit, questionId }) =>
                         )}
                 </ScrollArea>
             }
-            <Button className="mt-2 place-self-end border-2 self-end" variant="ghost" onClick={onAddQuestion}>{onEdit ? "Save" : "Add"} question</Button>
             <Toaster />
         </div>
     );

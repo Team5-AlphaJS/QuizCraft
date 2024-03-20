@@ -27,7 +27,7 @@ const AnswearCreateEdit = ({ question, setQuestion }) => {
     };
 
     return (
-        <div className="add-naswer flex">
+        <div className="add-naswer w-3/4 flex ">
             <Input className="w-2/3 mr-2" placeholder="Enter answear" value={answear} onChange={(e) => setAnswear(e.target.value)} />
             <Button variant="ghost" onClick={(e) => {
                 e.preventDefault();

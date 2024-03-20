@@ -4,6 +4,7 @@ import { getAllQuizzes } from "../../services/quiz.service";
 import SimpleQuiz from "@/components/SimpleQuiz/SimpleQuiz";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
+
 const ActiveQuizzes = () => {
     const { userData } = useContext(AuthContext);
 

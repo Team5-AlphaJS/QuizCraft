@@ -86,7 +86,7 @@ const OpenInvite = ({ quiz, setQuiz }) => {
                                         <a href="" onClick={(e) => {
                                             e.preventDefault();
                                             onInvite(e.target.parentNode.id);
-                                        }}>{student[0] in quiz.invited ? 'Uninvite' : 'Invite'}</a>
+                                        }}>{'invited' in quiz && student[0] in quiz.invited ? 'Uninvite' : 'Invite'}</a>
                                     </div>
                                 ))}
                             </div>

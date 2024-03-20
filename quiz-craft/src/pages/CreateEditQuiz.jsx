@@ -1,5 +1,4 @@
-import { Label } from "@radix-ui/react-dropdown-menu";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CategorySelect from "../components/CategorySelect/CategorySelect";
 import OpenInvite from "../components/OpenInvite/OpenInvite";
 import QuestionCreateEdit from "../components/QuestionCreateEdit/QuestionCreateEdit";
@@ -13,31 +12,46 @@ import { ScrollArea } from "../components/ui/scroll-area";
 import { Toaster } from "../components/ui/toaster";
 import { useToast } from "../components/ui/use-toast";
 import { AuthContext } from "../../context/AuthContext";
-import { createQuiz, inviteStudent } from "../../services/quiz.service";
-import OrderQuestions from "../components/OrderQuestions/OrderQuestions";
+import { createQuiz, inviteStudent, editQuiz } from "../../services/quiz.service";
 import Scoring from "../components/Scoring/Scoring";
-
-
+import { useNavigate, useParams } from "react-router-dom";
+import { getQuizData } from "../../services/quiz.service";
 
 const CreateEditQuiz = () => {
     const { userData } = useContext(AuthContext);
+    const id = useParams().id
+    const navigate = useNavigate();
+
+    const [onEdit, setOnEdit] = useState(false);
+
     const [quiz, setQuiz] = useState({
         title: '',
         category: '',
         openOrInvite: '',
         questions: {},
-        timer: 0,
+        timer: 60,
         dueDate: '',
-        author: userData.username,
-        orderQuestions: 'ordered',
-        orderAnswears: 'ordered',
+        author: userData?.username || '',
         score: 100
     });
 
+    useEffect(() => {
+        if (window.location.href.split('/')[3] === "edit-quiz") {
+            setOnEdit('true');
+        }
+    }, []);
+
+    useEffect(() => {
+        if (onEdit) {
+            getQuizData(id)
+                .then(snap => snap.val())
+                .then(data => setQuiz(data));
+        }
+    }, [onEdit])
+
     const { toast } = useToast();
 
-    const onCreate = async () => {
-        console.log(quiz);
+    const onCreateEdit = async () => {
         if (quiz.title.length < 3 || quiz.title.length > 30) {
             toast({
                 title: "Invalid title",
@@ -78,15 +92,18 @@ const CreateEditQuiz = () => {
             return;
         }
 
-
         try {
-            const response = await createQuiz(quiz);
+            let response;
+            if (onEdit) {
+                response = await editQuiz(id, quiz);
+            } else {
+                response = await createQuiz(quiz);
+            }
             if (quiz.openOrInvite === "invitational") {
                 const quizId = response._path.pieces_[1];
                 const invitation = {
                     status: "pending"
                 };
-
                 Object.keys(quiz.invited).map(async participant => await inviteStudent(participant, invitation, quizId));
             }
         } catch (e) {
@@ -96,46 +113,39 @@ const CreateEditQuiz = () => {
             });
         } finally {
             toast({
-                title: `Quiz created successfuly`,
+                title: `Quiz ${onEdit ? 'edited' : 'created'} successfuly`,
             });
-            // setQuizzes([...quizzes, quiz]);
-            setQuiz({
-                title: '',
-                category: '',
-                openOrInvite: '',
-                questions: {},
-                timer: 0,
-                dueDate: '',
-                author: userData.username,
-                orderQuestions: 'ordered',
-                orderAnswears: 'ordered'
-            });
+            if (onEdit) {
+                navigate('/active');
+            } else {
+                setQuiz({
+                    title: '',
+                    category: '',
+                    openOrInvite: '',
+                    questions: {},
+                    timer: 0,
+                    dueDate: '',
+                    author: userData.username,
+                });
+            }
         }
     };
 
-    return (<Card className="h-[90%] w-5/6 p-3 flex flex-col border-3">
-        <div className="flex justify-between">
-            <Label className="mt-1.5 mr-1 pl-1 w-24" htmlFor="title">Quiz Title</Label>
-            <Input
-                className="w-full p-1"
-                id="title"
-                placeholder="Medieval history"
-                value={quiz.title}
-                onChange={(e) => setQuiz({ ...quiz, title: e.target.value })}
-            />
-        </div>
-        <div className=" mt-1 mb-1 flex justify-start ">
-            <CategorySelect quiz={quiz} setQuiz={setQuiz} />{" "}
-            <OpenInvite quiz={quiz} setQuiz={setQuiz} />{" "}
-            <SetTimer quiz={quiz} setQuiz={setQuiz} /> {" "}
-            <SetDate quiz={quiz} setQuiz={setQuiz} />
-            <OrderQuestions quiz={quiz} setQuiz={setQuiz} />
-            <Scoring quiz={quiz} setQuiz={setQuiz} />
-        </div>
-        <div className="flex">
-            <div className="w-full mr-2">
-                <QuestionCreateEdit quiz={quiz} setQuiz={setQuiz} />
-                <div className="added-questions mt-4">
+    return (
+        <div className="flex justify-center w-full h-[750px] mt-4" >
+            <Card className="flex flex-col items-center w-3/5">
+                <Input type="text" id="quiz-title" value={quiz.title} onChange={(e) => setQuiz({ ...quiz, title: e.target.value })} className="w-4/5 mt-4" placeholder="Enter quiz title" />
+                <div className=" mt-1 mb-1 flex justify-start ">
+                    <CategorySelect quiz={quiz} setQuiz={setQuiz} />{" "}
+                    <OpenInvite quiz={quiz} setQuiz={setQuiz} />{" "}
+                    <SetTimer quiz={quiz} setQuiz={setQuiz} /> {" "}
+                    <SetDate quiz={quiz} setQuiz={setQuiz} />
+                    <Scoring quiz={quiz} setQuiz={setQuiz} />
+                </div>
+                <div className="w-4/5">
+                    <QuestionCreateEdit quiz={quiz} setQuiz={setQuiz} />
+                </div>
+                <div className="added-questions w-4/5">
                     <p className="text-xl ml-1">Questions:</p>
                     {Object.keys(quiz.questions).length > 0 ? (
                         <ScrollArea className="">
@@ -146,13 +156,12 @@ const CreateEditQuiz = () => {
                             </div>
                         </ScrollArea>
                     ) : <p>No questions added.</p>}
-
                 </div>
-            </div>
+                <Button className="ml-1 w-1/6 h-8 mr-2 self-end" onClick={onCreateEdit}>{onEdit ? 'Edit' : 'Create'} quiz</Button>
+                <Toaster />
+            </Card>
         </div>
-        <Button className="ml-1 w-1/6 h-8 self-end" onClick={onCreate}>Create quiz</Button>
-        <Toaster />
-    </Card>);
+    );
 };
 
 export default CreateEditQuiz;

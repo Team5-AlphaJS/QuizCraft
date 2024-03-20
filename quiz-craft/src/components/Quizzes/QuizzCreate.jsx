@@ -31,8 +31,6 @@ const QuizCreate = ({ quizzes, setQuizzes }) => {
         timer: 0,
         dueDate: '',
         author: userData.username,
-        orderQuestions: 'ordered',
-        orderAnswears: 'ordered',
         score: 100
     });
 
@@ -109,8 +107,6 @@ const QuizCreate = ({ quizzes, setQuizzes }) => {
                 timer: 0,
                 dueDate: '',
                 author: userData.username,
-                orderQuestions: 'ordered',
-                orderAnswears: 'ordered'
             });
         }
     };

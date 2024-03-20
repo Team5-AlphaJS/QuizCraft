@@ -2,15 +2,27 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { useToast } from "../ui/use-toast";
+import { Toaster } from "../ui/toaster";
+import { Trash2, PencilLine } from 'lucide-react';
+
 const SimpleAnswear = ({ answearId, question, setQuestion }) => {
     const [onEdit, setOnEdit] = useState(false);
     const [answear, setAnswear] = useState(question.answears[answearId]);
+    const { toast } = useToast();
 
     const editAnswer = () => {
         setOnEdit(true);
     };
 
     const onEditAnswear = () => {
+        if (!answear) {
+            toast({
+                title: "Invalid answear",
+                description: 'Answears cannot be empty!'
+            });
+            return;
+        }
         question.answears[answearId] = answear;
         setQuestion({ ...question });
         setOnEdit(false);
@@ -33,12 +45,13 @@ const SimpleAnswear = ({ answearId, question, setQuestion }) => {
 
     if (onEdit) {
         return (
-            <div className="">
-                <Input className="w-2/3 mr-2" placeholder="Enter answear" value={answear} onChange={(e) => setAnswear(e.target.value)} />
-                <Button href="" onClick={(e) => {
+            <div className="add-naswer w-3/4 flex ">
+                <Input className="w-2/3 ml-1 mt-2" placeholder="Enter answear" value={answear} onChange={(e) => setAnswear(e.target.value)} />
+                <Button className="ml-1 mt-2" variant="ghost" onClick={(e) => {
                     e.preventDefault();
                     onEditAnswear();
-                }}>save</Button>
+                }}>Save</Button>
+                <Toaster />
             </div>
         )
     }
@@ -52,8 +65,8 @@ const SimpleAnswear = ({ answearId, question, setQuestion }) => {
                 {question.correct && Object.keys(question.correct).includes(answearId) && <Button variant="link" className="h-6 mr-1 place-self-end" onClick={onMarkIncorrect}>Mark as incorrect</Button>}
             </div>
             <div className="flex place-self-end">
-                <Button className="h-6 mr-1" variant="ghost" onClick={editAnswer}>Edit</Button>
-                <Button className="h-6" variant="ghost" onClick={deleteAnswear}>Delete</Button>
+                <Button className="m-1 border-1  hover:text-blue-400 hover:border-1 hover:border-blue-400" variant="ghost" onClick={editAnswer}><PencilLine /></Button>
+                <Button className="m-1 border-1  hover:text-red-400 hover:border-1 hover:border-red-400" variant="ghost" onClick={deleteAnswear}><Trash2 /></Button>
             </div>
         </div>
     );

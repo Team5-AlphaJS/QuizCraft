@@ -98,6 +98,7 @@ function App() {
               />
               {/* <Route path="/educator-dashboard" element={<EducatorDashboard />} /> */}
               <Route path="/create-quiz" element={<CreateEditQuiz />} />
+              <Route path="/edit-quiz/:id" element={<CreateEditQuiz />} />
               <Route path="*" element={<NotFound />} />
               {isAdmin() && (
                 <Route path="/admin" element={<AdminDashboard />} />

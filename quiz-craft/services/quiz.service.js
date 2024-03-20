@@ -43,8 +43,8 @@ export const getQuizData = async (id) => {
   return get(ref(db, `quizzes/${id}`));
 };
 
-export const editQuiz = (data) => {
-  return update(ref(db, `quizzes/${data.title}`), data);
+export const editQuiz = (quizId, data) => {
+  return update(ref(db, `quizzes/${quizId}`), data);
 }
 
 export const removeQuiz = (quizId) => {
