@@ -11,7 +11,7 @@ import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
 import About from './components/About/About';
 import NotFound from './components/NotFound/NotFound';
-import Quizzes from './pages/Quizzes';
+// import Quizzes from './pages/Quizzes';
 import AuthGuard from '/hoc/AuthGuard';
 import UserProfile from './components/UserProfile/UserProfile';
 import LandingPage from './pages/LandingPage';
@@ -65,6 +65,7 @@ function App() {
     <>
       {appState.user === null ? (
         <>
+          <Toaster />
           <Header />
           <Routes>
             <Route path="/" element={<LandingPage />} />
@@ -87,7 +88,7 @@ function App() {
               <Route path="/home" element={<ActiveQuizzes />} />
               {/* <Route path="/register" element={<Register />} /> */}
               <Route path="/about" element={<About />} />
-              <Route path="/quizzes" element={<Quizzes />} />
+              {/* <Route path="/quizzes" element={<Quizzes />} /> */}
               <Route path="/active" element={<ActiveQuizzes />} />
               <Route path="/participatingIn" element={<ParticipatingIn />} />
               <Route path="/scoreboard" element={<Scoreboard />} />

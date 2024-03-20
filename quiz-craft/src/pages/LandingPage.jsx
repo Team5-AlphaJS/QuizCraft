@@ -24,7 +24,7 @@ export default function LandingPage() {
         <h1 className="text-4xl font-semibold">⚙️ Our Features</h1>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
         <motion.div whileHover={{ scale: 1.1 }}>
           <Card className="w-[300px] p-4 bg-gradient-to-t from-slate-900 to-slate-800">
             <CardHeader className="justify-center">
@@ -42,7 +42,7 @@ export default function LandingPage() {
           </Card>
         </motion.div>
 
-        <motion.div whileHover={{ scale: 1.1 }}>
+        {/* <motion.div whileHover={{ scale: 1.1 }}>
           <Card className="w-[300px] p-4 bg-gradient-to-t from-slate-900 to-slate-800">
             <CardHeader className="justify-center">
               <p className="uppercase font-bold text-primary">
@@ -56,7 +56,7 @@ export default function LandingPage() {
               </p>
             </CardBody>
           </Card>
-        </motion.div>
+        </motion.div> */}
 
         <motion.div whileHover={{ scale: 1.1 }}>
           <Card className="w-[300px] p-4 bg-gradient-to-t from-slate-900 to-slate-800">
@@ -81,11 +81,10 @@ export default function LandingPage() {
                 🤗 Join the Community
               </p>
             </CardHeader>
-            <CardBody className="py-2 text-center text-white">
+            <CardBody className="py-4 text-center text-white">
               <p>
                 Registration is free for everyone! Sign up to take quizzes and
-                test your knowledge on a variety of subjects or join groups with
-                quiz buddies.
+                test your knowledge on a variety of interesting subjects.
               </p>
             </CardBody>
           </Card>

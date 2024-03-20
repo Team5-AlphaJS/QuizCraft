@@ -4,10 +4,11 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import UserCard from '../UserCard/UserCard';
-import { Link } from '@nextui-org/react';
+import { Avatar, Link } from '@nextui-org/react';
 import { Search } from 'lucide-react';
 import { Button, Accordion, AccordionItem } from '@nextui-org/react';
+import { useNavigate } from 'react-router-dom';
+import { handleToggleRole } from '../../../services/users.service';
 
 const UsersList = () => {
   const [users, setUsers] = useState([]);
@@ -20,6 +21,8 @@ const UsersList = () => {
   // sorting stats
   const [desc, setDesc] = useState(false);
   const [sortBy, setSortBy] = useState('username');
+
+  const navigate = useNavigate();
 
   const sortUsers = (usersGiven) => {
     return desc
@@ -58,6 +61,26 @@ const UsersList = () => {
     ]);
   }, [searchTerm]);
 
+  const handleToggleStudent = async (userUsername, currentRole) => {
+    const newRole = currentRole === 'Student' ? 'Blocked' : 'Student';
+    await handleToggleRole(userUsername, newRole);
+    setUsers(
+      users.map((user) =>
+        user.username === userUsername ? { ...user, role: newRole } : user
+      )
+    );
+  };
+
+  const handleToggleEducator = async (userUsername, currentRole) => {
+    const newRole = currentRole === 'Educator' ? 'Blocked' : 'Educator';
+    await handleToggleRole(userUsername, newRole);
+    setUsers(
+      users.map((user) =>
+        user.username === userUsername ? { ...user, role: newRole } : user
+      )
+    );
+  };
+
   return (
     <>
       <div className="flex flex-row w-full mb-2">
@@ -82,15 +105,62 @@ const UsersList = () => {
           <div className="p-4">
             {users.length > 0 ? (
               <p className="text-xl font-semibold text-center">
-                Total number of users: {users.length}{' '}
+                Total number of users:{' '}
+                {users.filter((user) => user.role !== 'admin').length}{' '}
               </p>
             ) : (
               <p className="text-xl font-semibold text-center">
                 No users found.
               </p>
             )}
+
             {users &&
-              users.map((user) => <UserCard key={user.uid} user={user} />)}
+              users.map(
+                (user) =>
+                  user.role !== 'admin' && (
+                    <div key={user.id} className="flex h-32 my-2">
+                      <div className="user-photo w-1/4 border-r-2">
+                        <Avatar
+                          name={user?.username.slice(0, 1)}
+                          src={user?.photo}
+                          className="cursor-pointer ms-14 mt-6 w-20 h-20 text-large"
+                          onClick={() => navigate(`/user/${user?.uid}`)}
+                        />
+                      </div>
+                      <div className="user-info flex flex-col flex-start space-y-0 w-3/4 ">
+                        <h3 className="ms-3 text-left text-2xl">
+                          {user.username}
+                        </h3>
+                        {(user.firstName || user.lastName) && (
+                          <p className="ms-3 text-left text-sm">
+                            {user.firstName} {user.lastName}
+                          </p>
+                        )}
+                        <p className="ms-3 text-left text-sm">{user.role}</p>
+                        <p className="ms-3 text-left text-sm">{user.email}</p>
+                        <p className=" ms-3 text-left text-sm">
+                          Member since:{' '}
+                          {new Date(user.createdOn).toLocaleString()}
+                        </p>
+                      </div>
+                      <div className="flex items-center">
+                        <Button
+                          variant="ghost"
+                          color="danger"
+                          onClick={() =>
+                            user.email.includes('edu.mon.bg')
+                              ? handleToggleEducator(user?.username, user?.role)
+                              : handleToggleStudent(user?.username, user?.role)
+                          }
+                        >
+                          {user.role === 'Student' || user.role === 'Educator'
+                            ? 'Block'
+                            : 'Unblock'}
+                        </Button>
+                      </div>
+                    </div>
+                  )
+              )}
           </div>
         </ScrollArea>
 

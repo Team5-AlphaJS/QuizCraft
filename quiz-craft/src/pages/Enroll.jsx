@@ -8,6 +8,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getQuizData, participated, removeFromParticipatns } from "../../services/quiz.service";
 import { Button } from "../components/ui/button";
+import { Button as NextUIButton } from "@nextui-org/react";
 import { studentParticipated, studentEnrolled } from "../../services/users.service";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/react";
 
@@ -140,7 +141,9 @@ const Enroll = () => {
                             }
                             {showScore &&
                                 <div>
-                                    <p className="text-2xl text-center">Well done!</p>
+                                    {score.score >= 50 
+                                    ? <p className="text-2xl text-center">Well done!</p> 
+                                    : <p className="text-2xl text-center">You can do better!</p>}
                                     <p className="text-center">Your score is {score.score}</p>
                                 </div>}
                         </CardBody>
@@ -201,9 +204,9 @@ const Enroll = () => {
                             </CardBody>
                             <CardFooter>
                                 <div className=" place-items-end space-x-3">
-                                    {currentIndex !== 0 && <Button onClick={() => setCurrentIndex(currentIndex - 1)}>Previous</Button>}
-                                    {currentIndex < questionsIds.length - 1 && <Button onClick={() => setCurrentIndex(currentIndex + 1)}>Next</Button>}
-                                    {currentIndex === questionsIds.length - 1 && <Button onClick={onFinish}>Finish</Button>}
+                                    {currentIndex !== 0 && <NextUIButton variant="ghost" color="primary" onClick={() => setCurrentIndex(currentIndex - 1)}>Previous</NextUIButton>}
+                                    {currentIndex < questionsIds.length - 1 && <NextUIButton variant="ghost" color="primary" onClick={() => setCurrentIndex(currentIndex + 1)}>Next</NextUIButton>}
+                                    {currentIndex === questionsIds.length - 1 && <NextUIButton variant="ghost" color="primary" onClick={onFinish}>Finish</NextUIButton>}
                                 </div>
                             </CardFooter>
                         </Card>

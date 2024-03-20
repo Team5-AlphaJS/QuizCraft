@@ -39,9 +39,9 @@ export const editUser = (data) => {
   return update(ref(db, `users/${data.username}`), data);
 }
 
-export const handleToggleRole = async (userId, newRole) => {
+export const handleToggleRole = async (userUsername, newRole) => {
   try {
-    await update(ref(db, `users/${userId}`), { role: newRole });
+    await update(ref(db, `users/${userUsername}`), { role: newRole });
   } catch (error) {
     console.error('Error updating user role:', error);
   }

@@ -6,12 +6,11 @@ export default function About() {
       <h1 className="text-4xl font-semibold">About the app</h1>
       <h1 className="text-4xl font-semibold"><img className='inline' width={'50px'} src={logo} />Quizzify</h1>
       <p className="text-lg">
-        Quizzify is a web application that allows users to create, share, and
-        take quizzes. It was created by Team 4.
+        Quizzify is a web application that at the moment allows users to create, take quizzes and your results. It was created and still being created by Team AMS.
       </p>
       <p className="text-lg">
         The application is being built using a variety of technologies,
-        including React, Firebase, and Tailwind CSS. It is designed to be
+        including React, Firebase, Tailwind CSS, Shadcn UI and Next UI. It is designed to be
         user-friendly and accessible to all users.
       </p>
     </div>

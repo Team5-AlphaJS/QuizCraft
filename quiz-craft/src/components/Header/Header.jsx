@@ -221,13 +221,13 @@ export default function Header() {
               </Link>
             </NextUILink>
           )}
-          {userData && userData.role === 'Student' && (
+          {/* {userData && userData.role === 'Student' && (
             <NextUILink className="font-medium text-2xl">
               <Link to="/quizzes" onClick={() => setIsMenuOpen(false)}>
                 Quizzes
               </Link>
             </NextUILink>
-          )}
+          )} */}
           {userData && (
             <NextUILink className="font-medium text-2xl">
               <Link to="/active" onClick={() => setIsMenuOpen(false)}>

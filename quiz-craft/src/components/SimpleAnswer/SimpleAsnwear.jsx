@@ -18,8 +18,8 @@ const SimpleAnswear = ({ answearId, question, setQuestion }) => {
     const onEditAnswear = () => {
         if (!answear) {
             toast({
-                title: "Invalid answear",
-                description: 'Answears cannot be empty!'
+                title: "Invalid answer",
+                description: 'Answers cannot be empty!'
             });
             return;
         }
@@ -45,7 +45,7 @@ const SimpleAnswear = ({ answearId, question, setQuestion }) => {
 
     if (onEdit) {
         return (
-            <div className="add-naswer w-3/4 flex ">
+            <div className="add-answer w-3/4 flex ">
                 <Input className="w-2/3 ml-1 mt-2" placeholder="Enter answear" value={answear} onChange={(e) => setAnswear(e.target.value)} />
                 <Button className="ml-1 mt-2" variant="ghost" onClick={(e) => {
                     e.preventDefault();
