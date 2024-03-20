@@ -31,7 +31,7 @@ const QuestionCreateEdit = ({ quiz, setQuiz, onEdit, setOnEdit, questionId }) =>
         if (!question.question.length) {
             toast({
                 title: "Invalid question",
-                description: 'Question cannot be emty!'
+                description: 'Question cannot be empty!'
             });
             return;
         }
@@ -94,7 +94,7 @@ const QuestionCreateEdit = ({ quiz, setQuiz, onEdit, setOnEdit, questionId }) =>
             </RadioGroup>
             <div className="flex justify-between ">
                 <AnswearCreateEdit  question={question} setQuestion={setQuestion} />
-                <Button className="mb-1 self-end" variant="ghost" onClick={onAddQuestion}>{onEdit ? "Save" : "Add"} question</Button>
+                <Button className="mb-1 self-end" variant='ghost' onClick={onAddQuestion}>{onEdit ? "Save" : "Add"} question</Button>
             </div>
             {Object.keys(question.answears).length > 0
                 && <ScrollArea className="h-40 p-2">
