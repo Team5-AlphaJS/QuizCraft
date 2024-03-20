@@ -21,6 +21,10 @@ const Quizzes = () => {
         getAllQuizzes().then(snap => setQuizzes(snap.val()));
     }, []);
 
+    const show = () => {
+        console.log(quizzes)
+    }
+
     return (
         <div className="h-screen">
             {userData && userData.role === 'Educator'
@@ -55,10 +59,11 @@ const Quizzes = () => {
                     </div>
                     <div className="dashboard flex justify-start w-full  mt-3">
                         {studentState === "active" && <QuizAll quizzes={quizzes} setQuizzes={setQuizzes} />}
-                        {studentState === "ongoing" && <OngoingQuizzes />}
+                        {studentState === "ongoing" && <OngoingQuizzes quizzes={quizzes} setQuizzes={setQuizzes} />}
                     </div>
                 </div>
             )}
+            <button onClick={show}>show</button>
         </div>
     );
 };

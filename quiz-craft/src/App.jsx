@@ -15,7 +15,11 @@ import Quizzes from './pages/Quizzes';
 import AuthGuard from '/hoc/AuthGuard';
 import UserProfile from './components/UserProfile/UserProfile';
 import LandingPage from './pages/LandingPage';
-import EducatorDashboard from './pages/EducatorDashboard';
+// import EducatorDashboard from './pages/EducatorDashboard';
+import ActiveQuizzes from './pages/ActiveQuizzes';
+import ParticipatingIn from './pages/ParticipatingIn';
+import Enroll from './pages/Enroll';
+import CreateEditQuiz from './pages/CreateEditQuiz';
 
 function App() {
   const [appState, setAppState] = useState({
@@ -73,10 +77,14 @@ function App() {
           >
             <Header />
             <Routes>
+            <Route path="/" element={<ActiveQuizzes />} />
               <Route path="/home" element={<Home />} />
-              <Route path="/register" element={<Register />} />
+              {/* <Route path="/register" element={<Register />} /> */}
               <Route path="/about" element={<About />} />
               <Route path="/quizzes" element={<Quizzes />} />
+              <Route path="/active" element={<ActiveQuizzes />} />
+              <Route path="participatingIn" element={<ParticipatingIn />} />
+              <Route path="/enroll/:id" element={<Enroll />} />
               <Route
                 path="/user/:id"
                 element={
@@ -88,7 +96,8 @@ function App() {
                   </AuthGuard>
                 }
               />
-              <Route path="/educator-dashboard" element={<EducatorDashboard />} />
+              {/* <Route path="/educator-dashboard" element={<EducatorDashboard />} /> */}
+              <Route path="/create-quiz" element={<CreateEditQuiz />} />
               <Route path="*" element={<NotFound />} />
               {isAdmin() && (
                 <Route path="/admin" element={<AdminDashboard />} />

@@ -185,13 +185,23 @@ export default function Header() {
               </Link>
             </NextUILink>
           )}
-          {userData && userData.role === 'Educator' && (
+          {/* {userData && userData.role === 'Educator' && (
             <NextUILink size="lg" className="font-medium">
               <Link
                 to="/educator-dashboard"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Educator Dashboard
+              </Link>
+            </NextUILink>
+          )} */}
+          {userData && userData.role === 'Educator' && (
+            <NextUILink size="lg" className="font-medium">
+              <Link
+                to="/create-quiz"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Create quiz
               </Link>
             </NextUILink>
           )}
@@ -205,7 +215,23 @@ export default function Header() {
               </Link>
             </NextUILink>
           )}
-          {menuItems.map((item, index) => (
+          <NextUILink size="lg" className="font-medium">
+            <Link
+              to="/active"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Active Quizzes
+            </Link>
+          </NextUILink>
+          <NextUILink size="lg" className="font-medium">
+              <Link
+                to="/participatingIn"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Participating In
+              </Link>
+            </NextUILink>
+          {/* {menuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <NextUILink
                 color={index === menuItems.length - 1 ? 'danger' : 'foreground'}
@@ -215,7 +241,7 @@ export default function Header() {
                 {item}
               </NextUILink>
             </NavbarMenuItem>
-          ))}
+          ))} */}
         </NavbarMenu>
       </Navbar>
     </motion.nav>

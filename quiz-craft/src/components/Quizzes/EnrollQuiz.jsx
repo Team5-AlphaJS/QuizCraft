@@ -1,17 +1,23 @@
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { Label } from "../ui/label";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import Timer from "../Timer/Timer";
+import { AuthContext } from "../../../context/AuthContext";
+import { studentEnrolled, studentParticipated } from "../../../services/users.service";
 
-const EnrollQuiz = ({ quiz, setEnroll }) => {
+const EnrollQuiz = ({ quiz, ongoing, setOngoing, setEnroll }) => {
+    const { userData, setContext } = useContext(AuthContext);
     const [quizStart, setQuizStart] = useState(false);
+
 
     const [questionIds] = useState(Object.keys(quiz.questions));
     const [questionIndex, setQuestionIndex] = useState(0);
     const [currentQuestion, setCurrentQuestion] = useState(quiz.questions[questionIds[questionIndex]]);
     const [participantAnswears, setParticipantAnswears] = useState({});
+    const [time, setTime] = useState(new Date());
 
     useEffect(() => {
         questionIds.map(questionId => participantAnswears[questionId] = []);
@@ -32,29 +38,48 @@ const EnrollQuiz = ({ quiz, setEnroll }) => {
                 participantAnswears[questionIds[questionIndex]].push(answearId);
             }
         }
-
         setParticipantAnswears({ ...participantAnswears });
     }
 
-    const finish = () => {
-        const score = { total: 0, time: 0 };
-        const pointsPerAnswear = Math.ceil(quiz.score / Object.keys(quiz.questions).length);
 
-        Object.keys(quiz.questions).map(questionId => {
-            if (quiz.questions[questionId].type === 'single') {
-                if (participantAnswears[questionId].includes(Object.keys(quiz.questions[questionId].correct)[0])) {
-                    score.total = score.total + pointsPerAnswear;
-                }
-            } else if (quiz.questions[questionId].type === "multi") {
-                const pointsPerPieceAnswear = Math.ceil(pointsPerAnswear / Object.keys(quiz.questions[questionId].correct).length)
-                Object.keys(quiz.questions[questionId].correct).map(answearId => {
-                    if (participantAnswears[questionId].includes(answearId)) {
-                        score.total = score.total + pointsPerPieceAnswear;
-                    }
-                });
-            }
-        });
-        console.log(score);
+    const finish = async () => {
+        // setQuizStart(false);
+        // const score = { total: 0 };
+        // const pointsPerAnswear = Math.ceil(quiz.score / Object.keys(quiz.questions).length);
+
+        // Object.keys(quiz.questions).map(questionId => {
+        //     if (quiz.questions[questionId].type === 'single') {
+        //         if (participantAnswears[questionId].includes(Object.keys(quiz.questions[questionId].correct)[0])) {
+        //             score.total = score.total + pointsPerAnswear;
+        //         }
+        //     } else if (quiz.questions[questionId].type === "multi") {
+        //         const pointsPerPieceAnswear = Math.ceil(pointsPerAnswear / Object.keys(quiz.questions[questionId].correct).length)
+        //         Object.keys(quiz.questions[questionId].correct).map(answearId => {
+        //             if (participantAnswears[questionId].includes(answearId)) {
+        //                 score.total = score.total + pointsPerPieceAnswear;
+        //             }
+        //         });
+        //     }
+        // });
+
+
+        // try {
+        //     // globally user update
+        //     await studentEnrolled(userData.username, quiz.id);
+        //     await studentParticipated(userData.username, quiz.id, score);
+        // } catch (e) {
+        //     console.log(e);
+        // } finally {
+        //     // locally user update
+        //     delete userData.ongoing[quiz.id];
+        //     userData['enrolled'] = {};
+        //     userData.enrolled[quiz.id] = score;
+        //     setContext(prev => prev, userData);
+        //     ongoing
+
+        //     console.log(userData);
+        // }
+
     };
 
 
@@ -70,11 +95,20 @@ const EnrollQuiz = ({ quiz, setEnroll }) => {
                     </di>
                     <div className="flex justify-between">
                         <Button className="ml-2" onClick={() => setEnroll('')}>Back</Button>
-                        <Button className="mr-4" onClick={() => setQuizStart(true)}>Start</Button>
+                        {(!("participated" in quiz) || !(userData.username in quiz.participated)) &&
+                            <Button className="mr-4" onClick={() => {
+                                setQuizStart(true);
+                                const newTime = new Date();
+                                const seconds = quiz.timer * 60;
+                                newTime.setSeconds(newTime.getSeconds() + seconds);
+                                setTime(newTime);
+                            }}>Start</Button>}
+
                     </div>
                 </div>
             }
-            {quizStart && <div className="quiz`">
+            {quizStart && <div className="quiz">
+                <Timer setQuizStart={setQuizStart} expiryTimestamp={time} />
                 <div className="question">
                     <p>{currentQuestion.question}</p>
                     {quiz.questions[questionIds[questionIndex]].type === "single" &&
@@ -128,6 +162,8 @@ const EnrollQuiz = ({ quiz, setEnroll }) => {
 
 EnrollQuiz.propTypes = {
     quiz: PropTypes.object.isRequired,
+    ongoing: PropTypes.object.isRequired,
+    setOngoing: PropTypes.func.isRequired,
     setEnroll: PropTypes.func.isRequired
 }
 

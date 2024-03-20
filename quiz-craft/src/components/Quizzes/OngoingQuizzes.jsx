@@ -4,7 +4,7 @@ import { getQuizData } from "../../../services/quiz.service";
 import { Button } from "../ui/button";
 import EnrollQuiz from "./EnrollQuiz";
 
-const OngoingQuizzes = () => {
+const OngoingQuizzes = ({ quizzes, setQuizzes }) => {
     const { userData } = useContext(AuthContext);
     const [ongoing, setOngoing] = useState({});
     const [enroll, setEnroll] = useState('');
@@ -12,6 +12,7 @@ const OngoingQuizzes = () => {
     useEffect(() => {
         Object.keys(userData.ongoing).map(async quizId => {
             const quizData = await (await getQuizData(quizId)).val();
+            quizData.id = quizId;
             ongoing[quizId] = quizData;
             setOngoing({ ...ongoing });
         });
@@ -22,7 +23,7 @@ const OngoingQuizzes = () => {
     };
 
     if (enroll) {
-        return <EnrollQuiz quiz={ongoing[enroll]} setEnroll={setEnroll} />
+        return <EnrollQuiz quiz={ongoing[enroll]} ongoing={ongoing} setOngoing={setOngoing} setEnroll={setEnroll} />
     }
 
     return (

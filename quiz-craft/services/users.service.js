@@ -12,11 +12,22 @@ export const createUserHandle = (userData) => {
 }
 
 export const acceptInvitation = (quizId, userName) => {
-  return update(ref(db, `users/${userName}/ongoing/`), {[quizId]: true});
+  return update(ref(db, `users/${userName}/ongoing/`), { [quizId]: true });
 };
 
+export const studentEnrolled = async (username, quizId) => {
+  // removes the ongoing quizzes from the user data
+  return update(ref(db, `users/${username}/ongoing/`), { [quizId]: null });
+}
+
+export const studentParticipated = async (username, quizId, score) => {
+  // adds in which quiz the user has prticipated
+  return update(ref(db, `users/${username}/enrolled/${quizId}`), score);
+}
+
+
 export const removeInvitation = (quizId, userName) => {
-  return update(ref(db, `users/${userName}/invitations/`), {[quizId]: null});
+  return update(ref(db, `users/${userName}/invitations/`), { [quizId]: null });
   // return update(ref(db, `users/${userName}/invitations/`), {[quizId]: null});
 };
 
