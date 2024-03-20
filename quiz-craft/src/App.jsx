@@ -63,6 +63,7 @@ function App() {
     <>
       {appState.user === null ? (
         <>
+          <Toaster />
           <Header />
           <Routes>
             <Route path="/" element={<LandingPage />} />

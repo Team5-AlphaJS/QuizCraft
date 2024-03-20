@@ -40,15 +40,23 @@ export function LoginForm({ isOpen, onOpenChange, onClose }) {
       const existingUsernameSnapshot = await getUserByUsername(data.username);
       const userValues = existingUsernameSnapshot.val();
       const userEmail = userValues?.email;
+      const userRole = userValues?.role;
 
-      const credential = await loginUser(userEmail, data.password);
-      setContext({ user: credential.user });
-      toast({
-        title: 'Log In Successful',
-        description: 'You have successfully logged in.',
-      });
-      navigate('/home');
-      onClose();
+      if (userRole === 'Blocked') {
+        toast({
+          title: 'Your account is blocked!',
+          description: 'You are not allowed to log in!',
+        });
+      } else {
+        const credential = await loginUser(userEmail, data.password);
+        setContext({ user: credential.user });
+        toast({
+          title: 'Log In Successful',
+          description: 'You have successfully logged in.',
+        });
+        navigate('/home');
+        onClose();
+      }
     } catch (error) {
       toast({
         title: 'Log In Error',

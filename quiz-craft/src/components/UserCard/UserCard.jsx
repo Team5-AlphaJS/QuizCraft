@@ -1,6 +1,7 @@
 import { Avatar } from "@nextui-org/react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@nextui-org/react";
 
 const UserCard = ({ user }) => {
     const navigate = useNavigate();
@@ -21,6 +22,15 @@ const UserCard = ({ user }) => {
                 <p className="ms-3 text-left text-sm">{user.role}</p>
                 <p className="ms-3 text-left text-sm">{user.email}</p>
                 <p className=" ms-3 text-left text-sm">Member since: {new Date(user.createdOn).toLocaleString()}</p>
+            </div>
+            <div className="flex items-center">
+                <Button
+                    variant="ghost"
+                    color="danger"
+                    onClick={() => handleToggle(user?.id, user?.role)}
+                >
+                    View
+                </Button>
             </div>
         </div>
     )
