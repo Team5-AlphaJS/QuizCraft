@@ -235,25 +235,27 @@ export default function Header() {
               </Link>
             </NextUILink>
           )}
-          {userData && userData.role === "Student" && (
+          {userData && userData.role === 'Student' && (
             <NextUILink className="font-medium text-2xl">
               <Link to="/participatingIn" onClick={() => setIsMenuOpen(false)}>
                 Participating In
               </Link>
             </NextUILink>
           )}
-          {userData && userData.role === "Educator" && (
+          {userData && userData.role === 'Educator' && (
             <NextUILink className="font-medium text-2xl">
               <Link to="/finished" onClick={() => setIsMenuOpen(false)}>
                 Finished
               </Link>
             </NextUILink>
           )}
-          <NextUILink className="font-medium text-2xl">
-            <Link to="/scoreboard" onClick={() => setIsMenuOpen(false)}>
-              Scoreboard
-            </Link>
-          </NextUILink>
+          {userData && (
+            <NextUILink className="font-medium text-2xl">
+              <Link to="/scoreboard" onClick={() => setIsMenuOpen(false)}>
+                Scoreboard
+              </Link>
+            </NextUILink>
+          )}
           <NextUILink className="font-medium text-2xl">
             <Link to="/about" onClick={() => setIsMenuOpen(false)}>
               About the app
