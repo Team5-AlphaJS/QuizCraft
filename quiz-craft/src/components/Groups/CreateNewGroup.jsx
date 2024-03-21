@@ -18,14 +18,14 @@ const CreateNewGroup = () => {
   const [group, setGroup] = useState({
     name: '',
     owner: userData.username,
-    participants: userData.username,
+    participants: {},
     invited: {},
   });
 
   const { toast } = useToast();
 
   const onCreate = async () => {
-    console.log(group);
+
     // Handle creation of new group
     // if (group.title.length < 3 || group.title.length > 30) {
     //   toast({
@@ -36,10 +36,8 @@ const CreateNewGroup = () => {
     // }
 
     try {
-      console.log("hi");  
       const response = await createGroup(group);
       const groupId = response._path.pieces_[1];
-      console.log(groupId);
       const invitation = {
         status: "pending"
       };
@@ -58,11 +56,9 @@ const CreateNewGroup = () => {
       setGroup({
         name: '',
         owner: userData.username,
-        participants: userData.username,
-        invited: {}
+        invited: {},
       });
     }
-
   };
 
   return (

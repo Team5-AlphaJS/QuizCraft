@@ -189,14 +189,7 @@ export default function Header() {
                   Admin Dashboard
                 </Link>
               </NextUILink>
-              {/* <NextUILink size="lg" className="font-medium">
-                <Link
-                  to="/educator-dashboard"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Educator Dashboard
-                </Link>
-              </NextUILink> */}
+             
               {/* <NextUILink size="lg" className="font-medium">
                 <Link to="/quizzes" onClick={() => setIsMenuOpen(false)}>
                   Quizzes
@@ -215,11 +208,24 @@ export default function Header() {
             </NextUILink>
           )} */}
           {userData && userData.role === 'Educator' && (
-            <NextUILink className="font-medium text-2xl">
-              <Link to="/create-quiz" onClick={() => setIsMenuOpen(false)}>
-                Create quiz
-              </Link>
-            </NextUILink>
+            <>
+              <NextUILink size="lg" className="font-medium">
+                <Link
+                  to="/create-quiz"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Create quiz
+                </Link>              
+              </NextUILink>
+              <NextUILink size="lg" className="font-medium">
+                  <Link
+                    to="/groups"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Groups
+                  </Link>
+              </NextUILink> 
+            </>  
           )}
           {userData && userData.role === 'Student' && (
             <NextUILink className="font-medium text-2xl">

@@ -15,6 +15,10 @@ export const acceptInvitation = (quizId, userName) => {
   return update(ref(db, `users/${userName}/ongoing/`), { [quizId]: true });
 };
 
+export const acceptGroupInvitation = (groupId, userName) => {
+  return update(ref(db, `users/${userName}/groups/`), { [groupId]: true });
+};
+
 export const studentEnrolled = async (username, quizId) => {
   // removes the ongoing quizzes from the user data
   return update(ref(db, `users/${username}/ongoing/`), { [quizId]: null });
@@ -29,6 +33,10 @@ export const studentParticipated = async (username, quizId, score) => {
 export const removeInvitation = (quizId, userName) => {
   return update(ref(db, `users/${userName}/invitations/`), { [quizId]: null });
   // return update(ref(db, `users/${userName}/invitations/`), {[quizId]: null});
+};
+
+export const removeGroupInvitation = (userName, quizId) => {
+  return update(ref(db, `users/${userName}/groupInvitations/`), { [quizId]: null });
 };
 
 export const getUserData = (uid) => {

@@ -15,12 +15,12 @@ import Quizzes from './pages/Quizzes';
 import AuthGuard from '/hoc/AuthGuard';
 import UserProfile from './components/UserProfile/UserProfile';
 import LandingPage from './pages/LandingPage';
-// import EducatorDashboard from './pages/EducatorDashboard';
+import Groups from './pages/Groups';
 import ActiveQuizzes from './pages/ActiveQuizzes';
 import ParticipatingIn from './pages/ParticipatingIn';
 import Enroll from './pages/Enroll';
 import CreateEditQuiz from './pages/CreateEditQuiz';
-
+import GroupPage from './components/GroupPage/GroupPage';
 function App() {
   const [appState, setAppState] = useState({
     user: null,
@@ -96,7 +96,8 @@ function App() {
                   </AuthGuard>
                 }
               />
-              {/* <Route path="/educator-dashboard" element={<EducatorDashboard />} /> */}
+              <Route path="/groups" element={<Groups />} />
+              <Route path="/group/:id" element={<GroupPage />} />
               <Route path="/create-quiz" element={<CreateEditQuiz />} />
               <Route path="/edit-quiz/:id" element={<CreateEditQuiz />} />
               <Route path="*" element={<NotFound />} />

@@ -23,6 +23,7 @@ import Scoring from "../Scoring/Scoring";
 
 const QuizCreate = ({ quizzes, setQuizzes }) => {
     const { userData } = useContext(AuthContext);
+    
     const [quiz, setQuiz] = useState({
         title: '',
         category: '',
